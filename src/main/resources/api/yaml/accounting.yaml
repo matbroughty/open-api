@@ -1,0 +1,177 @@
+openapi: 3.1.0
+info:
+  version: '1.0'
+  title: accounting
+  summary: Open Accounting accounting data
+  description: Access standardized data from Open Accounting originating data sources
+servers:
+  - url: 'http://localhost:8080'
+paths:
+  '/ledgers/{ledgerId}/salesitems':
+    get:
+      summary: Get Sales Items by Ledger ID
+      description: Retrieve the information of the user with the matching user ID.
+      operationId: get-sales-items
+      parameters:
+        - name: query
+          in: query
+          schema:
+            type: string
+        - name: queryStr
+          in: query
+          schema:
+            type: string
+        - name: ledgerId
+          in: path
+          description: Id of the owning Ledger
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Ledger found
+          content:
+            application/json:
+              schema:
+                type: array
+                readOnly: true
+                uniqueItems: true
+                items:
+                  $ref: '#/components/schemas/item'
+        '204':
+          description: No Content
+        '404':
+          description: Ledger Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+      servers:
+        - url: 'http://localhost:8080'
+components:
+  securitySchemes:
+    apiKey_1:
+      type: apiKey
+      name: apiKey
+      in: query
+  schemas:
+    item:
+      type: object
+      properties:
+        closedId:
+          type: string
+        takeonExcluded:
+          type: string
+        dueDate:
+          type: string
+        amountLc:
+          type: string
+        createdId:
+          type: string
+        deletedId:
+          type: string
+        type:
+          type: string
+        amountDc:
+          type: string
+        reference:
+          type: string
+        balanceDc:
+          type: string
+        fingerprint:
+          type: string
+        balanceLc:
+          type: string
+        balanceSc:
+          type: string
+        entryDate:
+          type: string
+        uniqueKey:
+          type: string
+          maxLength: 250
+          readOnly: true
+        taxAmountAc:
+          type: string
+        amountSc:
+          type: string
+        extraField1:
+          type: string
+        debtorReference:
+          type: string
+        extraField2:
+          type: string
+        extraField3:
+          type: string
+        disputeCode:
+          type: string
+        documentDate:
+          type: string
+        balanceDpc:
+          type: string
+        amountDpc:
+          type: string
+        taxAmountSc:
+          type: string
+        taxAmountDpc:
+          type: string
+        updatedId:
+          type: string
+        userName:
+          type: string
+        closeDate:
+          type: string
+        taxAmountLc:
+          type: string
+        retained:
+          type: string
+        currencyCode:
+          type: string
+        retainedDate:
+          type: string
+        debtor:
+          type: string
+          readOnly: true
+      required:
+        - createdId
+        - type
+        - uniqueKey
+      x-examples:
+        Example 1:
+          closedId: string
+          takeonExcluded: boolean
+          dueDate: string
+          amountLc: number
+          createdId: string
+          deletedId: string
+          type: String
+          amountDc: number
+          reference: String
+          balanceDc: number
+          fingerprint: String
+          balanceLc: number
+          balanceSc: number
+          entryDate: string
+          uniqueKey: String
+          amountSc: number
+          taxAmountAc: number
+          ledgerId: string
+          extraField1: String
+          balanceCc: number
+          debtorReference: String
+          extraField2: String
+          amountCc: number
+          extraField3: String
+          disputeCode: String
+          documentDate: string
+          balanceDpc: number
+          creditorReference: String
+          amountDpc: number
+          taxAmountSc: number
+          taxAmountDpc: number
+          updatedId: string
+          userName: String
+          closeDate: string
+          taxAmountLc: number
+          retained: boolean
+          currencyCode: String
+          retainedDate: string
