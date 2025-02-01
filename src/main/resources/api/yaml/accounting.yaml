@@ -2,176 +2,2371 @@ openapi: 3.1.0
 info:
   version: '1.0'
   title: accounting
-  summary: Open Accounting accounting data
-  description: Access standardized data from Open Accounting originating data sources
+  summary: Open Accounting Base accounting data schema
+  description: "Allows access to the standardized accounts data from Open Accounting originating data sources.  These could be native desktop or cloud connectors, Universal Adaptor data files or third party integration connectors.\r\n\r\nThis API is read-only.  The data cannot be modified outside of the originating data source. \r\n\r\nBefore using these endpoints the Company Id must have been retrieved and the Company should have at least one Snapshot (for most of the accounting endpoints to return any meaningful data).\r\n\r\nThe following records all contain links back to the Snapshot that created them.\r\n\r\n- Customer\r\n- Supplier\r\n- Item\r\n- PackageInfo\r\n- Bank\r\n- BankItem\r\n\r\nUsing the following links to the Snaphot Id it is possible to drill into the Snapshot through the following fields:\r\n\r\n- createdId : The Snapshot that created the record. Fixed.\r\n- updatedId : The last snaphost to update the record - will change with later updates to a record.\r\n- closedId : The snapshot that closed the record - i.e. for items when balance goes to zero\r\n- deletedId : The snaphost where an Item (mainly concerns sales and purchase items) wasn't pulled \r\n\r\n| Endpoints | Description |\r\n| :- |:- |\r\n| Customers | Access all customer/debtor information |\r\n| Suppliers | Access all creditor/supplier information |\r\n| Aged Debtor | Aged Debtor report based on Customers and Sales Items |\r\n| Aged Creditor | Aged Creditor report based on Suppliers and Purchase Items |\r\n| Package Info | Access data about the connection and company as taken from originating data source |\r\n| Sales Items | Access all sales ledger Item transactions from the originating data source. |\r\n| Purchase Items | Access all purchase ledger Item transactions from the originating data source. |\r\n| Snapshot | Access all Snapshot information - these are the balance snapshots from a particular data load |\r\n| Data Files | Access the raw data from the originating data source.  The Data File will be converted to a Snapshot and is in a standard format |\r\n| Banks | Access the banks and items.  Only available if the Company has bank extraction enabled |\r\n| Nominal Ledger | Access the trial balance items.  Only available if the Company has nominal ledger enabled |\r\n"
+  termsOfService: 'https://www.lendscape.com/'
+  contact:
+    name: Lendscape
+    url: 'https://www.lendscape.com/'
+    email: mat.broughton@lendscape.com
+  license:
+    url: 'https://www.lendscape.com/'
+    name: Lendscape
 servers:
   - url: 'http://localhost:8080'
+    description: localhost
 paths:
-  '/ledgers/{ledgerId}/salesitems':
+  '/accounting/companies/{companyId}/salesItems':
     get:
-      summary: Get Sales Items by Ledger ID
-      description: Retrieve the information of the user with the matching user ID.
-      operationId: get-sales-items
+      tags:
+        - salesitems
+        - mvp
+      summary: List sales items
+      description: |
+        Retrieve the sales ledger items for a Company.  
+
+        This endpoint can access all sales item transactions for the Company, i.e. every transaction that makes up the current Sales Ledger balance.
+
+        The query params allow selection of items by the Snapshot id for created, closed, updated and deleted ID's as well as non-notified etc.
+
+        Using this endpoint in conjuction with the Snapshot endpoints allows a detailed granular view of movements by snapshot date.
+      operationId: accounting-list-sales-items
       parameters:
-        - name: query
-          in: query
-          schema:
-            type: string
-        - name: queryStr
-          in: query
-          schema:
-            type: string
-        - name: ledgerId
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/pageNumber'
+        - $ref: '#/components/parameters/status'
+        - $ref: '#/components/parameters/orderByItem'
+        - $ref: '#/components/parameters/itemType'
+        - $ref: '#/components/parameters/createdId'
+        - $ref: '#/components/parameters/updatedId'
+        - $ref: '#/components/parameters/closedId'
+        - $ref: '#/components/parameters/deletedId'
+        - $ref: '#/components/parameters/balanceGtEq'
+        - $ref: '#/components/parameters/balanceLt'
+        - $ref: '#/components/parameters/notified'
+        - $ref: '#/components/parameters/companyId'
+      responses:
+        '200':
+          description: Returns back 0 or more sales items for the Company.  The Company must have 1 or more Snapshots.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Items'
+        '401':
+          $ref: '#/components/responses/Access-Denied'
+        '404':
+          $ref: '#/components/responses/Not-Found'
+        '500':
+          $ref: '#/components/responses/Internal-Server-Error'
+        4XX:
+          $ref: '#/components/responses/General-Client-Error'
+      servers:
+        - url: 'http://localhost:8080'
+          description: localhost
+  '/accounting/companies/{companyId}/salesItems/{itemKey}':
+    get:
+      tags:
+        - salesitems
+        - mvp
+      summary: Get sales Item
+      description: |
+        Gets a single sales ledger item by uniqueKey.
+      operationId: accounting-get-sales-item
+      parameters:
+        - $ref: '#/components/parameters/companyId'
+        - $ref: '#/components/parameters/itemKey'
+      responses:
+        '200':
+          description: Extracts
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
+        '404':
+          $ref: '#/components/responses/Not-Found'
+        5XX:
+          $ref: '#/components/responses/Internal-Server-Error'
+        4XX:
+          $ref: '#/components/responses/General-Client-Error'
+      servers:
+        - url: 'http://localhost:8080'
+          description: localhost
+  '/accounting/companies/{companyId}/purchaseItems':
+    get:
+      tags:
+        - purchaseitems
+        - mvp
+      summary: List purchase items
+      description: Retrieve all purchase items for the Company
+      operationId: accounting-list-purchase-items
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/pageNumber'
+        - $ref: '#/components/parameters/status'
+        - $ref: '#/components/parameters/orderByItem'
+        - $ref: '#/components/parameters/itemType'
+        - $ref: '#/components/parameters/createdId'
+        - $ref: '#/components/parameters/updatedId'
+        - $ref: '#/components/parameters/closedId'
+        - $ref: '#/components/parameters/deletedId'
+        - $ref: '#/components/parameters/balanceGtEq'
+        - $ref: '#/components/parameters/balanceLt'
+        - name: companyId
           in: path
-          description: Id of the owning Ledger
+          description: The main UUID representing the Company.  Static and unqiue
           required: true
           schema:
             type: string
       responses:
         '200':
-          description: Ledger found
+          description: List Purchase items (supplier items)
           content:
             application/json:
               schema:
-                type: array
-                readOnly: true
-                uniqueItems: true
-                items:
-                  $ref: '#/components/schemas/item'
-        '204':
-          description: No Content
+                $ref: '#/components/schemas/Items'
         '404':
-          description: Ledger Not Found
+          $ref: '#/components/responses/Not-Found'
+        '500':
+          $ref: '#/components/responses/Internal-Server-Error'
+        4XX:
+          $ref: '#/components/responses/General-Client-Error'
+      servers:
+        - url: 'http://localhost:8080'
+          description: localhost
+  '/accounting/companies/{companyId}/packageInfo':
+    get:
+      tags:
+        - package-info
+      summary: Get package info
+      description: "Gets the company data from the accounts system.  The Company data is the optional data pulled from the originating data source that represents the Company details but not added within the Open Accounting system directly.\r\n\r\n"
+      operationId: accounting-get-accountpackage-info
+      parameters:
+        - name: companyId
+          in: path
+          description: The main UUID representing the Company.  Static and unqiue
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
           content:
             application/json:
               schema:
                 type: object
+                properties:
+                  company:
+                    $ref: '#/components/schemas/PackageInfo'
+        '404':
+          $ref: '#/components/responses/Not-Found'
+        '500':
+          $ref: '#/components/responses/Internal-Server-Error'
+        4XX:
+          $ref: '#/components/responses/General-Client-Error'
       servers:
         - url: 'http://localhost:8080'
+          description: localhost
+  '/accounting/companies/{companyId}/customers':
+    get:
+      tags:
+        - list-customers
+        - mvp
+      summary: List customers
+      description: Gets customers (debtors) for a company
+      operationId: accounting-list-customers
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/pageNumber'
+        - $ref: '#/components/parameters/orderBy'
+        - $ref: '#/components/parameters/createdId'
+        - $ref: '#/components/parameters/updatedId'
+        - $ref: '#/components/parameters/closedId'
+        - $ref: '#/components/parameters/deletedId'
+        - $ref: '#/components/parameters/balanceGtEq'
+        - $ref: '#/components/parameters/balanceLt'
+        - $ref: '#/components/parameters/notified'
+        - $ref: '#/components/parameters/notified'
+        - name: companyId
+          in: path
+          description: The main UUID representing the Company.  Static and unqiue
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content: { }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customers'
+        '403':
+          $ref: '#/components/responses/Access-Denied'
+        '404':
+          $ref: '#/components/responses/Not-Found'
+        '500':
+          $ref: '#/components/responses/Internal-Server-Error'
+        4XX:
+          $ref: '#/components/responses/General-Client-Error'
+      servers:
+        - url: 'http://localhost:8080'
+          description: localhost
+  '/accounting/companies/{companyId}/banks':
+    get:
+      tags:
+        - list-banks
+      summary: List banks
+      description: "Lists banks.  The bank accounts are only available for a subset of the native connectors and only pulled if.\r\nthe Company.banksAccounts is set to true.\r\n\r\n**Note:** This list query is not paged as there will usually only be a handful of bank accounts on the Company"
+      operationId: accounting-list-banks
+      parameters:
+        - name: companyId
+          in: path
+          description: The main UUID representing the Company.  Static and unqiue
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content: { }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Bank'
+        '403':
+          $ref: '#/components/responses/Access-Denied'
+        '404':
+          $ref: '#/components/responses/Not-Found'
+        '500':
+          $ref: '#/components/responses/Internal-Server-Error'
+        4XX:
+          $ref: '#/components/responses/General-Client-Error'
+      servers:
+        - url: 'http://localhost:8080'
+          description: localhost
+  '/accounting/companies/{companyId}/nominalLedger':
+    get:
+      tags:
+        - list-nominal-items
+      summary: List nominal items
+      description: "Lists nominal items.  \r\n\r\nThe nominal accounts are only available for a subset of the native connectors and only pulled if.\r\nthe Company.trialBalance is set to true.\r\n"
+      operationId: accounting-list-nominal
+      parameters:
+        - name: companyId
+          in: path
+          description: The main UUID representing the Company.  Static and unqiue
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content: { }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NominalAccount'
+        '403':
+          $ref: '#/components/responses/Access-Denied'
+        '404':
+          $ref: '#/components/responses/Not-Found'
+        '500':
+          $ref: '#/components/responses/Internal-Server-Error'
+        4XX:
+          $ref: '#/components/responses/General-Client-Error'
+      servers:
+        - url: 'http://localhost:8080'
+          description: localhost
+  '/accounting/companies/{companyId}/banks/{bankUniqueKey}':
+    get:
+      tags:
+        - list-bank-items
+      summary: List bank items
+      description: "Lists bank items.  The bank accounts and items are only available for a subset of the native connectors and only pulled if.\r\nthe Company.banksAccounts is set to true.\r\n\r\nSome connectors only take Banks Accounts and not the items\r\n"
+      operationId: accounting-list-banks-items
+      parameters:
+        - name: companyId
+          in: path
+          description: The main UUID representing the Company.  Static and unqiue
+          required: true
+          schema:
+            type: string
+        - $ref: '#/components/parameters/bankUniqueKey'
+      requestBody:
+        content: { }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BankItems'
+        '403':
+          $ref: '#/components/responses/Access-Denied'
+        '404':
+          $ref: '#/components/responses/Not-Found'
+        '500':
+          $ref: '#/components/responses/Internal-Server-Error'
+        4XX:
+          $ref: '#/components/responses/General-Client-Error'
+      servers:
+        - url: 'http://localhost:8080'
+          description: localhost
+  '/accounting/companies/{companyId}/suppliers':
+    get:
+      tags:
+        - list-suppliers
+        - mvp
+      summary: List suppliers
+      description: Gets suppliers (creditors) for a company
+      operationId: accounting-list-suppliers
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/pageNumber'
+        - $ref: '#/components/parameters/orderBy'
+        - $ref: '#/components/parameters/createdId'
+        - $ref: '#/components/parameters/updatedId'
+        - $ref: '#/components/parameters/closedId'
+        - $ref: '#/components/parameters/deletedId'
+        - $ref: '#/components/parameters/balanceLt'
+        - $ref: '#/components/parameters/balanceGtEq'
+        - name: companyId
+          in: path
+          description: The main UUID representing the Company.  Static and unqiue
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Suppliers'
+        '404':
+          $ref: '#/components/responses/Not-Found'
+        '500':
+          $ref: '#/components/responses/Internal-Server-Error'
+        4XX:
+          $ref: '#/components/responses/General-Client-Error'
+      servers:
+        - url: 'http://localhost:8080'
+          description: localhost
+  '/accounting/companies/{companyId}/customers/{customerId}':
+    get:
+      tags:
+        - get-customer
+        - mvp
+      summary: Get customer
+      description: Gets a customer by the unique Customer id
+      operationId: accounting-get-customer-by-id
+      parameters:
+        - $ref: '#/components/parameters/customerId'
+        - $ref: '#/components/parameters/companyId'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+        '404':
+          $ref: '#/components/responses/Not-Found'
+        '500':
+          $ref: '#/components/responses/Internal-Server-Error'
+        4XX:
+          $ref: '#/components/responses/General-Client-Error'
+      servers:
+        - url: 'http://localhost:8080'
+          description: localhost
+  '/accounting/companies/{companyId}/suppliers/{supplierId}':
+    get:
+      tags:
+        - get-supplier
+        - mvp
+      summary: Get supplier
+      description: Gets a Supplier by the unique Supplier id
+      operationId: accounting-get-supplier-by-id
+      parameters:
+        - $ref: '#/components/parameters/companyId'
+        - $ref: '#/components/parameters/supplierId'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Supplier'
+        '404':
+          $ref: '#/components/responses/Not-Found'
+        '500':
+          $ref: '#/components/responses/Internal-Server-Error'
+        4XX:
+          $ref: '#/components/responses/General-Client-Error'
+      servers:
+        - url: 'http://localhost:8080'
+          description: localhost
+  '/accounting/companies/{companyId}/snapshots':
+    get:
+      tags:
+        - list-snapshot
+        - mvp
+      summary: List snapshots
+      description: "List all snapshots - these are records of updates from the originating data source and contain balance and movement details comparing the current snapshot to the previous snapshot\r\n"
+      operationId: accounting-list-snapshots
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/pageNumber'
+        - $ref: '#/components/parameters/snapshotDate'
+        - $ref: '#/components/parameters/snapshotDateGtEq'
+        - $ref: '#/components/parameters/snapshotDateLt'
+        - $ref: '#/components/parameters/snapshotBalanceChange'
+        - $ref: '#/components/parameters/companyId'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Snapshots'
+        '404':
+          $ref: '#/components/responses/Not-Found'
+        '500':
+          $ref: '#/components/responses/Internal-Server-Error'
+        4XX:
+          $ref: '#/components/responses/General-Client-Error'
+      servers:
+        - url: 'http://localhost:8080'
+          description: localhost
+  '/accounting/companies/{companyId}/agedDebtor':
+    get:
+      tags:
+        - aged-debtor
+      summary: Get aged debtor report
+      description: "Gets the aged debtor report - i.e. ageing by customer.\r\n"
+      operationId: accounting-get-aged-debtor
+      parameters:
+        - $ref: '#/components/parameters/notified'
+        - $ref: '#/components/parameters/ageingDate'
+        - $ref: '#/components/parameters/companyId'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgedDebtor'
+        '403':
+          $ref: '#/components/responses/Access-Denied'
+        '404':
+          $ref: '#/components/responses/Not-Found'
+        '500':
+          $ref: '#/components/responses/Internal-Server-Error'
+        4XX:
+          $ref: '#/components/responses/General-Client-Error'
+      servers:
+        - url: 'http://localhost:8080'
+          description: localhost
+  '/accounting/companies/{companyId}/agedCreditor':
+    get:
+      tags:
+        - aged-creditor
+      summary: Get aged creditor report
+      description: "Gets the aged  creditor report - i.e. ages by supplier.\r\n"
+      operationId: accounting-get-aged-creditor
+      parameters:
+        - $ref: '#/components/parameters/ageingDate'
+        - $ref: '#/components/parameters/companyId'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgedCreditor'
+        '403':
+          $ref: '#/components/responses/Access-Denied'
+        '404':
+          $ref: '#/components/responses/Not-Found'
+        '500':
+          $ref: '#/components/responses/Internal-Server-Error'
+        4XX:
+          $ref: '#/components/responses/General-Client-Error'
+      servers:
+        - url: 'http://localhost:8080'
+          description: localhost
+  '/accounting/companies/{companyId}/snapshots/current':
+    get:
+      tags:
+        - current-snapshot
+        - mvp
+      summary: Get current snapshot
+      description: "Gets the current snapshot - any company with data must have at least one snapshot.  This endpoint will return the latest.\r\n\r\nThe Snapshot ID can be used in the List items and customers/suppliers to deteremine the items and accounts that were created, modified, deleted or closed by this snapshot"
+      operationId: accounting-get-current-snapshot
+      parameters:
+        - $ref: '#/components/parameters/companyId'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Snapshot'
+        '403':
+          $ref: '#/components/responses/Access-Denied'
+        '404':
+          $ref: '#/components/responses/Not-Found'
+        '500':
+          $ref: '#/components/responses/Internal-Server-Error'
+        4XX:
+          $ref: '#/components/responses/General-Client-Error'
+      servers:
+        - url: 'http://localhost:8080'
+          description: localhost
+  '/accounting/companies/{companyId}/snapshots/previous':
+    get:
+      tags:
+        - previous-snapshot
+      summary: Get previous snapshot
+      description: |-
+        Gets the previous snapshot - i.e. the snapshot before the current snapshot.
+
+        A company may only have one snapshot so this could return empty
+      operationId: accounting-get-previous-snapshot
+      parameters:
+        - $ref: '#/components/parameters/companyId'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Snapshot'
+        '403':
+          $ref: '#/components/responses/Access-Denied'
+        '404':
+          $ref: '#/components/responses/Not-Found'
+        '500':
+          $ref: '#/components/responses/Internal-Server-Error'
+        4XX:
+          $ref: '#/components/responses/General-Client-Error'
+      servers:
+        - url: 'http://localhost:8080'
+          description: localhost
+  '/accounting/companies/{companyId}/dataFile/{dataFileId}':
+    get:
+      tags:
+        - gate-data-file
+        - mvp
+      summary: Get data file
+      description: "The raw data from the originating data source.  \r\n\r\nThis will contain the raw standardised xml data regardless of originating data source"
+      operationId: accounting-get-datafile
+      parameters:
+        - $ref: '#/components/parameters/companyId'
+        - name: dataFileId
+          in: path
+          description: Data File Id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataFile'
+        '403':
+          $ref: '#/components/responses/Access-Denied'
+        '404':
+          $ref: '#/components/responses/Not-Found'
+        '500':
+          $ref: '#/components/responses/Internal-Server-Error'
+        4XX:
+          $ref: '#/components/responses/General-Client-Error'
+      servers:
+        - url: 'http://localhost:8080'
+          description: localhost
+  '/accounting/companies/{companyId}/dataFile':
+    get:
+      tags:
+        - list-data-file
+        - mvp
+      summary: List data files
+      description: "Lists the raw data from the originating data source.  \r\n\r\nNote - the list will NOT return the raw data, only the id and other fields that then allow the individual datFile to be retrieved which will contain the raw data"
+      operationId: accounting-list-datafiles
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/orderBy'
+        - $ref: '#/components/parameters/pageNumber'
+        - $ref: '#/components/parameters/createdId'
+        - $ref: '#/components/parameters/companyId'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataFiles'
+        '403':
+          $ref: '#/components/responses/Access-Denied'
+        '404':
+          $ref: '#/components/responses/Not-Found'
+        '500':
+          $ref: '#/components/responses/Internal-Server-Error'
+        4XX:
+          $ref: '#/components/responses/General-Client-Error'
+      servers:
+        - url: 'http://localhost:8080'
+          description: localhost
+tags:
+  - name: accounting-api
+    description: Accounting API - read-only
+  - name: mvp
+    description: Minimum Viable Product
+  - name: package-info
+    description: This is Company info from the account package
+  - name: purchaseitems
+    description: purchase ledger items
+  - name: salesitems
+    description: sales ledger items
 components:
-  securitySchemes:
-    apiKey_1:
-      type: apiKey
-      name: apiKey
+  parameters:
+    page:
+      name: page
       in: query
+      description: Page number
+      required: true
+      schema:
+        type: string
+        examples:
+          - '1'
+    pageNumber:
+      name: pageSize
+      in: query
+      description: The number of records to return - defaults to 100
+      required: true
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 1000
+        default: 100
+        examples:
+          - 1
+    orderBy:
+      name: orderBy
+      in: query
+      description: 'Order by properties (descending) - for Account (Customer/Supplier) this will be balance, currencyCode, reference, name and countryCode'
+      required: true
+      schema:
+        type: string
+        enum:
+          - currencyCode
+          - name
+          - reference
+          - balanceCc
+          - createdId
+          - updatedId
+        default: balanceCc
+    status:
+      name: status
+      in: query
+      description: 'Status of the items - open, closed or include all'
+      required: true
+      schema:
+        type: string
+        enum:
+          - open
+          - closed
+          - all
+        default: open
+        examples:
+          - all
+    orderByItem:
+      name: orderByItem
+      in: query
+      description: Order by columns (descending) for Sales and purchase item list queries
+      required: false
+      schema:
+        type: string
+        enum:
+          - type
+          - dueDate
+          - documentDate
+          - amount
+          - balance
+          - reference
+          - createdId
+          - deletedId
+          - closedId
+          - updatedId
+        default: balance
+        examples:
+          - type
+    itemType:
+      name: itemType
+      in: query
+      description: Limit the item types for sales and purchase ledger item list queries to on of the available item types
+      required: false
+      schema:
+        type: string
+        enum:
+          - INV
+          - DBA
+          - CRA
+          - PAY
+          - CRD
+        examples:
+          - INV
+    createdId:
+      name: createdId
+      in: query
+      description: The SnapshotId that created the item or account
+      required: false
+      schema:
+        type: integer
+        examples:
+          - 71514
+    closedId:
+      name: closedId
+      in: query
+      description: The Snapshot ID that closed the item or account
+      required: false
+      schema:
+        type: integer
+    deletedId:
+      name: deletedId
+      in: query
+      description: The Snapshot ID that deleted the item or account
+      required: false
+      schema:
+        type: integer
+    updatedId:
+      name: updatedId
+      in: query
+      description: The Snapshot ID that updated the item or account
+      required: false
+      schema:
+        type: string
+    balanceGtEq:
+      name: balanceGtEq
+      in: query
+      description: Specify an amount that the balance (company currency) needs to be greater than or equal to. Can be negative.
+      required: false
+      schema:
+        type: number
+        examples:
+          - 1300
+    balanceLt:
+      name: balanceLt
+      in: query
+      description: Specify an amount that the balance (company currency) needs to be less than. Can be negative.
+      required: false
+      schema:
+        type: number
+        examples:
+          - 2000
+    snapshotDate:
+      name: snapshotDate
+      in: query
+      description: A date string to limit the Snapshot list to - based on the Snapshot receivedDate.  There may be multiple Snapshots per day.
+      required: false
+      schema:
+        type: string
+        format: date
+    snapshotDateGtEq:
+      name: snapshotDateGtEq
+      in: query
+      description: A date string to limit the Snapshot list to being greater to or equal to (i.e. on or after) - based on the Snapshot receivedDate.
+      required: false
+      schema:
+        type: string
+        format: date
+    snapshotDateLt:
+      name: snapshotDateLt
+      in: query
+      description: A date string to limit the Snapshot list to being less than (i.e. before) - based on the Snapshot receivedDate.
+      required: false
+      schema:
+        type: string
+    snapshotBalanceChange:
+      name: snapshotSalesBalanceChange
+      in: query
+      description: true to restrict list of Snaphots to those that had a balance change based on the previous sales ledger Balance in Company currency compared to this Snapshots balance (startBalanceCc != balanceCc )
+      required: false
+      schema:
+        type: boolean
+    notified:
+      name: notified
+      in: query
+      description: 'Is the Customer notified - tue, false or include all'
+      required: false
+      schema:
+        type: string
+        enum:
+          - 'true'
+          - 'false'
+          - all
+        default: all
+        examples:
+          - all
+    ageingDate:
+      name: ageingDate
+      in: query
+      description: The date field to use for ageing.  Defaults to dueDate.
+      required: false
+      schema:
+        type: string
+        enum:
+          - documentDate
+          - dueDate
+        default: dueDate
+        examples:
+          - dueDate
+    companyId:
+      name: companyId
+      in: path
+      description: The main UUID representing the Company.  Static and unqiue
+      required: true
+      schema:
+        type: string
+        minLength: 36
+        maxLength: 36
+        examples:
+          - d698c05f-1a28-4398-9e5a-65a8c62ba84b
+    customerId:
+      name: customerId
+      in: path
+      description: 'The uniqueKey for the Customer.  Data soure controlled.  Static and unique. '
+      required: true
+      schema:
+        type: string
+        minLength: 1
+        maxLength: 50
+    supplierId:
+      name: supplierId
+      in: path
+      description: 'The uniqueKey for the Supplier.  Data soure controlled.  Static and unique. '
+      required: true
+      schema:
+        type: string
+        minLength: 1
+        maxLength: 50
+    itemKey:
+      name: itemKey
+      in: path
+      description: Unique identifier for the item
+      required: true
+      schema:
+        type: string
+        minLength: 1
+        maxLength: 50
+        examples:
+          - '73673'
+    bankUniqueKey:
+      name: bankUniqueKey
+      in: path
+      description: The Bank's unique key
+      required: true
+      schema:
+        type: string
+        minLength: 1
+        maxLength: 50
+        examples:
+          - '10981'
+  securitySchemes:
+    auth_header:
+      type: apiKey
+      name: Authorization
+      in: header
+  responses:
+    General-Client-Error:
+      description: General Client Error.  Check logs and request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Internal-Server-Error:
+      description: There is a problem with our API service. Please try again later.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Not-Found:
+      description: |-
+        One or more of the resources you referenced could not be found.
+        This might be because your company id is incorrect.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Access-Denied:
+      description: Access Denied
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
-    item:
+    Items:
+      title: items
+      allOf:
+        - type: object
+          properties:
+            results:
+              type: array
+              items:
+                $ref: '#/components/schemas/Item'
+        - $ref: '#/components/schemas/Paginginfo'
+    Item:
       type: object
+      description: |-
+        The Item record represents all open, changed and closed items on the Sales Ledger (Customer items) and Purchase Ledger (Supplier items).
+
+        An open item is either an item where the balance is zero or where the close date is a date in the past. 
+
+        The Item record will include all Debits (Invoices, Debit Adjustments), Credits (Credit Notes, Credit Adjustments, Discounts) and Cash on both the Sales and Purchase ledger - see Transaction Type.  
+
+        It is expected that the various account transaction types will be 
+
+
+        Transaction Type.  
+
+        It is expected that the various account transaction types present in the various account packages/ERP systems will be mapped to the five OA transaction types.
+
+        The transaction type is stored in the item#TYPE field.  A 3 character string field that accepts the following:
+
+        INV  (Invoices)
+
+        CRD (Credit Notes)
+
+        PAY (Cash, Cheque, etc.)
+
+        CRA (Credit Adjustments)
+
+        DBA (Debit Adjustments)
+
+        The INV and DBA transactions are debits and should be positive (for sales and purchase ledger).  The CRD, PAY, CRA transactions are credits and should be negative (for sales and purchase ledger). 
+
+        Only the Ledger Item Amount and Balance in the original Customer or Supplier currency are pulled – the OA laoding service completes further currency conversions.  The currency of the item is derived from the owning Supplier or Customer.
+
+        It is assumed that when an Item's Balance is zero that it is closed. 
+
+        The OA Service will truncate all field values if they exceed the maximum size limit.
       properties:
-        closedId:
+        type:
           type: string
-        takeonExcluded:
+          description: "Transaction Type.  It is expected that the various account transaction types present in the various account packages/ERP systems will be mapped to the five Open Accounting transaction types.\r\n\r\nA 3 character string field that accepts the following:\r\n\r\n- INV  (Invoices) +\r\n- CRD (Credit Notes) -\r\n- PAY (Cash, Cheque, etc.) -\r\n- CRA (Credit Adjustments) -\r\n- DBA (Debit Adjustments) +\r\n\r\nThe INV and DBA transactions are debits and should be positive (for sales and purchase ledger).  The CRD, PAY, CRA transactions are credits and should be negative (for sales and purchase ledger). \r\n\r\nIf you sum up all Balance items for a company then this WILL ALWAYS equal the Sales or Purchase Ledger balance\r\n"
+          minLength: 3
+          maxLength: 3
+          readOnly: true
+          examples:
+            - INV
+        amountCc:
+          type: number
+          description: Item original amount in Company currency
+          examples:
+            - 2000
+        balanceCc:
+          type: number
+          description: "Item balance in company currency\r\n"
+          examples:
+            - 2000
+        amountAc:
+          type: number
+          description: Amount in account currency
+          examples:
+            - 2000
+        balanceAc:
+          type: number
+          description: Outsatnding Balance in account currency
+          examples:
+            - 2000
+        amountSc:
+          type: number
+          description: Amount in system currency
+        balanceSc:
+          type: number
+          description: Balance in system currency
+          examples:
+            - 2000
+        taxAmountAc:
+          type: number
+          description: Tax amount in Customer/Supplier currency
+          examples:
+            - 400
+        taxAmountCc:
+          type: number
+          description: Tax amount in Company currency
+          examples:
+            - 400
+        taxAmountSc:
+          type: number
+          description: Tax amount in System currency.
+          examples:
+            - 400
+        reference:
           type: string
+          description: User populated reference for the item.  Could be empty.
+          maxLength: 30
+          readOnly: true
+          examples:
+            - INV-345
+        accountReference:
+          type: string
+          description: The Customer or Supplier reference
+          maxLength: 30
+          examples:
+            - JIMMY01
+        fingerprint:
+          type: string
+          description: An internal hash used to indicate current state of item.  Changes between snapshots if the item changes.
+          examples:
+            - d23213db87cc0d25e4a259298063dd48
+        retained:
+          type: boolean
+          description: Indicates if the item has been retained.  See the Company retained days for more information
+          default: false
+        nonNotifiedTakeOn:
+          type: boolean
+          description: 'true - if the item was non-notified at take-on, i.e. if customer was non-notified when the item was first created.'
+          default: false
+        uniqueKey:
+          type: string
+          description: "A value that can be guaranteed to be unique and static for each individual extracted Item.\r\n\r\nThis uniqueKey can be used to find individual items"
+          maxLength: 50
+          readOnly: true
+          examples:
+            - '923277727'
+        entryUserName:
+          type: string
+          maxLength: 50
+          examples:
+            - matb
+        documentDate:
+          type: string
+          description: 'Original document date '
+          format: date
+          examples:
+            - '2025-01-31'
         dueDate:
           type: string
-        amountLc:
+          description: "Date item is due.  Typically only populated for debit \r\nitems"
+          format: date
+          examples:
+            - '2025-02-28'
+        entryDate:
+          type: string
+          description: Date item was physically entered into accounting package (by UserName).
+          format: date
+          examples:
+            - '2025-01-31'
+        itemReceivedDate:
+          type: string
+          description: Date that Open Accounting first saw the item
+          format: date
+          examples:
+            - '2025-01-31'
+        takeOn:
+          type: boolean
+          description: Was the item created as part of the take-on
+        createdId:
+          type: integer
+          description: Snapshot ID that created this item.  Always populated.
+        updatedId:
+          type: integer
+          description: 'Snapshot ID that updated this item. '
+        closedId:
+          type: integer
+          description: Snapshot ID that closed this item. If this ID is populated then then the balance will be 0
+        deletedId:
+          type: integer
+          description: Snapshot ID that deleted  this item.  Indicates the item went missing
+        accountName:
+          type: string
+          description: "The account (customer or supplier) name\r\n"
+        accountCreatedId:
+          type: integer
+          description: The customer or supplier snapshot id that created the account
+          examples:
+            - 1243
+        accountCurrencyCode:
+          type: string
+          description: Customer or Supplier currency code.  This will be the currency of the item
+        accountNotified:
+          type: string
+          description: Is the Customer notified
+        accountAutoNonNotified:
+          type: boolean
+          description: Was the Customer auto non-notified - i.e. Customer had a zero balance at take-on
+          default: false
+        itemCurrencyCode:
+          type: string
+          description: "Future use item level currency field.  Will allow multiple currency items\r\n"
+          maxLength: 3
+          examples:
+            - GBP
+        companyCurrencyCode:
+          type: string
+          description: Owning company currency code
+          maxLength: 3
+        companyId:
+          type: string
+          description: The Company UUID
+          minLength: 36
+          maxLength: 36
+          examples:
+            - d698c05f-1a28-4398-9e5a-65a8c62ba84b
+      required:
+        - type
+        - amountCc
+        - balanceCc
+        - amountAc
+        - balanceAc
+        - accountReference
+        - fingerprint
+        - uniqueKey
+        - createdId
+        - companyId
+      x-examples:
+        Example 1:
+          type: INV
+          amountLc: 850
+          balanceLc: 270.63
+          amountAc: 850
+          balanceAc: 270.63
+          amountSc: 850
+          balanceSc: 270.63
+          taxAmountAc: 141.67
+          taxAmountLc: 141.67
+          taxAmountSc: 141.67
+          reference: INV-0027
+          accountReference: 1262c350-fe0f-40ec-aeff-41c95b
+          fingerprint: 7202022916c39efe9bbca227cdcb4a90
+          retained: false
+          nonNotifiedTakeOn: false
+          uniqueKey: a633d5f2-396c-4e1f-ab3a-b4574d82ee1c
+          entryUserName: AUTHORISED
+          documentDate: '2024-11-10T00:00:00'
+          dueDate: '2024-11-20T00:00:00'
+          entryDate: '2024-11-10T00:00:00'
+          createdDate: '2025-01-15T15:25:10.057'
+          takeOn: true
+          createdId: 51274
+          accountName: DIISR - Small Business Services
+          accountId: 1262c350-fe0f-40ec-aeff-41c95b4a45af
+          accountCreatedId: 51274
+          accountCurrencyCode: GBP
+          accountNotified: 'true'
+          accountAutoNonNotified: 0
+    Paginginfo:
+      type: object
+      description: Paging info returned in all api list calls
+      properties:
+        pageNumber:
+          type: integer
+        pageSize:
+          type: integer
+        totalResults:
+          type: integer
+        _links:
+          type: object
+          properties:
+            self:
+              type: object
+              properties:
+                href:
+                  type: string
+            current:
+              type: object
+              properties:
+                href:
+                  type: string
+      x-examples:
+        Example 1:
+          pageNumber: 1
+          pageSize: 10
+          totalResults: 1
+          _links:
+            self:
+              href: '/companies/{id}/data/{dataType}'
+            current:
+              href: '/companies/{id}/data/{dataType}?page=1&pageSize=10'
+    PackageInfo:
+      type: object
+      description: |-
+        This represents the Company information taken from the originating data source
+
+        The Company will hold basic information such as the Client name, address and contact details as well as Tax number and information about the account package the data is being retrieved from and whether it is a multi-currency installation. This information is likely to match the information manually entered into the Client\Company records in the system api.
+
+        Pulling this Company data is optional, apart from for Cloud accounting packages (i.e. Xero, QuickBooks online).
+
+        There will typically only be one Company per account package instance.
+
+        The OA Service will truncate all field values if they exceed the maximum size limit. 
+      properties:
+        companyId:
+          type: string
+          description: Company UUID
+          minLength: 36
+          maxLength: 36
+        uniqueKey:
+          type: string
+          description: Unique id of the PackageInfo
+          maxLength: 50
+        fingerprint:
+          type: string
+          maxLength: 32
+        createdId:
+          type: integer
+          description: The Snapshot ID that created this Package Info record
+        updatedId:
+          type: integer
+          description: The Snapshot ID that updated this Package Info record
+        name:
+          type: string
+          description: 'Name of the Company '
+          maxLength: 60
+        reference:
+          type: string
+          maxLength: 30
+        address1:
+          type: string
+          maxLength: 60
+        address2:
+          type: string
+          maxLength: 60
+        address3:
+          type: string
+          maxLength: 60
+        postCode:
+          type: string
+          maxLength: 20
+        countryCode:
+          type: string
+          maxLength: 2
+        contactPhone:
+          type: string
+          maxLength: 25
+        duns:
+          type: string
+          maxLength: 20
+        taxNo:
+          type: string
+          maxLength: 20
+        multiCurrency:
+          type: boolean
+          description: true if multi-currency company
+        startMonth:
+          type: string
+          description: Compant financial start month
+        industryType:
+          type: string
+          description: Industry type for the company
+          maxLength: 50
+        packageInfo:
+          type: string
+          description: Details in short the accounting package/ERP system
+          maxLength: 50
+      x-examples:
+        Example 1:
+          companyId: 9ed20c0b-e22b-444a-878e-c6489a913adb
+          uniqueKey: '!K3Ps5'
+          fingerprint: 633bc980a45c620e2a446cb49491cadd
+          createdId: 51274
+          name: Demo Company (UK)
+          reference: '!K3Ps5'
+          address1: 23 Main Street
+          address2: Central City
+          address3: Marineville
+          postCode: MV12 3CC
+          countryCode: GB
+          contactPhone: 1234 5678
+          duns: '02181833'
+          taxNo: GB 123456789
+          multiCurrency: false
+          startMonth: '3'
+          industryType: COMPANY
+          packageInfo: BUSINESS/DEMO
+    Customers:
+      title: customers
+      examples:
+        - results:
+            - accountName: Hausser Corp
+              uniqueKey: 19288-018
+              reference: HAUS1
+              address1: Jimny Street
+              address2: Canterbury
+              address3: Kent
+              address4: ''
+              countryCode: UK
+              postCode: CT1 7UP
+              contact: Jill
+              email: biigy@smalls.com
+              contactPhone: '07765143'
+              fax: ''
+              fingerprint: ury7248hj8u3q093y73y
+              balancePackage: 500
+              balanceAc: 500
+              balanceSc: 500
+              balanceCc: 500
+              overdueAc: 500
+              creditLimitAc: 200
+              creditLimitCc: 200
+              creditLimitSc: 200
+              overdueCc: 0
+              overdueSc: 0
+              companyCurrencyCode: GBP
+              createdDate: '2019-08-24'
+              takeOn: true
+              createdId: 239
+              closedId: 0
+              updatedId: 0
+              deletedId: 0
+              externalRef1: Contra
+              externalRef2: something
+              externalRef3: else
+              currencyCode: GBP
+              accountNotified: true
+              accountAutoNonNotified: true
+              export: true
+              companyId: 44uy5u4y5u4yu4u4yuyu4yu4yu
+              vatNumber: GB-287236
+              dunsNumber: '349894'
+              termsCode: '30'
+              termsDescription: 30 days
+          pageNumber: 1
+          pageSize: 100
+          totalResults: 1
+          _links:
+            self:
+              href: string
+            current:
+              href: string
+      allOf:
+        - type: object
+          properties:
+            results:
+              type: array
+              items:
+                $ref: '#/components/schemas/Customer'
+        - $ref: '#/components/schemas/Paginginfo'
+    Customer:
+      type: object
+      description: |-
+        The Sales Ledger Account - i.e. a Customer/Debtor
+        All Customer records on the Sales Ledger will be pulled.
+      properties:
+        accountName:
+          type: string
+          description: Customer or supplier name
+          maxLength: 60
+        uniqueKey:
+          type: string
+          description: The ID of the custo mer- a Unique static identifier
+          minLength: 1
+          maxLength: 50
+        reference:
+          type: string
+          minLength: 1
+          maxLength: 30
+        address1:
+          type: string
+          description: Address line 1 field
+          maxLength: 60
+        address2:
+          type: string
+          description: Address line 2 field
+          maxLength: 60
+        address3:
+          type: string
+          description: Address line 3 field
+          maxLength: 60
+        address4:
+          type: string
+          description: Address line 4 field
+          maxLength: 60
+        countryCode:
+          type: string
+          description: ISO country code - although may contain non ISO country codes
+          maxLength: 2
+        postCode:
+          type: string
+          description: Postal code/Zip code
+          maxLength: 20
+        contact:
+          type: string
+          description: Contact details - usually a name
+          maxLength: 60
+        email:
+          type: string
+          maxLength: 128
+        email_copy:
+          type: string
+          maxLength: 128
+        contactPhone:
+          type: string
+          description: The contacts phone number
+          maxLength: 25
+        fax:
+          type: string
+          description: Fax or other contact number
+          maxLength: 25
+        fingerprint:
+          type: string
+          description: Internal hash code of Customer.  Will change when the customer changes
+          maxLength: 32
+        balancePackage:
+          type: number
+          description: The Customer balance as reported in the origiu
+        balanceAc:
+          type: number
+          description: Sales balance in account currency - i.e. the currencyCode.
+        balanceSc:
+          type: number
+          description: Sales balance in System  currency.
+        balanceCc:
+          type: number
+          description: Sales balance in Company currency.
+        overdueAc:
+          type: number
+          description: Overdue balance in Customer  currency.
+        creditLimitAc:
+          type: number
+          description: Originating data source credit limit value on account currency.
+        creditLimitCc:
+          type: number
+          description: Originating data source credit limit value in company currency.
+        creditLimitSc:
+          type: number
+          description: Originating data source credit limit value in System currency.
+        overdueCc:
+          type: number
+          description: Overdue balance in Company currency.
+        overdueSc:
+          type: number
+          description: Overdue balance in System currency.
+        companyCurrencyCode:
+          type: string
+          description: Company Currency Code
+        createdDate:
+          type: string
+          description: Snapshot Customer creation date- i.e. the Snapshot createdId date
+          format: date
+        takeOn:
+          type: boolean
+          description: "True if the Customer was created by the take-on (first) Snapshot for the Company.\r\n"
+        createdId:
+          type: integer
+          description: Snapshot that created the Customer
+        closedId:
+          type: integer
+          description: 'Snapshot that closed the Customer,  Customers aren''t typically closed'
+        updatedId:
+          type: integer
+          description: Snapshot that updated the Customer.  Balance changes do not count as a change
+        deletedId:
+          type: integer
+          description: Snapshot that deleted the Customer.  This will usually be null
+        externalRef1:
+          type: string
+          description: Extra field information.  Populated slightly differently depending on originating data source.
+          maxLength: 255
+        externalRef2:
+          type: string
+          description: Extra field information.  Populated slightly differently depending on originating data source.
+          maxLength: 255
+        externalRef3:
+          type: string
+          description: Extra field information.  Populated slightly differently depending on originating data source.
+          maxLength: 255
+        currencyCode:
+          type: string
+          description: "ISO currency code.  All items on the Customer will be in this currency.\r\n\r\n**Note** - some data sources will allow the field to be populated with non ISO currency codes."
+          maxLength: 3
+        accountNotified:
+          type: boolean
+          description: true if Customer is notified
+        accountAutoNonNotified:
+          type: boolean
+          description: true if Customer non notified at take-on due to zero balance.
+        export:
+          type: boolean
+          description: 'true - If Customer flagged as Export.  This is not set by the originating data source, but is a manual process by an Open Accounting back office user.'
+        companyId:
+          type: string
+          description: The owning Company ID UUID
+          minLength: 36
+          maxLength: 36
+        vatNumber:
+          type: string
+          description: Company registration number
+          maxLength: 20
+        dunsNumber:
+          type: string
+          description: DUNS number
+          maxLength: 20
+        termsCode:
+          type: string
+          description: Optional terms code
+          maxLength: 2
+        termsDescription:
+          type: string
+          description: Optional terms description for the code - i.e. 90 days
+          maxLength: 60
+      required:
+        - uniqueKey
+        - reference
+      x-examples:
+        Example 1:
+          accountName: DIISR - Small Business Services
+          uniqueKey: 1262c350-fe0f-40ec-aeff-41c95b4a45af
+          reference: 1262c350-fe0f-40ec-aeff-41c95b
+          address1: GPO 9566
+          address3: Pinehaven
+          address4: ''
+          countryCode: ''
+          postCode: PI98 2HV
+          contact: ' '
+          email: cad@diisr.govt
+          contactPhone: ''
+          fax: '018009002'
+          fingerprint: 6f865be582488b17af685affc1aee4f7
+          balancePackage: 4470.63
+          balanceAc: 4470.63
+          balanceCc: 4470.63
+          balanceSc: 4470.63
+          overdueAc: 270.63
+          overdueCc: 270.63
+          overdueSc: 270.63
+          ledgerCurrencyCode: GBP
+          itemReceivedDate: '2025-01-15T15:25:10.057'
+          takeOn: true
+          itemCreatedId: 51274
+          externalRef1: Contra
+          currencyCode: GBP
+          accountNotified: 'true'
+          accountAutoNonNotified: 0
+          export: 'true'
+      x-tags:
+        - mvp
+    Bank:
+      type: object
+      description: |-
+        The Bank record represents a Bank in the accounting package. These may not necessarily be high street banks (although they typically will be), but they could also be other accounts used to process cash in the accounting package (for instance Petty Cash, if recorded).
+
+        Bank Items belonging to the Bank and making up the statement items can be pulled but the balance of the Bank is taken from the Bank objects themselves so it is vital the Bank.BalanceBankCurrency is extracted from the accounting package.
+
+        The OA service will truncate all field values if they exceed the maximum size limit. 
+      properties:
+        companyId:
+          type: string
+          description: Owning company UUID
+          minLength: 36
+          maxLength: 36
+        uniqueKey:
+          type: string
+          description: A value that can be guaranteed to be unique and static for each extracted Bank.
+        fingerprint:
           type: string
         createdId:
-          type: string
+          type: integer
+          description: Snapshot that created the Bank
         deletedId:
+          type: integer
+          description: Snapshot that deleted the Bank
+        updatedId:
+          type: integer
+          description: Snapshot that updated the Bank
+        closedId:
+          type: integer
+          description: Snapshot that closed the Bank record
+        name:
+          type: string
+          description: "\t\r\nName of the bank - for instance HSBC, Lloyds, Barclays etc."
+          maxLength: 60
+        reference:
+          type: string
+          description: Reference for Bank in account package
+          maxLength: 30
+        address1:
+          type: string
+          description: First line of bank's postal address.
+          maxLength: 60
+        address2:
+          type: string
+          description: Second line of bank's postal address.
+          maxLength: 60
+        address3:
+          type: string
+          description: Third line of bank's postal address.
+          maxLength: 60
+        address4:
+          type: string
+          description: Fourth line of bank's postal address.
+          maxLength: 60
+        postCode:
+          type: string
+          description: Post/Zip code of bank's postal address.
+          maxLength: 20
+        contact:
+          type: string
+          description: Name of Contact for this Bank.
+          maxLength: 60
+        balanceBankBc:
+          type: number
+          description: Current Bank Balance in Bank.CurrencyCode. Not mandatory but for the Bank information to be useful this should be populated
+        balanceBankCc:
+          type: number
+          description: Current Bank Balance in Company currency. Not mandatory but for the Bank information to be useful this should be populated
+        balanceBankSc:
+          type: number
+          description: Current Bank Balance in System currency code. Not mandatory but for the Bank information to be useful this should be populated
+        balanceItemsBc:
+          type: number
+          description: Sum of items - if pulled
+        balanceItemsCc:
+          type: number
+        balanceItemsSc:
+          type: number
+        description:
+          type: string
+          description: Description of what bank account is used for
+          maxLength: 128
+        accountName:
+          type: string
+          description: Name of account owner
+          maxLength: 60
+        sortCode:
+          type: string
+          description: Bank Account Sort Code
+          maxLength: 30
+        swiftCode:
+          type: string
+          description: Swift Code.
+          maxLength: 15
+        accountNumber:
+          type: string
+          description: "\t\r\nBank Account Number"
+          maxLength: 30
+        overdraft:
+          type: number
+          description: Overdraft limit in Bank.CurrencyCode
+        iban:
+          type: string
+          description: Iban code.
+          maxLength: 34
+      required:
+        - companyId
+        - uniqueKey
+      examples:
+        - companyId: d698c05f-1a28-4398-9e5a-65a8c62ba84b
+          uniqueKey: '1200'
+          fingerprint: d23213db87cc0d25e4a259298063dd48
+          createdId: 41222
+          updatedId: 41225
+          name: Bank Current Account
+          reference: '1200'
+          address1: Bank Chambers
+          address2: 23a Grey Street
+          address3: Necastle Upon Tyne
+          address4: NE1 3ER
+          postCode: NE1 3ER
+          contact: Manager
+          balanceBankBc: 364507.6
+          balanceBankCc: 364507.6
+          balanceBankSc: 364507.6
+          balanceItemsBc: 364507.6
+          balanceItemsCc: 364507.6
+          balanceItemsSc: 364507.6
+          description: Cheque Account
+          accountName: Lloyds Bank PLC
+          sortCode: string
+          swiftCode: string
+      x-examples:
+        Example 1:
+          companyId: d698c05f-1a28-4398-9e5a-65a8c62ba84b
+          uniqueKey: '1200'
+          fingerprint: d23213db87cc0d25e4a259298063dd48
+          createdId: 41222
+          updatedId: 41232
+          name: Bank Current Account
+          reference: '1200'
+          address1: Bank Chambers
+          address2: 23a Grey Street
+          address3: Necastle Upon Tyne
+          address4: ''
+          postCode: NE1 3ER
+          contact: ''
+          balanceBankBc: 364507.6
+          balanceBankCc: 364507.6
+          balanceBankSc: 364507.6
+          balanceItemsBc: 364507.6
+          balanceItemsCc: 364507.6
+          balanceItemsSc: 364507.6
+          description: Cheque Account
+          accountName: Lloyds Bank PLC
+          sortCode: 23-34-34
+          swiftCode: '4535345'
+    NominalAccount:
+      title: NominalAccount
+      description: |-
+        A nominal ledger, also known as a general ledger, records a company's accounting transactions, including assets, expenses, and payments. It's a key part of a company's financial records. 
+
+        This Nominal Account record includes all the transcations in the nominal ledger.
+      allOf:
+        - type: object
+          properties:
+            results:
+              type: array
+              items:
+                $ref: '#/components/schemas/NominalItem'
+        - $ref: '#/components/schemas/PagingInfo'
+    NominalItem:
+      type: object
+      title: NominalItem
+      description: |-
+        The Items in the Nominal Account 
+
+        - Sales accounts: Record all sales, or separate them by product group or product
+        - Wages: Recorded in the cash book and wages account in the nominal ledger
+        - Assets: Recorded in the nominal ledger
+        - Expenses: Recorded in the nominal ledger
+        - Payments: Recorded in the nominal ledger
+        - Accruals and prepayments: Recorded in the nominal ledger
+      properties:
+        id:
+          type: integer
+          description: Transaction identifier
+          examples:
+            - 12466
+        code:
+          type: string
+          description: Code for the transaction
+          maxLength: 30
+          examples:
+            - '1020'
+        name:
+          type: string
+          description: Name of transaction
+          maxLength: 60
+        debitCc:
+          type: number
+          description: Populated if a debit transaction
+          examples:
+            - 0
+        creditCc:
+          type: number
+          examples:
+            - 123.45
+        createdId:
+          type: integer
+          description: Id of the Snapshot that created the transaction
+          examples:
+            - 53665
+        companyId:
+          type: string
+          description: Owning Company Id
+          minLength: 36
+          maxLength: 36
+          examples:
+            - D698C05F-1A28-4398-9E5A-65A8C62BA84B
+        periodDate:
+          type: string
+          format: date-time
+    PagingInfo:
+      type: object
+      description: Paging info
+      properties:
+        pageNumber:
+          type: integer
+        pageSize:
+          type: integer
+        totalResults:
+          type: integer
+        _links:
+          type: object
+          properties:
+            self:
+              type: object
+              properties:
+                href:
+                  type: string
+            current:
+              type: object
+              properties:
+                href:
+                  type: string
+      x-examples:
+        Example 1:
+          pageNumber: 1
+          pageSize: 10
+          totalResults: 1
+          _links:
+            self:
+              href: '/companies/{id}/data/{dataType}'
+            current:
+              href: '/companies/{id}/data/{dataType}?page=1&pageSize=10'
+    BankItems:
+      title: BankItems
+      description: |-
+        List of Bank Items - i.e. cash movements,
+        See BankItem
+      allOf:
+        - type: object
+          properties:
+            results:
+              type: array
+              items:
+                $ref: '#/components/schemas/BankItem'
+        - $ref: '#/components/schemas/PagingInfo'
+    BankItem:
+      type: object
+      description: |-
+        The Bank Item record represents all cash items (receipts, payments and adjustments) for a particular Bank.
+
+
+        It is not necessary to extract Bank Items as the owning Bank (BankItem.BankReference = Bank.Reference) contains the Balance but if it is required to see Bank Statements for a certain period then all Bank Items for a Bank should be extracted.
+
+        Bank Items are neither open or closed.
+
+        Bank Items either debit or credit the owning Bank
+
+        Some of these Bank Items will already exist as a Customer or Supplier 'PAY' Ledger item. If possible and known in the accounts package then the BankItem.LedgerItemUniqueKey will be the same as the LedgerItem.UniqueKey.
+
+        The OA Service will truncate all field values if they exceed the maximum size limit.
+      properties:
+        companyId:
+          type: string
+          description: Owning Company UUID
+          minLength: 36
+          maxLength: 36
+        reference:
+          type: string
+          maxLength: 30
+        bankUniqueKey:
+          type: string
+          maxLength: 50
+        accountName:
+          type: string
+        accountReference:
+          type: string
+        bankReference:
+          type: string
+        createdId:
+          type: integer
+        deletedId:
+          type: integer
+        closedId:
+          type: integer
+        fingerprint:
+          type: string
+        amountBc:
+          type: integer
+        amountCc:
+          type: integer
+        amountSc:
+          type: integer
+        details:
           type: string
         type:
           type: string
-        amountDc:
-          type: string
-        reference:
-          type: string
-        balanceDc:
-          type: string
-        fingerprint:
-          type: string
-        balanceLc:
-          type: string
+        balanceBc:
+          type: integer
+        balanceCc:
+          type: integer
         balanceSc:
-          type: string
-        entryDate:
-          type: string
-        uniqueKey:
-          type: string
-          maxLength: 250
-          readOnly: true
-        taxAmountAc:
-          type: string
-        amountSc:
-          type: string
-        extraField1:
-          type: string
-        debtorReference:
-          type: string
-        extraField2:
-          type: string
-        extraField3:
-          type: string
-        disputeCode:
+          type: integer
+        dueDate:
           type: string
         documentDate:
           type: string
-        balanceDpc:
-          type: string
-        amountDpc:
-          type: string
-        taxAmountSc:
-          type: string
-        taxAmountDpc:
-          type: string
-        updatedId:
+        entryDate:
           type: string
         userName:
           type: string
-        closeDate:
+        taxAmountBc:
+          type: integer
+        taxAmountCc:
+          type: integer
+        taxAmountSc:
+          type: integer
+        ledgerItemKey:
           type: string
-        taxAmountLc:
+        originalType:
           type: string
-        retained:
+      x-examples:
+        Example 1:
+          companyId: d698c05f-1a28-4398-9e5a-65a8c62ba84b
+          reference: '1200'
+          bankUniqueKey: '1200'
+          accountName: Lloyds Bank PLC
+          accountReference: YOU001
+          bankReference: '1200'
+          createdId: 20776
+          deletedId: 20777
+          closedId: 20777
+          fingerprint: 62be0f84ffa899ae4c60f522e872a168
+          amountBc: 1000
+          amountCc: 1000
+          amountSc: 1000
+          details: Payment Received
+          type: DBT
+          balanceBc: 0
+          balanceCc: 0
+          balanceSc: 0
+          dueDate: '2024-05-12T00:00:00'
+          documentDate: '2023-04-12T00:00:00'
+          entryDate: '2023-09-14T00:00:00'
+          userName: MANAGER
+          taxAmountBc: 0
+          taxAmountCc: 0
+          taxAmountSc: 0
+          ledgerItemKey: '1103'
+          originalType: SR
+    Suppliers:
+      title: Supplier
+      allOf:
+        - type: object
+          properties:
+            results:
+              type: array
+              items:
+                $ref: '#/components/schemas/Supplier'
+        - $ref: '#/components/schemas/Paginginfo'
+    Supplier:
+      type: object
+      description: |-
+        The Supplier record represents a supplier on the Purchase Ledger.  All Supplier records on the Purchase Ledger (accounts payable) should be extracted.
+
+        Supplier Items are pulledbut the balance of the open creditor items is not so it is vital the Supplier.Balance is extracted from the accounting package. 
+
+        The OA Service will truncate all field values if they exceed the maximum size limit.
+      properties:
+        accountName:
+          type: string
+          description: Supplier name
+          maxLength: 60
+          examples:
+            - Jimmy's Cars corp
+        uniqueKey:
+          type: string
+          description: "\t\r\nA value that can be guaranteed to be unique and static for each extracted Supplier per Company"
+          minLength: 1
+          maxLength: 50
+        reference:
+          type: string
+          description: Supplier reference
+          maxLength: 30
+          examples:
+            - JIMMY01
+        address1:
+          type: string
+          description: Address Line 1
+          maxLength: 60
+          examples:
+            - 654 Longshank Road
+        address3:
+          type: string
+          description: Address Line 3
+        address4:
+          type: string
+        countryCode:
+          type: string
+        postCode:
+          type: string
+          maxLength: 20
+          examples:
+            - BR3 9AP
+        contact:
+          type: string
+        email:
+          type: string
+        contactPhone:
+          type: string
+        fax:
+          type: string
+        fingerprint:
+          type: string
+        balancePackage:
+          type: number
+        balanceAc:
+          type: number
+        balanceCc:
+          type: number
+        balanceSc:
+          type: number
+        overdueAc:
+          type: number
+        overdueCc:
+          type: number
+        overdueSc:
+          type: number
+        ledgerCurrencyCode:
+          type: string
+        itemReceivedDate:
+          type: string
+        takeOn:
+          type: boolean
+        itemCreatedId:
+          type: integer
+        externalRef1:
           type: string
         currencyCode:
           type: string
-        retainedDate:
+        address2:
           type: string
-        debtor:
-          type: string
-          readOnly: true
+          description: 2nd line of address
+          maxLength: 60
+          examples:
+            - Chileshurst
       required:
-        - createdId
-        - type
+        - accountName
         - uniqueKey
       x-examples:
         Example 1:
-          closedId: string
-          takeonExcluded: boolean
-          dueDate: string
-          amountLc: number
+          accountName: DIISR - Small Business Services
+          uniqueKey: 1262c350-fe0f-40ec-aeff-41c95b4a45af
+          reference: 1262c350-fe0f-40ec-aeff-41c95b
+          address1: GPO 9566
+          address3: Pinehaven
+          address4: ''
+          countryCode: ''
+          postCode: PI98 2HV
+          contact: ' '
+          email: cad@diisr.govt
+          contactPhone: ''
+          fax: '018009002'
+          fingerprint: 6f865be582488b17af685affc1aee4f7
+          balancePackage: 4470.63
+          balanceAc: 4470.63
+          balanceCc: 4470.63
+          balanceSc: 4470.63
+          overdueAc: 270.63
+          overdueCc: 270.63
+          overdueSc: 270.63
+          ledgerCurrencyCode: GBP
+          itemReceivedDate: '2025-01-15T15:25:10.057'
+          takeOn: true
+          itemCreatedId: 51274
+          externalRef1: Contra
+          currencyCode: GBP
+    Snapshots:
+      title: snapshots
+      allOf:
+        - type: object
+          properties:
+            results:
+              type: array
+              items:
+                $ref: '#/components/schemas/Snapshot'
+        - $ref: '#/components/schemas/Paginginfo'
+    Snapshot:
+      type: object
+      description: A Snapshot is at Company Level and represents the state of the originating data source at a point in time.  The balances are all at either Company or System level
+      properties:
+        dataFileId:
+          type: integer
+          description: The DataFile id that resulted in the snapshot
+        snapshotId:
+          type: integer
+          description: 'Id of the Snapshot.  Used as the createdId, closedId, updatedId and deletedId in Customer, Supplier and Items records.'
+        dataFileReceived:
+          type: string
+        receivedDate:
+          type: string
+        loadStarted:
+          type: string
+        loadFinished:
+          type: string
+        extractDate:
+          type: string
+        balanceCc:
+          type: number
+        balanceSc:
+          type: number
+          description: Slaes ledger balance in Company currency as a result of this snapshot.
+        purchaseBalanceCc:
+          type: number
+        purchaseBalanceSc:
+          type: number
+        overdueCc:
+          type: number
+        overdueSc:
+          type: number
+        balanceExcCc:
+          type: number
+        balanceExcSc:
+          type: number
+        deletedItems:
+          type: integer
+        modifiedItems:
+          type: integer
+        newItems:
+          type: integer
+        cashBalanceCc:
+          type: integer
+        cashBalanceSc:
+          type: integer
+        cashNewBalanceCc:
+          type: integer
+        cashNewBalanceSc:
+          type: integer
+        deletedPurchaseItems:
+          type: integer
+        modifiedPurchaseItems:
+          type: integer
+        newPurchaseItems:
+          type: integer
+        invoiceBalanceCc:
+          type: number
+        invoiceBalanceSc:
+          type: number
+        invoiceChangedCc:
+          type: integer
+        invoiceChangedSc:
+          type: integer
+        invoiceClosedCc:
+          type: number
+        invoiceDeletedCc:
+          type: integer
+        invoiceDeletedSc:
+          type: integer
+        invoiceMissing:
+          type: integer
+        invoiceNew:
+          type: integer
+        companyId:
+          type: string
+          description: The Company Identifier UUID
+          minLength: 36
+          maxLength: 36
+        startBalanceCc:
+          type: number
+          description: Sales ledger balance in Company Currency before this Snapshot.
+        startBalanceSc:
+          type: number
+          description: Sales ledger balance in System Currency before this Snapshot
+        id:
+          type: number
+          description: This snapshot id
+      required:
+        - snapshotId
+      x-examples:
+        Example 1:
+          dataFileId: 53209
+          snapshotId: 51274
+          dataFileReceived: '2025-01-15T15:25:10.057'
+          receivedDate: '2025-01-15T15:25:10.057'
+          loadStarted: '2025-01-15T15:25:21.533'
+          loadFinished: '2025-01-15T15:25:23.020'
+          extractDate: '2025-01-15T15:25:05.380'
+          balanceCc: 23520.17
+          balanceSc: 23520.17
+          purchaseBalanceCc: 8687.14
+          purchaseBalanceSc: 8687.14
+          overdueCc: 12602.68
+          overdueSc: 12602.68
+          balanceExcCc: 23520.17
+          balanceExcSc: 23520.17
+          deletedItems: 14
+          modifiedItems: 0
+          newItems: 45
+          cashBalanceCc: 0
+          cashBalanceSc: 0
+          cashNewBalanceCc: 0
+          cashNewBalanceSc: 0
+          deletedPurchaseItems: 2
+          modifiedPurchaseItems: 0
+          newPurchaseItems: 18
+          invoiceBalanceCc: 23520.17
+          invoiceBalanceSc: 23520.17
+          invoiceChangedCc: 0
+          invoiceChangedSc: 0
+          invoiceClosedCc: 3638.7
+          invoiceDeletedCc: 0
+          invoiceDeletedSc: 0
+          invoiceMissing: 0
+          invoiceNew: 18
+    AgedDebtor:
+      type: array
+      items:
+        $ref: '#/components/schemas/AgeingBucket'
+      x-examples:
+        Example 1:
+          - AgedDebtorBucket:
+              companyId: c010a0d2-aa3c-489f-83d7-77cefd15de66
+              companyRef: '0000260\001 : GBP'
+              bucketNumber: 1
+              amountAc: 8960.4
+              invoiceCount: 4
+          - AgedDebtorBucket:
+              companyId: c010a0d2-aa3c-489f-83d7-77cefd15de66
+              companyRef: '0000260\001 : GBP'
+              bucketNumber: 4
+              amountAc: 162102.03
+              invoiceCount: 90
+          - AgedDebtorBucket:
+              companyId: c010a0d2-aa3c-489f-83d7-77cefd15de66
+              companyRef: '0000260\001 : GBP'
+              bucketNumber: 2
+              amountAc: 10488.4
+              invoiceCount: 20
+          - AgedDebtorBucket:
+              companyId: c010a0d2-aa3c-489f-83d7-77cefd15de66
+              companyRef: '0000260\001 : GBP'
+              bucketNumber: 0
+              amountAc: 17230
+              invoiceCount: 5
+          - AgedDebtorBucket:
+              companyId: c010a0d2-aa3c-489f-83d7-77cefd15de66
+              companyRef: '0000260\001 : GBP'
+              bucketNumber: 3
+              amountAc: 4833.74
+              invoiceCount: 6
+    AgeingBucket:
+      type: object
+      description: Represents a bucket for ageing - i.e. 0-30 days.  A group of Ageing Buckets make up an aged Customer or Supplier report
+      properties:
+        companyId:
+          type: string
+          minLength: 36
+          maxLength: 36
+        companyRef:
+          type: string
+          description: Company reference
+        bucketNumber:
+          type: integer
+          description: Bucket number
+        amountAc:
+          type: number
+          description: Ageing amount in Account currency
+        itemCount:
+          type: integer
+          description: No of items making up the amountAc
+      examples:
+        - companyId: stringstringstringstringstringstring
+          companyRef: string
+          bucketNumber: 0
+          amountAc: 0
+          itemCount: 0
+      x-examples:
+        Example 1:
+          companyId: c010a0d2-aa3c-489f-83d7-77cefd15de66
+          companyRef: '0000260\001 : GBP'
+          bucketNumber: 1
+          amountAc: 8960.4
+          invoiceCount: 4
+    AgedCreditor:
+      type: array
+      title: AgedCreditor
+      description: Ageding Supplier buckets for the Company
+      examples:
+        - - companyId: stringstringstringstringstringstring
+            companyRef: string
+            bucketNumber: 0
+            amountAc: 0
+            itemCount: 0
+      items:
+        $ref: '#/components/schemas/AgeingBucket'
+    DataFile:
+      type: object
+      description: The raw data file that will become a Snapshot if allowed through. If status is 40 then the suspendedDetails will be populated and the createdId will be null.
+      properties:
+        id:
+          type: string
+          description: Unique Id of the DataFile instance
+        status:
+          type: integer
+          description: "- 0  = WAITING   : Awaiting processing by the Engine\r\n- 5  = PAUSED    : Data file processing is PAUSED\r\n- 20 = COMPLETED : Data file finished and Snapshot createdId is populated\r\n- 30 = COMPLETED ERROR : Data file failed on server side\r\n- 35 = COMPLETED ERROR TIMEOUT : Data file failed on server side due to exceeding processing time (30 mins default)\r\n- 40 = SUSPENDED : Data suspended.  Exceeds Company suspension limit percentage, i.e. the load would increase or decrese the sales ledger by too much if let through\r\n- 50 - CLIENT FAILURE : Typicalls an on-premise connector has failed.\r\n"
+        receivedDate:
+          type: string
+          description: Date the DataFile was first seen by Open Accounting
+          format: date-time
+        content:
+          type: string
+          description: 'The raw content from the data source.  This will be empty for the list method and only populated for the single Get '
+        createdId:
+          type: string
+          description: The Snapshot id if the status is completed
+        previousStatus:
+          type: integer
+          description: See status - stores the previous status.  Useful to trouble shoot.
+        suspendedDetails:
+          type: object
+          description: If the DataFile was suspended (status=40) then this will hold details of why
+          properties:
+            id:
+              type: integer
+              description: Suspended data id
+            supsendedDate:
+              type: string
+              description: Date file was suspended
+              format: date-time
+            previousSalesBalanceCc:
+              type: number
+              description: Previous sales ledger balance prior to this DataFile
+            proposedSalesBalanceCc:
+              type: number
+              description: Proposed sales ledger balance if this DataFile let through
+            proposedSalesBalanceChangePercent:
+              type: integer
+              description: Proposed Sales Ledger Balance change
+      required:
+        - id
+        - status
+      examples:
+        - id: string
+          status: 0
+          receivedDate: '2019-08-24T14:15:22Z'
+          content: string
           createdId: string
-          deletedId: string
-          type: String
-          amountDc: number
-          reference: String
-          balanceDc: number
-          fingerprint: String
-          balanceLc: number
-          balanceSc: number
-          entryDate: string
-          uniqueKey: String
-          amountSc: number
-          taxAmountAc: number
-          ledgerId: string
-          extraField1: String
-          balanceCc: number
-          debtorReference: String
-          extraField2: String
-          amountCc: number
-          extraField3: String
-          disputeCode: String
-          documentDate: string
-          balanceDpc: number
-          creditorReference: String
-          amountDpc: number
-          taxAmountSc: number
-          taxAmountDpc: number
-          updatedId: string
-          userName: String
-          closeDate: string
-          taxAmountLc: number
-          retained: boolean
-          currencyCode: String
-          retainedDate: string
+          previousStatus: 0
+          suspendedDetails:
+            id: 0
+            supsendedDate: '2019-08-24T14:15:22Z'
+            previousSalesBalanceCc: 0
+            proposedSalesBalanceCc: 0
+            proposedSalesBalanceChangePercent: 0
+      x-examples:
+        Example 1:
+          id: '74636'
+          status: '0001'
+          receivedDate: 28-05-2024
+          content: '-328y748jhkdjsdf8ywirhkejfgughirfohioheiknfbkiehfgihawkgsbvx'
+          createdId: '82773'
+    DataFiles:
+      title: DataFiles
+      description: The raw data loaded from the originating data sources prior to being created as a Snapshot
+      allOf:
+        - type: object
+          properties:
+            results:
+              type: array
+              readOnly: true
+              items:
+                $ref: '#/components/schemas/DataFile'
+        - $ref: '#/components/schemas/PagingInfo'
+    Error:
+      type: object
+      properties:
+        statusCode:
+          type: integer
+        service:
+          type: string
+        errorMessage:
+          type: string
+          description: Error message string
+        retryable:
+          type: string
+          description: Can the API call be retried.
+      x-examples:
+        Example 1:
+          statusCode: 0
+          service: string
+          errorMessage: string
+          retryable: string

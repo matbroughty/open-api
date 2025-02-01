@@ -1,4 +1,13 @@
 services:
+
+  oa-database:
+    image: open-accounting.binary-repo.hpd.int/build/master/oa-db-mssql:latest
+    environment:
+      INITIAL_DB_SOURCE: /var/opt/mssql/backups/oa.mssql.bak
+      INITIAL_DB_NAME: oa
+    volumes:
+      - ./backups:/var/opt/mssql/backups
+
   zipkin:
     image: 'openzipkin/zipkin:latest'
     ports:

@@ -2,7 +2,7 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '3.4.1'
     id 'io.spring.dependency-management' version '1.1.7'
-    id 'org.openapi.generator' version '7.4.0'
+    id 'org.openapi.generator' version '7.11.0'
 }
 
 group = 'com.broughty'
@@ -28,30 +28,28 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'io.micrometer:micrometer-tracing-bridge-brave'
     implementation 'io.zipkin.reporter2:zipkin-reporter-brave'
-    implementation 'org.springframework.modulith:spring-modulith-starter-core'
-    implementation 'org.springframework.modulith:spring-modulith-starter-jdbc'
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.3'
-    developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
-    runtimeOnly 'org.springframework.modulith:spring-modulith-actuator'
-    runtimeOnly 'org.springframework.modulith:spring-modulith-observability'
+    //developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
+    //runtimeOnly 'com.microsoft.sqlserver:mssql-jdbc'
+    runtimeOnly 'com.h2database:h2'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.boot:spring-boot-testcontainers'
-    testImplementation 'org.springframework.modulith:spring-modulith-starter-test'
     testImplementation 'org.testcontainers:junit-jupiter'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
-dependencyManagement {
-    imports {
-        mavenBom "org.springframework.modulith:spring-modulith-bom:${springModulithVersion}"
-    }
-}
 
 tasks.named('test') {
     useJUnitPlatform()
 }
 
+tasks.named("openApiGenerate") {
+    doNotTrackState("true")
+}
+
 openApiGenerate {
+    validateSpec.set(false)
+    skipValidateSpec.set(true)
     inputSpec.set("$rootDir/src/main/resources/api/yaml/accounting.yaml")
     generatorName = "spring"
     outputDir = "$projectDir"
@@ -59,9 +57,11 @@ openApiGenerate {
     invokerPackage = "com.broughty.restapi.api"
     modelPackage = "com.broughty.restapi.model"
     configOptions = [
-            interfaceOnly: "false",
+            interfaceOnly       : "true",
             openApiNullable: "false",
             skipDefaultInterface: "true",
-            useJakartaValidation: "true"
+            useJakartaValidation: "true", // doesn't do anything it seems
+            useSpringBoot3      : "true" // this forces jakarta validation - without it you get javax validation
     ]
 }
+
