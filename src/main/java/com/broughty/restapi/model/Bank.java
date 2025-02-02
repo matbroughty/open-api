@@ -1,22 +1,18 @@
 package com.broughty.restapi.model;
 
-import java.net.URI;
-import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import java.math.BigDecimal;
-import org.springframework.lang.Nullable;
-import java.time.OffsetDateTime;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.*;
 import io.swagger.v3.oas.annotations.media.Schema;
-
-
-import java.util.*;
 import jakarta.annotation.Generated;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import org.springframework.lang.Nullable;
+
+import java.math.BigDecimal;
+import java.util.Objects;
 
 /**
- * The Bank record represents a Bank in the accounting package. These may not necessarily be high street banks (although they typically will be), but they could also be other accounts used to process cash in the accounting package (for instance Petty Cash, if recorded).  Bank Items belonging to the Bank and making up the statement items can be pulled but the balance of the Bank is taken from the Bank objects themselves so it is vital the Bank.BalanceBankCurrency is extracted from the accounting package.  The OA service will truncate all field values if they exceed the maximum size limit. 
+ * The Bank record represents a Bank in the accounting package. These may not necessarily be high street banks (although they typically will be), but they could also be other accounts used to process cash in the accounting package (for instance Petty Cash, if recorded).  Bank Items belonging to the Bank and making up the statement items can be pulled but the balance of the Bank is taken from the Bank objects themselves so it is vital the Bank.BalanceBankCurrency is extracted from the accounting package.  The OA service will truncate all field values if they exceed the maximum size limit.
  */
 
 @Schema(name = "Bank", description = "The Bank record represents a Bank in the accounting package. These may not necessarily be high street banks (although they typically will be), but they could also be other accounts used to process cash in the accounting package (for instance Petty Cash, if recorded).  Bank Items belonging to the Bank and making up the statement items can be pulled but the balance of the Bank is taken from the Bank objects themselves so it is vital the Bank.BalanceBankCurrency is extracted from the accounting package.  The OA service will truncate all field values if they exceed the maximum size limit. ")
@@ -98,6 +94,7 @@ public class Bank {
 
   /**
    * Owning company UUID
+   *
    * @return companyId
    */
   @NotNull
@@ -119,9 +116,10 @@ public class Bank {
 
   /**
    * A value that can be guaranteed to be unique and static for each extracted Bank.
+   *
    * @return uniqueKey
    */
-  @NotNull 
+  @NotNull
   @Schema(name = "uniqueKey", description = "A value that can be guaranteed to be unique and static for each extracted Bank.", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("uniqueKey")
   public String getUniqueKey() {
@@ -139,6 +137,7 @@ public class Bank {
 
   /**
    * Get fingerprint
+   *
    * @return fingerprint
    */
 
@@ -159,6 +158,7 @@ public class Bank {
 
   /**
    * Snapshot that created the Bank
+   *
    * @return createdId
    */
 
@@ -179,6 +179,7 @@ public class Bank {
 
   /**
    * Snapshot that deleted the Bank
+   *
    * @return deletedId
    */
 
@@ -199,6 +200,7 @@ public class Bank {
 
   /**
    * Snapshot that updated the Bank
+   *
    * @return updatedId
    */
 
@@ -219,6 +221,7 @@ public class Bank {
 
   /**
    * Snapshot that closed the Bank record
+   *
    * @return closedId
    */
 
@@ -238,10 +241,11 @@ public class Bank {
   }
 
   /**
-   *    Name of the bank - for instance HSBC, Lloyds, Barclays etc.
+   * Name of the bank - for instance HSBC, Lloyds, Barclays etc.
+   *
    * @return name
    */
-  @Size(max = 60) 
+  @Size(max = 60)
   @Schema(name = "name", description = "   Name of the bank - for instance HSBC, Lloyds, Barclays etc.", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("name")
   public String getName() {
@@ -259,9 +263,10 @@ public class Bank {
 
   /**
    * Reference for Bank in account package
+   *
    * @return reference
    */
-  @Size(max = 30) 
+  @Size(max = 30)
   @Schema(name = "reference", description = "Reference for Bank in account package", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("reference")
   public String getReference() {
@@ -279,9 +284,10 @@ public class Bank {
 
   /**
    * First line of bank's postal address.
+   *
    * @return address1
    */
-  @Size(max = 60) 
+  @Size(max = 60)
   @Schema(name = "address1", description = "First line of bank's postal address.", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("address1")
   public String getAddress1() {
@@ -299,9 +305,10 @@ public class Bank {
 
   /**
    * Second line of bank's postal address.
+   *
    * @return address2
    */
-  @Size(max = 60) 
+  @Size(max = 60)
   @Schema(name = "address2", description = "Second line of bank's postal address.", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("address2")
   public String getAddress2() {
@@ -319,9 +326,10 @@ public class Bank {
 
   /**
    * Third line of bank's postal address.
+   *
    * @return address3
    */
-  @Size(max = 60) 
+  @Size(max = 60)
   @Schema(name = "address3", description = "Third line of bank's postal address.", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("address3")
   public String getAddress3() {
@@ -339,9 +347,10 @@ public class Bank {
 
   /**
    * Fourth line of bank's postal address.
+   *
    * @return address4
    */
-  @Size(max = 60) 
+  @Size(max = 60)
   @Schema(name = "address4", description = "Fourth line of bank's postal address.", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("address4")
   public String getAddress4() {
@@ -359,9 +368,10 @@ public class Bank {
 
   /**
    * Post/Zip code of bank's postal address.
+   *
    * @return postCode
    */
-  @Size(max = 20) 
+  @Size(max = 20)
   @Schema(name = "postCode", description = "Post/Zip code of bank's postal address.", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("postCode")
   public String getPostCode() {
@@ -379,9 +389,10 @@ public class Bank {
 
   /**
    * Name of Contact for this Bank.
+   *
    * @return contact
    */
-  @Size(max = 60) 
+  @Size(max = 60)
   @Schema(name = "contact", description = "Name of Contact for this Bank.", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("contact")
   public String getContact() {
@@ -399,9 +410,10 @@ public class Bank {
 
   /**
    * Current Bank Balance in Bank.CurrencyCode. Not mandatory but for the Bank information to be useful this should be populated
+   *
    * @return balanceBankBc
    */
-  @Valid 
+  @Valid
   @Schema(name = "balanceBankBc", description = "Current Bank Balance in Bank.CurrencyCode. Not mandatory but for the Bank information to be useful this should be populated", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("balanceBankBc")
   public BigDecimal getBalanceBankBc() {
@@ -419,9 +431,10 @@ public class Bank {
 
   /**
    * Current Bank Balance in Company currency. Not mandatory but for the Bank information to be useful this should be populated
+   *
    * @return balanceBankCc
    */
-  @Valid 
+  @Valid
   @Schema(name = "balanceBankCc", description = "Current Bank Balance in Company currency. Not mandatory but for the Bank information to be useful this should be populated", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("balanceBankCc")
   public BigDecimal getBalanceBankCc() {
@@ -439,9 +452,10 @@ public class Bank {
 
   /**
    * Current Bank Balance in System currency code. Not mandatory but for the Bank information to be useful this should be populated
+   *
    * @return balanceBankSc
    */
-  @Valid 
+  @Valid
   @Schema(name = "balanceBankSc", description = "Current Bank Balance in System currency code. Not mandatory but for the Bank information to be useful this should be populated", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("balanceBankSc")
   public BigDecimal getBalanceBankSc() {
@@ -459,9 +473,10 @@ public class Bank {
 
   /**
    * Sum of items - if pulled
+   *
    * @return balanceItemsBc
    */
-  @Valid 
+  @Valid
   @Schema(name = "balanceItemsBc", description = "Sum of items - if pulled", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("balanceItemsBc")
   public BigDecimal getBalanceItemsBc() {
@@ -479,9 +494,10 @@ public class Bank {
 
   /**
    * Get balanceItemsCc
+   *
    * @return balanceItemsCc
    */
-  @Valid 
+  @Valid
   @Schema(name = "balanceItemsCc", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("balanceItemsCc")
   public BigDecimal getBalanceItemsCc() {
@@ -499,9 +515,10 @@ public class Bank {
 
   /**
    * Get balanceItemsSc
+   *
    * @return balanceItemsSc
    */
-  @Valid 
+  @Valid
   @Schema(name = "balanceItemsSc", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("balanceItemsSc")
   public BigDecimal getBalanceItemsSc() {
@@ -519,9 +536,10 @@ public class Bank {
 
   /**
    * Description of what bank account is used for
+   *
    * @return description
    */
-  @Size(max = 128) 
+  @Size(max = 128)
   @Schema(name = "description", description = "Description of what bank account is used for", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("description")
   public String getDescription() {
@@ -539,9 +557,10 @@ public class Bank {
 
   /**
    * Name of account owner
+   *
    * @return accountName
    */
-  @Size(max = 60) 
+  @Size(max = 60)
   @Schema(name = "accountName", description = "Name of account owner", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("accountName")
   public String getAccountName() {
@@ -559,9 +578,10 @@ public class Bank {
 
   /**
    * Bank Account Sort Code
+   *
    * @return sortCode
    */
-  @Size(max = 30) 
+  @Size(max = 30)
   @Schema(name = "sortCode", description = "Bank Account Sort Code", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("sortCode")
   public String getSortCode() {
@@ -579,9 +599,10 @@ public class Bank {
 
   /**
    * Swift Code.
+   *
    * @return swiftCode
    */
-  @Size(max = 15) 
+  @Size(max = 15)
   @Schema(name = "swiftCode", description = "Swift Code.", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("swiftCode")
   public String getSwiftCode() {
@@ -598,10 +619,11 @@ public class Bank {
   }
 
   /**
-   *    Bank Account Number
+   * Bank Account Number
+   *
    * @return accountNumber
    */
-  @Size(max = 30) 
+  @Size(max = 30)
   @Schema(name = "accountNumber", description = "   Bank Account Number", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("accountNumber")
   public String getAccountNumber() {
@@ -619,9 +641,10 @@ public class Bank {
 
   /**
    * Overdraft limit in Bank.CurrencyCode
+   *
    * @return overdraft
    */
-  @Valid 
+  @Valid
   @Schema(name = "overdraft", description = "Overdraft limit in Bank.CurrencyCode", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("overdraft")
   public BigDecimal getOverdraft() {
@@ -639,9 +662,10 @@ public class Bank {
 
   /**
    * Iban code.
+   *
    * @return iban
    */
-  @Size(max = 34) 
+  @Size(max = 34)
   @Schema(name = "iban", description = "Iban code.", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("iban")
   public String getIban() {
@@ -698,38 +722,37 @@ public class Bank {
 
   @Override
   public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("class Bank {\n");
-    sb.append("    companyId: ").append(toIndentedString(companyId)).append("\n");
-    sb.append("    uniqueKey: ").append(toIndentedString(uniqueKey)).append("\n");
-    sb.append("    fingerprint: ").append(toIndentedString(fingerprint)).append("\n");
-    sb.append("    createdId: ").append(toIndentedString(createdId)).append("\n");
-    sb.append("    deletedId: ").append(toIndentedString(deletedId)).append("\n");
-    sb.append("    updatedId: ").append(toIndentedString(updatedId)).append("\n");
-    sb.append("    closedId: ").append(toIndentedString(closedId)).append("\n");
-    sb.append("    name: ").append(toIndentedString(name)).append("\n");
-    sb.append("    reference: ").append(toIndentedString(reference)).append("\n");
-    sb.append("    address1: ").append(toIndentedString(address1)).append("\n");
-    sb.append("    address2: ").append(toIndentedString(address2)).append("\n");
-    sb.append("    address3: ").append(toIndentedString(address3)).append("\n");
-    sb.append("    address4: ").append(toIndentedString(address4)).append("\n");
-    sb.append("    postCode: ").append(toIndentedString(postCode)).append("\n");
-    sb.append("    contact: ").append(toIndentedString(contact)).append("\n");
-    sb.append("    balanceBankBc: ").append(toIndentedString(balanceBankBc)).append("\n");
-    sb.append("    balanceBankCc: ").append(toIndentedString(balanceBankCc)).append("\n");
-    sb.append("    balanceBankSc: ").append(toIndentedString(balanceBankSc)).append("\n");
-    sb.append("    balanceItemsBc: ").append(toIndentedString(balanceItemsBc)).append("\n");
-    sb.append("    balanceItemsCc: ").append(toIndentedString(balanceItemsCc)).append("\n");
-    sb.append("    balanceItemsSc: ").append(toIndentedString(balanceItemsSc)).append("\n");
-    sb.append("    description: ").append(toIndentedString(description)).append("\n");
-    sb.append("    accountName: ").append(toIndentedString(accountName)).append("\n");
-    sb.append("    sortCode: ").append(toIndentedString(sortCode)).append("\n");
-    sb.append("    swiftCode: ").append(toIndentedString(swiftCode)).append("\n");
-    sb.append("    accountNumber: ").append(toIndentedString(accountNumber)).append("\n");
-    sb.append("    overdraft: ").append(toIndentedString(overdraft)).append("\n");
-    sb.append("    iban: ").append(toIndentedString(iban)).append("\n");
-    sb.append("}");
-    return sb.toString();
+    String sb = "class Bank {\n" +
+        "    companyId: " + toIndentedString(companyId) + "\n" +
+        "    uniqueKey: " + toIndentedString(uniqueKey) + "\n" +
+        "    fingerprint: " + toIndentedString(fingerprint) + "\n" +
+        "    createdId: " + toIndentedString(createdId) + "\n" +
+        "    deletedId: " + toIndentedString(deletedId) + "\n" +
+        "    updatedId: " + toIndentedString(updatedId) + "\n" +
+        "    closedId: " + toIndentedString(closedId) + "\n" +
+        "    name: " + toIndentedString(name) + "\n" +
+        "    reference: " + toIndentedString(reference) + "\n" +
+        "    address1: " + toIndentedString(address1) + "\n" +
+        "    address2: " + toIndentedString(address2) + "\n" +
+        "    address3: " + toIndentedString(address3) + "\n" +
+        "    address4: " + toIndentedString(address4) + "\n" +
+        "    postCode: " + toIndentedString(postCode) + "\n" +
+        "    contact: " + toIndentedString(contact) + "\n" +
+        "    balanceBankBc: " + toIndentedString(balanceBankBc) + "\n" +
+        "    balanceBankCc: " + toIndentedString(balanceBankCc) + "\n" +
+        "    balanceBankSc: " + toIndentedString(balanceBankSc) + "\n" +
+        "    balanceItemsBc: " + toIndentedString(balanceItemsBc) + "\n" +
+        "    balanceItemsCc: " + toIndentedString(balanceItemsCc) + "\n" +
+        "    balanceItemsSc: " + toIndentedString(balanceItemsSc) + "\n" +
+        "    description: " + toIndentedString(description) + "\n" +
+        "    accountName: " + toIndentedString(accountName) + "\n" +
+        "    sortCode: " + toIndentedString(sortCode) + "\n" +
+        "    swiftCode: " + toIndentedString(swiftCode) + "\n" +
+        "    accountNumber: " + toIndentedString(accountNumber) + "\n" +
+        "    overdraft: " + toIndentedString(overdraft) + "\n" +
+        "    iban: " + toIndentedString(iban) + "\n" +
+        "}";
+    return sb;
   }
 
   /**

@@ -1,21 +1,15 @@
 package com.broughty.restapi.model;
 
-import java.net.URI;
-import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import org.springframework.lang.Nullable;
-import java.time.OffsetDateTime;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.*;
 import io.swagger.v3.oas.annotations.media.Schema;
-
-
-import java.util.*;
 import jakarta.annotation.Generated;
+import jakarta.validation.constraints.Size;
+import org.springframework.lang.Nullable;
+
+import java.util.Objects;
 
 /**
- * This represents the Company information taken from the originating data source  The Company will hold basic information such as the Client name, address and contact details as well as Tax number and information about the account package the data is being retrieved from and whether it is a multi-currency installation. This information is likely to match the information manually entered into the Client\\Company records in the system api.  Pulling this Company data is optional, apart from for Cloud accounting packages (i.e. Xero, QuickBooks online).  There will typically only be one Company per account package instance.  The OA Service will truncate all field values if they exceed the maximum size limit. 
+ * This represents the Company information taken from the originating data source  The Company will hold basic information such as the Client name, address and contact details as well as Tax number and information about the account package the data is being retrieved from and whether it is a multi-currency installation. This information is likely to match the information manually entered into the Client\\Company records in the system api.  Pulling this Company data is optional, apart from for Cloud accounting packages (i.e. Xero, QuickBooks online).  There will typically only be one Company per account package instance.  The OA Service will truncate all field values if they exceed the maximum size limit.
  */
 
 @Schema(name = "PackageInfo", description = "This represents the Company information taken from the originating data source  The Company will hold basic information such as the Client name, address and contact details as well as Tax number and information about the account package the data is being retrieved from and whether it is a multi-currency installation. This information is likely to match the information manually entered into the Client\\Company records in the system api.  Pulling this Company data is optional, apart from for Cloud accounting packages (i.e. Xero, QuickBooks online).  There will typically only be one Company per account package instance.  The OA Service will truncate all field values if they exceed the maximum size limit. ")
@@ -67,9 +61,10 @@ public class PackageInfo {
 
   /**
    * Company UUID
+   *
    * @return companyId
    */
-  @Size(min = 36, max = 36) 
+  @Size(min = 36, max = 36)
   @Schema(name = "companyId", description = "Company UUID", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("companyId")
   public String getCompanyId() {
@@ -87,9 +82,10 @@ public class PackageInfo {
 
   /**
    * Unique id of the PackageInfo
+   *
    * @return uniqueKey
    */
-  @Size(max = 50) 
+  @Size(max = 50)
   @Schema(name = "uniqueKey", description = "Unique id of the PackageInfo", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("uniqueKey")
   public String getUniqueKey() {
@@ -107,9 +103,10 @@ public class PackageInfo {
 
   /**
    * Get fingerprint
+   *
    * @return fingerprint
    */
-  @Size(max = 32) 
+  @Size(max = 32)
   @Schema(name = "fingerprint", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("fingerprint")
   public String getFingerprint() {
@@ -127,6 +124,7 @@ public class PackageInfo {
 
   /**
    * The Snapshot ID that created this Package Info record
+   *
    * @return createdId
    */
 
@@ -147,6 +145,7 @@ public class PackageInfo {
 
   /**
    * The Snapshot ID that updated this Package Info record
+   *
    * @return updatedId
    */
 
@@ -166,10 +165,11 @@ public class PackageInfo {
   }
 
   /**
-   * Name of the Company 
+   * Name of the Company
+   *
    * @return name
    */
-  @Size(max = 60) 
+  @Size(max = 60)
   @Schema(name = "name", description = "Name of the Company ", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("name")
   public String getName() {
@@ -187,9 +187,10 @@ public class PackageInfo {
 
   /**
    * Get reference
+   *
    * @return reference
    */
-  @Size(max = 30) 
+  @Size(max = 30)
   @Schema(name = "reference", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("reference")
   public String getReference() {
@@ -207,9 +208,10 @@ public class PackageInfo {
 
   /**
    * Get address1
+   *
    * @return address1
    */
-  @Size(max = 60) 
+  @Size(max = 60)
   @Schema(name = "address1", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("address1")
   public String getAddress1() {
@@ -227,9 +229,10 @@ public class PackageInfo {
 
   /**
    * Get address2
+   *
    * @return address2
    */
-  @Size(max = 60) 
+  @Size(max = 60)
   @Schema(name = "address2", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("address2")
   public String getAddress2() {
@@ -247,9 +250,10 @@ public class PackageInfo {
 
   /**
    * Get address3
+   *
    * @return address3
    */
-  @Size(max = 60) 
+  @Size(max = 60)
   @Schema(name = "address3", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("address3")
   public String getAddress3() {
@@ -267,9 +271,10 @@ public class PackageInfo {
 
   /**
    * Get postCode
+   *
    * @return postCode
    */
-  @Size(max = 20) 
+  @Size(max = 20)
   @Schema(name = "postCode", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("postCode")
   public String getPostCode() {
@@ -287,9 +292,10 @@ public class PackageInfo {
 
   /**
    * Get countryCode
+   *
    * @return countryCode
    */
-  @Size(max = 2) 
+  @Size(max = 2)
   @Schema(name = "countryCode", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("countryCode")
   public String getCountryCode() {
@@ -307,9 +313,10 @@ public class PackageInfo {
 
   /**
    * Get contactPhone
+   *
    * @return contactPhone
    */
-  @Size(max = 25) 
+  @Size(max = 25)
   @Schema(name = "contactPhone", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("contactPhone")
   public String getContactPhone() {
@@ -327,9 +334,10 @@ public class PackageInfo {
 
   /**
    * Get duns
+   *
    * @return duns
    */
-  @Size(max = 20) 
+  @Size(max = 20)
   @Schema(name = "duns", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("duns")
   public String getDuns() {
@@ -347,9 +355,10 @@ public class PackageInfo {
 
   /**
    * Get taxNo
+   *
    * @return taxNo
    */
-  @Size(max = 20) 
+  @Size(max = 20)
   @Schema(name = "taxNo", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("taxNo")
   public String getTaxNo() {
@@ -367,6 +376,7 @@ public class PackageInfo {
 
   /**
    * true if multi-currency company
+   *
    * @return multiCurrency
    */
 
@@ -387,6 +397,7 @@ public class PackageInfo {
 
   /**
    * Compant financial start month
+   *
    * @return startMonth
    */
 
@@ -407,9 +418,10 @@ public class PackageInfo {
 
   /**
    * Industry type for the company
+   *
    * @return industryType
    */
-  @Size(max = 50) 
+  @Size(max = 50)
   @Schema(name = "industryType", description = "Industry type for the company", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("industryType")
   public String getIndustryType() {
@@ -427,9 +439,10 @@ public class PackageInfo {
 
   /**
    * Details in short the accounting package/ERP system
+   *
    * @return packageInfo
    */
-  @Size(max = 50) 
+  @Size(max = 50)
   @Schema(name = "packageInfo", description = "Details in short the accounting package/ERP system", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("packageInfo")
   public String getPackageInfo() {
@@ -477,29 +490,28 @@ public class PackageInfo {
 
   @Override
   public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("class PackageInfo {\n");
-    sb.append("    companyId: ").append(toIndentedString(companyId)).append("\n");
-    sb.append("    uniqueKey: ").append(toIndentedString(uniqueKey)).append("\n");
-    sb.append("    fingerprint: ").append(toIndentedString(fingerprint)).append("\n");
-    sb.append("    createdId: ").append(toIndentedString(createdId)).append("\n");
-    sb.append("    updatedId: ").append(toIndentedString(updatedId)).append("\n");
-    sb.append("    name: ").append(toIndentedString(name)).append("\n");
-    sb.append("    reference: ").append(toIndentedString(reference)).append("\n");
-    sb.append("    address1: ").append(toIndentedString(address1)).append("\n");
-    sb.append("    address2: ").append(toIndentedString(address2)).append("\n");
-    sb.append("    address3: ").append(toIndentedString(address3)).append("\n");
-    sb.append("    postCode: ").append(toIndentedString(postCode)).append("\n");
-    sb.append("    countryCode: ").append(toIndentedString(countryCode)).append("\n");
-    sb.append("    contactPhone: ").append(toIndentedString(contactPhone)).append("\n");
-    sb.append("    duns: ").append(toIndentedString(duns)).append("\n");
-    sb.append("    taxNo: ").append(toIndentedString(taxNo)).append("\n");
-    sb.append("    multiCurrency: ").append(toIndentedString(multiCurrency)).append("\n");
-    sb.append("    startMonth: ").append(toIndentedString(startMonth)).append("\n");
-    sb.append("    industryType: ").append(toIndentedString(industryType)).append("\n");
-    sb.append("    packageInfo: ").append(toIndentedString(packageInfo)).append("\n");
-    sb.append("}");
-    return sb.toString();
+    String sb = "class PackageInfo {\n" +
+        "    companyId: " + toIndentedString(companyId) + "\n" +
+        "    uniqueKey: " + toIndentedString(uniqueKey) + "\n" +
+        "    fingerprint: " + toIndentedString(fingerprint) + "\n" +
+        "    createdId: " + toIndentedString(createdId) + "\n" +
+        "    updatedId: " + toIndentedString(updatedId) + "\n" +
+        "    name: " + toIndentedString(name) + "\n" +
+        "    reference: " + toIndentedString(reference) + "\n" +
+        "    address1: " + toIndentedString(address1) + "\n" +
+        "    address2: " + toIndentedString(address2) + "\n" +
+        "    address3: " + toIndentedString(address3) + "\n" +
+        "    postCode: " + toIndentedString(postCode) + "\n" +
+        "    countryCode: " + toIndentedString(countryCode) + "\n" +
+        "    contactPhone: " + toIndentedString(contactPhone) + "\n" +
+        "    duns: " + toIndentedString(duns) + "\n" +
+        "    taxNo: " + toIndentedString(taxNo) + "\n" +
+        "    multiCurrency: " + toIndentedString(multiCurrency) + "\n" +
+        "    startMonth: " + toIndentedString(startMonth) + "\n" +
+        "    industryType: " + toIndentedString(industryType) + "\n" +
+        "    packageInfo: " + toIndentedString(packageInfo) + "\n" +
+        "}";
+    return sb;
   }
 
   /**

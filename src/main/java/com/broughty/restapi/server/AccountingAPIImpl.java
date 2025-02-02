@@ -1,9 +1,10 @@
 package com.broughty.restapi.server;
 
 import com.broughty.restapi.api.AccountingApi;
-import com.broughty.restapi.sales.dao.SalesLedgerDao;
 import com.broughty.restapi.model.*;
+import com.broughty.restapi.sales.dao.SalesLedgerDao;
 import com.broughty.restapi.server.exception.ResourceNotFoundException;
+import com.broughty.restapi.snapshot.dao.SnapshotDao;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,10 +17,12 @@ import java.util.Optional;
 public class AccountingAPIImpl implements AccountingApi {
 
   private final SalesLedgerDao salesLedgerDao;
+  private final SnapshotDao snapshotDao;
 
 
-  AccountingAPIImpl(SalesLedgerDao salesLedgerDao) {
+  AccountingAPIImpl(SalesLedgerDao salesLedgerDao, SnapshotDao snapshotDao) {
     this.salesLedgerDao = salesLedgerDao;
+    this.snapshotDao = snapshotDao;
   }
 
 
@@ -35,7 +38,11 @@ public class AccountingAPIImpl implements AccountingApi {
 
   @Override
   public ResponseEntity<Snapshot> accountingGetCurrentSnapshot(String companyId) {
-    return null;
+    Optional<Snapshot> snapshot = snapshotDao.getCurrentSnapshot(companyId);
+    if (snapshot.isEmpty()) {
+      throw new ResourceNotFoundException(String.format("Company with Id %s not found or Company has no Snapshots", companyId));
+    }
+    return ResponseEntity.ok(snapshot.get());
   }
 
 
@@ -55,7 +62,11 @@ public class AccountingAPIImpl implements AccountingApi {
 
   @Override
   public ResponseEntity<Snapshot> accountingGetPreviousSnapshot(String companyId) {
-    return null;
+    Optional<Snapshot> snapshot = snapshotDao.getPreviousSnapshot(companyId);
+    if (snapshot.isEmpty()) {
+      throw new ResourceNotFoundException(String.format("Company with Id %s not found or Company not had 2 Snapshots yet", companyId));
+    }
+    return ResponseEntity.ok(snapshot.get());
   }
 
   @Override
@@ -100,10 +111,12 @@ public class AccountingAPIImpl implements AccountingApi {
   }
 
 
-
   @Override
   public ResponseEntity<Snapshots> accountingListSnapshots(String page, Integer pageSize, String companyId, LocalDate snapshotDate, LocalDate snapshotDateGtEq, String snapshotDateLt, Boolean snapshotSalesBalanceChange) {
-    return null;
+    List<Snapshot> snapshotResultList = snapshotDao.getSnapshotsByCompanyId(companyId, snapshotDate, snapshotDateGtEq);
+    Snapshots snapshots = new Snapshots().results(snapshotResultList).pageSize(1).totalResults(snapshotResultList.size());
+    return ResponseEntity.ok(snapshots);
+
   }
 
   @Override

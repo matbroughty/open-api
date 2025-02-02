@@ -1,23 +1,14 @@
 package com.broughty.restapi.model;
 
-import java.net.URI;
-import java.util.Objects;
-import com.broughty.restapi.model.PaginginfoLinks;
-import com.broughty.restapi.model.Supplier;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import org.springframework.lang.Nullable;
-import java.time.OffsetDateTime;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.*;
 import io.swagger.v3.oas.annotations.media.Schema;
-
-
-import java.util.*;
 import jakarta.annotation.Generated;
+import jakarta.validation.Valid;
+import org.springframework.lang.Nullable;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * Suppliers
@@ -44,6 +35,7 @@ public class Suppliers {
 
   /**
    * Get pageNumber
+   *
    * @return pageNumber
    */
 
@@ -64,6 +56,7 @@ public class Suppliers {
 
   /**
    * Get pageSize
+   *
    * @return pageSize
    */
 
@@ -84,6 +77,7 @@ public class Suppliers {
 
   /**
    * Get totalResults
+   *
    * @return totalResults
    */
 
@@ -104,9 +98,10 @@ public class Suppliers {
 
   /**
    * Get links
+   *
    * @return links
    */
-  @Valid 
+  @Valid
   @Schema(name = "_links", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("_links")
   public PaginginfoLinks getLinks() {
@@ -132,9 +127,10 @@ public class Suppliers {
 
   /**
    * Get results
+   *
    * @return results
    */
-  @Valid 
+  @Valid
   @Schema(name = "results", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("results")
   public List<@Valid Supplier> getResults() {
@@ -168,15 +164,14 @@ public class Suppliers {
 
   @Override
   public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("class Suppliers {\n");
-    sb.append("    pageNumber: ").append(toIndentedString(pageNumber)).append("\n");
-    sb.append("    pageSize: ").append(toIndentedString(pageSize)).append("\n");
-    sb.append("    totalResults: ").append(toIndentedString(totalResults)).append("\n");
-    sb.append("    links: ").append(toIndentedString(links)).append("\n");
-    sb.append("    results: ").append(toIndentedString(results)).append("\n");
-    sb.append("}");
-    return sb.toString();
+    String sb = "class Suppliers {\n" +
+        "    pageNumber: " + toIndentedString(pageNumber) + "\n" +
+        "    pageSize: " + toIndentedString(pageSize) + "\n" +
+        "    totalResults: " + toIndentedString(totalResults) + "\n" +
+        "    links: " + toIndentedString(links) + "\n" +
+        "    results: " + toIndentedString(results) + "\n" +
+        "}";
+    return sb;
   }
 
   /**

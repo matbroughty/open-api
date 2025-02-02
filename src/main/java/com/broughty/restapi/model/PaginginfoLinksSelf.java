@@ -1,19 +1,12 @@
 package com.broughty.restapi.model;
 
-import java.net.URI;
-import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
-import org.springframework.lang.Nullable;
-import java.time.OffsetDateTime;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.*;
 import io.swagger.v3.oas.annotations.media.Schema;
-
-
-import java.util.*;
 import jakarta.annotation.Generated;
+import org.springframework.lang.Nullable;
+
+import java.util.Objects;
 
 /**
  * PaginginfoLinksSelf
@@ -32,6 +25,7 @@ public class PaginginfoLinksSelf {
 
   /**
    * Get href
+   *
    * @return href
    */
 
@@ -64,11 +58,10 @@ public class PaginginfoLinksSelf {
 
   @Override
   public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("class PaginginfoLinksSelf {\n");
-    sb.append("    href: ").append(toIndentedString(href)).append("\n");
-    sb.append("}");
-    return sb.toString();
+    String sb = "class PaginginfoLinksSelf {\n" +
+        "    href: " + toIndentedString(href) + "\n" +
+        "}";
+    return sb;
   }
 
   /**

@@ -1,19 +1,14 @@
 package com.broughty.restapi.model;
 
-import java.net.URI;
-import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import java.math.BigDecimal;
-import org.springframework.lang.Nullable;
-import java.time.OffsetDateTime;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.*;
 import io.swagger.v3.oas.annotations.media.Schema;
-
-
-import java.util.*;
 import jakarta.annotation.Generated;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Size;
+import org.springframework.lang.Nullable;
+
+import java.math.BigDecimal;
+import java.util.Objects;
 
 /**
  * Represents a bucket for ageing - i.e. 0-30 days.  A group of Ageing Buckets make up an aged Customer or Supplier report
@@ -40,9 +35,10 @@ public class AgeingBucket {
 
   /**
    * Get companyId
+   *
    * @return companyId
    */
-  @Size(min = 36, max = 36) 
+  @Size(min = 36, max = 36)
   @Schema(name = "companyId", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("companyId")
   public String getCompanyId() {
@@ -60,6 +56,7 @@ public class AgeingBucket {
 
   /**
    * Company reference
+   *
    * @return companyRef
    */
 
@@ -80,6 +77,7 @@ public class AgeingBucket {
 
   /**
    * Bucket number
+   *
    * @return bucketNumber
    */
 
@@ -100,9 +98,10 @@ public class AgeingBucket {
 
   /**
    * Ageing amount in Account currency
+   *
    * @return amountAc
    */
-  @Valid 
+  @Valid
   @Schema(name = "amountAc", description = "Ageing amount in Account currency", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("amountAc")
   public BigDecimal getAmountAc() {
@@ -120,6 +119,7 @@ public class AgeingBucket {
 
   /**
    * No of items making up the amountAc
+   *
    * @return itemCount
    */
 
@@ -156,15 +156,14 @@ public class AgeingBucket {
 
   @Override
   public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("class AgeingBucket {\n");
-    sb.append("    companyId: ").append(toIndentedString(companyId)).append("\n");
-    sb.append("    companyRef: ").append(toIndentedString(companyRef)).append("\n");
-    sb.append("    bucketNumber: ").append(toIndentedString(bucketNumber)).append("\n");
-    sb.append("    amountAc: ").append(toIndentedString(amountAc)).append("\n");
-    sb.append("    itemCount: ").append(toIndentedString(itemCount)).append("\n");
-    sb.append("}");
-    return sb.toString();
+    String sb = "class AgeingBucket {\n" +
+        "    companyId: " + toIndentedString(companyId) + "\n" +
+        "    companyRef: " + toIndentedString(companyRef) + "\n" +
+        "    bucketNumber: " + toIndentedString(bucketNumber) + "\n" +
+        "    amountAc: " + toIndentedString(amountAc) + "\n" +
+        "    itemCount: " + toIndentedString(itemCount) + "\n" +
+        "}";
+    return sb;
   }
 
   /**

@@ -1,18 +1,12 @@
 package com.broughty.restapi.model;
 
-import java.net.URI;
-import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import org.springframework.lang.Nullable;
-import java.time.OffsetDateTime;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.*;
 import io.swagger.v3.oas.annotations.media.Schema;
-
-
-import java.util.*;
 import jakarta.annotation.Generated;
+import jakarta.validation.constraints.Size;
+import org.springframework.lang.Nullable;
+
+import java.util.Objects;
 
 /**
  * The Bank Item record represents all cash items (receipts, payments and adjustments) for a particular Bank.   It is not necessary to extract Bank Items as the owning Bank (BankItem.BankReference &#x3D; Bank.Reference) contains the Balance but if it is required to see Bank Statements for a certain period then all Bank Items for a Bank should be extracted.  Bank Items are neither open or closed.  Bank Items either debit or credit the owning Bank  Some of these Bank Items will already exist as a Customer or Supplier &#39;PAY&#39; Ledger item. If possible and known in the accounts package then the BankItem.LedgerItemUniqueKey will be the same as the LedgerItem.UniqueKey.  The OA Service will truncate all field values if they exceed the maximum size limit.
@@ -83,9 +77,10 @@ public class BankItem {
 
   /**
    * Owning Company UUID
+   *
    * @return companyId
    */
-  @Size(min = 36, max = 36) 
+  @Size(min = 36, max = 36)
   @Schema(name = "companyId", description = "Owning Company UUID", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("companyId")
   public String getCompanyId() {
@@ -103,9 +98,10 @@ public class BankItem {
 
   /**
    * Get reference
+   *
    * @return reference
    */
-  @Size(max = 30) 
+  @Size(max = 30)
   @Schema(name = "reference", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("reference")
   public String getReference() {
@@ -123,9 +119,10 @@ public class BankItem {
 
   /**
    * Get bankUniqueKey
+   *
    * @return bankUniqueKey
    */
-  @Size(max = 50) 
+  @Size(max = 50)
   @Schema(name = "bankUniqueKey", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("bankUniqueKey")
   public String getBankUniqueKey() {
@@ -143,6 +140,7 @@ public class BankItem {
 
   /**
    * Get accountName
+   *
    * @return accountName
    */
 
@@ -163,6 +161,7 @@ public class BankItem {
 
   /**
    * Get accountReference
+   *
    * @return accountReference
    */
 
@@ -183,6 +182,7 @@ public class BankItem {
 
   /**
    * Get bankReference
+   *
    * @return bankReference
    */
 
@@ -203,6 +203,7 @@ public class BankItem {
 
   /**
    * Get createdId
+   *
    * @return createdId
    */
 
@@ -223,6 +224,7 @@ public class BankItem {
 
   /**
    * Get deletedId
+   *
    * @return deletedId
    */
 
@@ -243,6 +245,7 @@ public class BankItem {
 
   /**
    * Get closedId
+   *
    * @return closedId
    */
 
@@ -263,6 +266,7 @@ public class BankItem {
 
   /**
    * Get fingerprint
+   *
    * @return fingerprint
    */
 
@@ -283,6 +287,7 @@ public class BankItem {
 
   /**
    * Get amountBc
+   *
    * @return amountBc
    */
 
@@ -303,6 +308,7 @@ public class BankItem {
 
   /**
    * Get amountCc
+   *
    * @return amountCc
    */
 
@@ -323,6 +329,7 @@ public class BankItem {
 
   /**
    * Get amountSc
+   *
    * @return amountSc
    */
 
@@ -343,6 +350,7 @@ public class BankItem {
 
   /**
    * Get details
+   *
    * @return details
    */
 
@@ -363,6 +371,7 @@ public class BankItem {
 
   /**
    * Get type
+   *
    * @return type
    */
 
@@ -383,6 +392,7 @@ public class BankItem {
 
   /**
    * Get balanceBc
+   *
    * @return balanceBc
    */
 
@@ -403,6 +413,7 @@ public class BankItem {
 
   /**
    * Get balanceCc
+   *
    * @return balanceCc
    */
 
@@ -423,6 +434,7 @@ public class BankItem {
 
   /**
    * Get balanceSc
+   *
    * @return balanceSc
    */
 
@@ -443,6 +455,7 @@ public class BankItem {
 
   /**
    * Get dueDate
+   *
    * @return dueDate
    */
 
@@ -463,6 +476,7 @@ public class BankItem {
 
   /**
    * Get documentDate
+   *
    * @return documentDate
    */
 
@@ -483,6 +497,7 @@ public class BankItem {
 
   /**
    * Get entryDate
+   *
    * @return entryDate
    */
 
@@ -503,6 +518,7 @@ public class BankItem {
 
   /**
    * Get userName
+   *
    * @return userName
    */
 
@@ -523,6 +539,7 @@ public class BankItem {
 
   /**
    * Get taxAmountBc
+   *
    * @return taxAmountBc
    */
 
@@ -543,6 +560,7 @@ public class BankItem {
 
   /**
    * Get taxAmountCc
+   *
    * @return taxAmountCc
    */
 
@@ -563,6 +581,7 @@ public class BankItem {
 
   /**
    * Get taxAmountSc
+   *
    * @return taxAmountSc
    */
 
@@ -583,6 +602,7 @@ public class BankItem {
 
   /**
    * Get ledgerItemKey
+   *
    * @return ledgerItemKey
    */
 
@@ -603,6 +623,7 @@ public class BankItem {
 
   /**
    * Get originalType
+   *
    * @return originalType
    */
 
@@ -661,37 +682,36 @@ public class BankItem {
 
   @Override
   public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("class BankItem {\n");
-    sb.append("    companyId: ").append(toIndentedString(companyId)).append("\n");
-    sb.append("    reference: ").append(toIndentedString(reference)).append("\n");
-    sb.append("    bankUniqueKey: ").append(toIndentedString(bankUniqueKey)).append("\n");
-    sb.append("    accountName: ").append(toIndentedString(accountName)).append("\n");
-    sb.append("    accountReference: ").append(toIndentedString(accountReference)).append("\n");
-    sb.append("    bankReference: ").append(toIndentedString(bankReference)).append("\n");
-    sb.append("    createdId: ").append(toIndentedString(createdId)).append("\n");
-    sb.append("    deletedId: ").append(toIndentedString(deletedId)).append("\n");
-    sb.append("    closedId: ").append(toIndentedString(closedId)).append("\n");
-    sb.append("    fingerprint: ").append(toIndentedString(fingerprint)).append("\n");
-    sb.append("    amountBc: ").append(toIndentedString(amountBc)).append("\n");
-    sb.append("    amountCc: ").append(toIndentedString(amountCc)).append("\n");
-    sb.append("    amountSc: ").append(toIndentedString(amountSc)).append("\n");
-    sb.append("    details: ").append(toIndentedString(details)).append("\n");
-    sb.append("    type: ").append(toIndentedString(type)).append("\n");
-    sb.append("    balanceBc: ").append(toIndentedString(balanceBc)).append("\n");
-    sb.append("    balanceCc: ").append(toIndentedString(balanceCc)).append("\n");
-    sb.append("    balanceSc: ").append(toIndentedString(balanceSc)).append("\n");
-    sb.append("    dueDate: ").append(toIndentedString(dueDate)).append("\n");
-    sb.append("    documentDate: ").append(toIndentedString(documentDate)).append("\n");
-    sb.append("    entryDate: ").append(toIndentedString(entryDate)).append("\n");
-    sb.append("    userName: ").append(toIndentedString(userName)).append("\n");
-    sb.append("    taxAmountBc: ").append(toIndentedString(taxAmountBc)).append("\n");
-    sb.append("    taxAmountCc: ").append(toIndentedString(taxAmountCc)).append("\n");
-    sb.append("    taxAmountSc: ").append(toIndentedString(taxAmountSc)).append("\n");
-    sb.append("    ledgerItemKey: ").append(toIndentedString(ledgerItemKey)).append("\n");
-    sb.append("    originalType: ").append(toIndentedString(originalType)).append("\n");
-    sb.append("}");
-    return sb.toString();
+    String sb = "class BankItem {\n" +
+        "    companyId: " + toIndentedString(companyId) + "\n" +
+        "    reference: " + toIndentedString(reference) + "\n" +
+        "    bankUniqueKey: " + toIndentedString(bankUniqueKey) + "\n" +
+        "    accountName: " + toIndentedString(accountName) + "\n" +
+        "    accountReference: " + toIndentedString(accountReference) + "\n" +
+        "    bankReference: " + toIndentedString(bankReference) + "\n" +
+        "    createdId: " + toIndentedString(createdId) + "\n" +
+        "    deletedId: " + toIndentedString(deletedId) + "\n" +
+        "    closedId: " + toIndentedString(closedId) + "\n" +
+        "    fingerprint: " + toIndentedString(fingerprint) + "\n" +
+        "    amountBc: " + toIndentedString(amountBc) + "\n" +
+        "    amountCc: " + toIndentedString(amountCc) + "\n" +
+        "    amountSc: " + toIndentedString(amountSc) + "\n" +
+        "    details: " + toIndentedString(details) + "\n" +
+        "    type: " + toIndentedString(type) + "\n" +
+        "    balanceBc: " + toIndentedString(balanceBc) + "\n" +
+        "    balanceCc: " + toIndentedString(balanceCc) + "\n" +
+        "    balanceSc: " + toIndentedString(balanceSc) + "\n" +
+        "    dueDate: " + toIndentedString(dueDate) + "\n" +
+        "    documentDate: " + toIndentedString(documentDate) + "\n" +
+        "    entryDate: " + toIndentedString(entryDate) + "\n" +
+        "    userName: " + toIndentedString(userName) + "\n" +
+        "    taxAmountBc: " + toIndentedString(taxAmountBc) + "\n" +
+        "    taxAmountCc: " + toIndentedString(taxAmountCc) + "\n" +
+        "    taxAmountSc: " + toIndentedString(taxAmountSc) + "\n" +
+        "    ledgerItemKey: " + toIndentedString(ledgerItemKey) + "\n" +
+        "    originalType: " + toIndentedString(originalType) + "\n" +
+        "}";
+    return sb;
   }
 
   /**

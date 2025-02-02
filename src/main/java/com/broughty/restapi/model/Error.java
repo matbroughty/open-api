@@ -1,18 +1,11 @@
 package com.broughty.restapi.model;
 
-import java.net.URI;
-import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import org.springframework.lang.Nullable;
-import java.time.OffsetDateTime;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.*;
 import io.swagger.v3.oas.annotations.media.Schema;
-
-
-import java.util.*;
 import jakarta.annotation.Generated;
+import org.springframework.lang.Nullable;
+
+import java.util.Objects;
 
 /**
  * Describes an Error from the OA API service
@@ -37,6 +30,7 @@ public class Error {
 
   /**
    * HTTP status code
+   *
    * @return status
    */
 
@@ -57,6 +51,7 @@ public class Error {
 
   /**
    * Timestamp of error
+   *
    * @return timestamp
    */
 
@@ -77,6 +72,7 @@ public class Error {
 
   /**
    * Error message string
+   *
    * @return error
    */
 
@@ -97,6 +93,7 @@ public class Error {
 
   /**
    * The API path
+   *
    * @return path
    */
 
@@ -132,14 +129,13 @@ public class Error {
 
   @Override
   public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("class Error {\n");
-    sb.append("    status: ").append(toIndentedString(status)).append("\n");
-    sb.append("    timestamp: ").append(toIndentedString(timestamp)).append("\n");
-    sb.append("    error: ").append(toIndentedString(error)).append("\n");
-    sb.append("    path: ").append(toIndentedString(path)).append("\n");
-    sb.append("}");
-    return sb.toString();
+    String sb = "class Error {\n" +
+        "    status: " + toIndentedString(status) + "\n" +
+        "    timestamp: " + toIndentedString(timestamp) + "\n" +
+        "    error: " + toIndentedString(error) + "\n" +
+        "    path: " + toIndentedString(path) + "\n" +
+        "}";
+    return sb;
   }
 
   /**

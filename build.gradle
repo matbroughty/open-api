@@ -27,8 +27,10 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
-    implementation 'io.micrometer:micrometer-tracing-bridge-brave'
-    implementation 'io.zipkin.reporter2:zipkin-reporter-brave'
+
+    // add this if using docker
+    //implementation 'io.micrometer:micrometer-tracing-bridge-brave'
+    //implementation 'io.zipkin.reporter2:zipkin-reporter-brave'
     // Need the springdoc for the open api generator validation
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.3'
     // SQL template tool - very lightweight but not maintained so may want to write ourselves

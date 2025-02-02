@@ -1,19 +1,12 @@
 package com.broughty.restapi.model;
 
-import java.net.URI;
-import java.util.Objects;
-import com.broughty.restapi.model.PaginginfoLinks;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import org.springframework.lang.Nullable;
-import java.time.OffsetDateTime;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.*;
 import io.swagger.v3.oas.annotations.media.Schema;
-
-
-import java.util.*;
 import jakarta.annotation.Generated;
+import jakarta.validation.Valid;
+import org.springframework.lang.Nullable;
+
+import java.util.Objects;
 
 /**
  * Paging info
@@ -38,6 +31,7 @@ public class PagingInfo {
 
   /**
    * Get pageNumber
+   *
    * @return pageNumber
    */
 
@@ -58,6 +52,7 @@ public class PagingInfo {
 
   /**
    * Get pageSize
+   *
    * @return pageSize
    */
 
@@ -78,6 +73,7 @@ public class PagingInfo {
 
   /**
    * Get totalResults
+   *
    * @return totalResults
    */
 
@@ -98,9 +94,10 @@ public class PagingInfo {
 
   /**
    * Get links
+   *
    * @return links
    */
-  @Valid 
+  @Valid
   @Schema(name = "_links", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("_links")
   public PaginginfoLinks getLinks() {
@@ -133,14 +130,13 @@ public class PagingInfo {
 
   @Override
   public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("class PagingInfo {\n");
-    sb.append("    pageNumber: ").append(toIndentedString(pageNumber)).append("\n");
-    sb.append("    pageSize: ").append(toIndentedString(pageSize)).append("\n");
-    sb.append("    totalResults: ").append(toIndentedString(totalResults)).append("\n");
-    sb.append("    links: ").append(toIndentedString(links)).append("\n");
-    sb.append("}");
-    return sb.toString();
+    String sb = "class PagingInfo {\n" +
+        "    pageNumber: " + toIndentedString(pageNumber) + "\n" +
+        "    pageSize: " + toIndentedString(pageSize) + "\n" +
+        "    totalResults: " + toIndentedString(totalResults) + "\n" +
+        "    links: " + toIndentedString(links) + "\n" +
+        "}";
+    return sb;
   }
 
   /**

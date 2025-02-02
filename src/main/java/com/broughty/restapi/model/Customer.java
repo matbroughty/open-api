@@ -1,21 +1,17 @@
 package com.broughty.restapi.model;
 
-import java.net.URI;
-import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import java.math.BigDecimal;
-import java.time.LocalDate;
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.annotation.Generated;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.lang.Nullable;
-import java.time.OffsetDateTime;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.*;
-import io.swagger.v3.oas.annotations.media.Schema;
 
-
-import java.util.*;
-import jakarta.annotation.Generated;
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.Objects;
 
 /**
  * The Sales Ledger Account - i.e. a Customer/Debtor All Customer records on the Sales Ledger will be pulled.
@@ -133,9 +129,10 @@ public class Customer {
 
   /**
    * Customer or supplier name
+   *
    * @return accountName
    */
-  @Size(max = 60) 
+  @Size(max = 60)
   @Schema(name = "accountName", description = "Customer or supplier name", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("accountName")
   public String getAccountName() {
@@ -153,6 +150,7 @@ public class Customer {
 
   /**
    * The ID of the custo mer- a Unique static identifier
+   *
    * @return uniqueKey
    */
   @NotNull
@@ -174,6 +172,7 @@ public class Customer {
 
   /**
    * Get reference
+   *
    * @return reference
    */
   @NotNull
@@ -195,9 +194,10 @@ public class Customer {
 
   /**
    * Address line 1 field
+   *
    * @return address1
    */
-  @Size(max = 60) 
+  @Size(max = 60)
   @Schema(name = "address1", description = "Address line 1 field", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("address1")
   public String getAddress1() {
@@ -215,9 +215,10 @@ public class Customer {
 
   /**
    * Address line 2 field
+   *
    * @return address2
    */
-  @Size(max = 60) 
+  @Size(max = 60)
   @Schema(name = "address2", description = "Address line 2 field", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("address2")
   public String getAddress2() {
@@ -235,9 +236,10 @@ public class Customer {
 
   /**
    * Address line 3 field
+   *
    * @return address3
    */
-  @Size(max = 60) 
+  @Size(max = 60)
   @Schema(name = "address3", description = "Address line 3 field", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("address3")
   public String getAddress3() {
@@ -255,9 +257,10 @@ public class Customer {
 
   /**
    * Address line 4 field
+   *
    * @return address4
    */
-  @Size(max = 60) 
+  @Size(max = 60)
   @Schema(name = "address4", description = "Address line 4 field", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("address4")
   public String getAddress4() {
@@ -275,9 +278,10 @@ public class Customer {
 
   /**
    * ISO country code - although may contain non ISO country codes
+   *
    * @return countryCode
    */
-  @Size(max = 2) 
+  @Size(max = 2)
   @Schema(name = "countryCode", description = "ISO country code - although may contain non ISO country codes", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("countryCode")
   public String getCountryCode() {
@@ -295,9 +299,10 @@ public class Customer {
 
   /**
    * Postal code/Zip code
+   *
    * @return postCode
    */
-  @Size(max = 20) 
+  @Size(max = 20)
   @Schema(name = "postCode", description = "Postal code/Zip code", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("postCode")
   public String getPostCode() {
@@ -315,9 +320,10 @@ public class Customer {
 
   /**
    * Contact details - usually a name
+   *
    * @return contact
    */
-  @Size(max = 60) 
+  @Size(max = 60)
   @Schema(name = "contact", description = "Contact details - usually a name", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("contact")
   public String getContact() {
@@ -335,9 +341,10 @@ public class Customer {
 
   /**
    * Get email
+   *
    * @return email
    */
-  @Size(max = 128) 
+  @Size(max = 128)
   @Schema(name = "email", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("email")
   public String getEmail() {
@@ -355,9 +362,10 @@ public class Customer {
 
   /**
    * Get emailCopy
+   *
    * @return emailCopy
    */
-  @Size(max = 128) 
+  @Size(max = 128)
   @Schema(name = "email_copy", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("email_copy")
   public String getEmailCopy() {
@@ -375,9 +383,10 @@ public class Customer {
 
   /**
    * The contacts phone number
+   *
    * @return contactPhone
    */
-  @Size(max = 25) 
+  @Size(max = 25)
   @Schema(name = "contactPhone", description = "The contacts phone number", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("contactPhone")
   public String getContactPhone() {
@@ -395,9 +404,10 @@ public class Customer {
 
   /**
    * Fax or other contact number
+   *
    * @return fax
    */
-  @Size(max = 25) 
+  @Size(max = 25)
   @Schema(name = "fax", description = "Fax or other contact number", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("fax")
   public String getFax() {
@@ -415,9 +425,10 @@ public class Customer {
 
   /**
    * Internal hash code of Customer.  Will change when the customer changes
+   *
    * @return fingerprint
    */
-  @Size(max = 32) 
+  @Size(max = 32)
   @Schema(name = "fingerprint", description = "Internal hash code of Customer.  Will change when the customer changes", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("fingerprint")
   public String getFingerprint() {
@@ -435,9 +446,10 @@ public class Customer {
 
   /**
    * The Customer balance as reported in the origiu
+   *
    * @return balancePackage
    */
-  @Valid 
+  @Valid
   @Schema(name = "balancePackage", description = "The Customer balance as reported in the origiu", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("balancePackage")
   public BigDecimal getBalancePackage() {
@@ -455,9 +467,10 @@ public class Customer {
 
   /**
    * Sales balance in account currency - i.e. the currencyCode.
+   *
    * @return balanceAc
    */
-  @Valid 
+  @Valid
   @Schema(name = "balanceAc", description = "Sales balance in account currency - i.e. the currencyCode.", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("balanceAc")
   public BigDecimal getBalanceAc() {
@@ -475,9 +488,10 @@ public class Customer {
 
   /**
    * Sales balance in System  currency.
+   *
    * @return balanceSc
    */
-  @Valid 
+  @Valid
   @Schema(name = "balanceSc", description = "Sales balance in System  currency.", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("balanceSc")
   public BigDecimal getBalanceSc() {
@@ -495,9 +509,10 @@ public class Customer {
 
   /**
    * Sales balance in Company currency.
+   *
    * @return balanceCc
    */
-  @Valid 
+  @Valid
   @Schema(name = "balanceCc", description = "Sales balance in Company currency.", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("balanceCc")
   public BigDecimal getBalanceCc() {
@@ -515,9 +530,10 @@ public class Customer {
 
   /**
    * Overdue balance in Customer  currency.
+   *
    * @return overdueAc
    */
-  @Valid 
+  @Valid
   @Schema(name = "overdueAc", description = "Overdue balance in Customer  currency.", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("overdueAc")
   public BigDecimal getOverdueAc() {
@@ -535,9 +551,10 @@ public class Customer {
 
   /**
    * Originating data source credit limit value on account currency.
+   *
    * @return creditLimitAc
    */
-  @Valid 
+  @Valid
   @Schema(name = "creditLimitAc", description = "Originating data source credit limit value on account currency.", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("creditLimitAc")
   public BigDecimal getCreditLimitAc() {
@@ -555,9 +572,10 @@ public class Customer {
 
   /**
    * Originating data source credit limit value in company currency.
+   *
    * @return creditLimitCc
    */
-  @Valid 
+  @Valid
   @Schema(name = "creditLimitCc", description = "Originating data source credit limit value in company currency.", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("creditLimitCc")
   public BigDecimal getCreditLimitCc() {
@@ -575,9 +593,10 @@ public class Customer {
 
   /**
    * Originating data source credit limit value in System currency.
+   *
    * @return creditLimitSc
    */
-  @Valid 
+  @Valid
   @Schema(name = "creditLimitSc", description = "Originating data source credit limit value in System currency.", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("creditLimitSc")
   public BigDecimal getCreditLimitSc() {
@@ -595,9 +614,10 @@ public class Customer {
 
   /**
    * Overdue balance in Company currency.
+   *
    * @return overdueCc
    */
-  @Valid 
+  @Valid
   @Schema(name = "overdueCc", description = "Overdue balance in Company currency.", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("overdueCc")
   public BigDecimal getOverdueCc() {
@@ -615,9 +635,10 @@ public class Customer {
 
   /**
    * Overdue balance in System currency.
+   *
    * @return overdueSc
    */
-  @Valid 
+  @Valid
   @Schema(name = "overdueSc", description = "Overdue balance in System currency.", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("overdueSc")
   public BigDecimal getOverdueSc() {
@@ -635,6 +656,7 @@ public class Customer {
 
   /**
    * Company Currency Code
+   *
    * @return companyCurrencyCode
    */
 
@@ -655,9 +677,10 @@ public class Customer {
 
   /**
    * Snapshot Customer creation date- i.e. the Snapshot createdId date
+   *
    * @return createdDate
    */
-  @Valid 
+  @Valid
   @Schema(name = "createdDate", description = "Snapshot Customer creation date- i.e. the Snapshot createdId date", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("createdDate")
   public LocalDate getCreatedDate() {
@@ -674,7 +697,8 @@ public class Customer {
   }
 
   /**
-   * True if the Customer was created by the take-on (first) Snapshot for the Company.  
+   * True if the Customer was created by the take-on (first) Snapshot for the Company.
+   *
    * @return takeOn
    */
 
@@ -695,6 +719,7 @@ public class Customer {
 
   /**
    * Snapshot that created the Customer
+   *
    * @return createdId
    */
 
@@ -715,6 +740,7 @@ public class Customer {
 
   /**
    * Snapshot that closed the Customer,  Customers aren't typically closed
+   *
    * @return closedId
    */
 
@@ -735,6 +761,7 @@ public class Customer {
 
   /**
    * Snapshot that updated the Customer.  Balance changes do not count as a change
+   *
    * @return updatedId
    */
 
@@ -755,6 +782,7 @@ public class Customer {
 
   /**
    * Snapshot that deleted the Customer.  This will usually be null
+   *
    * @return deletedId
    */
 
@@ -775,9 +803,10 @@ public class Customer {
 
   /**
    * Extra field information.  Populated slightly differently depending on originating data source.
+   *
    * @return externalRef1
    */
-  @Size(max = 255) 
+  @Size(max = 255)
   @Schema(name = "externalRef1", description = "Extra field information.  Populated slightly differently depending on originating data source.", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("externalRef1")
   public String getExternalRef1() {
@@ -795,9 +824,10 @@ public class Customer {
 
   /**
    * Extra field information.  Populated slightly differently depending on originating data source.
+   *
    * @return externalRef2
    */
-  @Size(max = 255) 
+  @Size(max = 255)
   @Schema(name = "externalRef2", description = "Extra field information.  Populated slightly differently depending on originating data source.", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("externalRef2")
   public String getExternalRef2() {
@@ -815,9 +845,10 @@ public class Customer {
 
   /**
    * Extra field information.  Populated slightly differently depending on originating data source.
+   *
    * @return externalRef3
    */
-  @Size(max = 255) 
+  @Size(max = 255)
   @Schema(name = "externalRef3", description = "Extra field information.  Populated slightly differently depending on originating data source.", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("externalRef3")
   public String getExternalRef3() {
@@ -835,9 +866,10 @@ public class Customer {
 
   /**
    * ISO currency code.  All items on the Customer will be in this currency.    **Note** - some data sources will allow the field to be populated with non ISO currency codes.
+   *
    * @return currencyCode
    */
-  @Size(max = 3) 
+  @Size(max = 3)
   @Schema(name = "currencyCode", description = "ISO currency code.  All items on the Customer will be in this currency.    **Note** - some data sources will allow the field to be populated with non ISO currency codes.", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("currencyCode")
   public String getCurrencyCode() {
@@ -855,6 +887,7 @@ public class Customer {
 
   /**
    * true if Customer is notified
+   *
    * @return accountNotified
    */
 
@@ -875,6 +908,7 @@ public class Customer {
 
   /**
    * true if Customer non notified at take-on due to zero balance.
+   *
    * @return accountAutoNonNotified
    */
 
@@ -895,6 +929,7 @@ public class Customer {
 
   /**
    * true - If Customer flagged as Export.  This is not set by the originating data source, but is a manual process by an Open Accounting back office user.
+   *
    * @return export
    */
 
@@ -915,9 +950,10 @@ public class Customer {
 
   /**
    * The owning Company ID UUID
+   *
    * @return companyId
    */
-  @Size(min = 36, max = 36) 
+  @Size(min = 36, max = 36)
   @Schema(name = "companyId", description = "The owning Company ID UUID", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("companyId")
   public String getCompanyId() {
@@ -935,9 +971,10 @@ public class Customer {
 
   /**
    * Company registration number
+   *
    * @return vatNumber
    */
-  @Size(max = 20) 
+  @Size(max = 20)
   @Schema(name = "vatNumber", description = "Company registration number", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("vatNumber")
   public String getVatNumber() {
@@ -955,9 +992,10 @@ public class Customer {
 
   /**
    * DUNS number
+   *
    * @return dunsNumber
    */
-  @Size(max = 20) 
+  @Size(max = 20)
   @Schema(name = "dunsNumber", description = "DUNS number", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("dunsNumber")
   public String getDunsNumber() {
@@ -975,9 +1013,10 @@ public class Customer {
 
   /**
    * Optional terms code
+   *
    * @return termsCode
    */
-  @Size(max = 2) 
+  @Size(max = 2)
   @Schema(name = "termsCode", description = "Optional terms code", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("termsCode")
   public String getTermsCode() {
@@ -995,9 +1034,10 @@ public class Customer {
 
   /**
    * Optional terms description for the code - i.e. 90 days
+   *
    * @return termsDescription
    */
-  @Size(max = 60) 
+  @Size(max = 60)
   @Schema(name = "termsDescription", description = "Optional terms description for the code - i.e. 90 days", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("termsDescription")
   public String getTermsDescription() {
@@ -1070,54 +1110,53 @@ public class Customer {
 
   @Override
   public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("class Customer {\n");
-    sb.append("    accountName: ").append(toIndentedString(accountName)).append("\n");
-    sb.append("    uniqueKey: ").append(toIndentedString(uniqueKey)).append("\n");
-    sb.append("    reference: ").append(toIndentedString(reference)).append("\n");
-    sb.append("    address1: ").append(toIndentedString(address1)).append("\n");
-    sb.append("    address2: ").append(toIndentedString(address2)).append("\n");
-    sb.append("    address3: ").append(toIndentedString(address3)).append("\n");
-    sb.append("    address4: ").append(toIndentedString(address4)).append("\n");
-    sb.append("    countryCode: ").append(toIndentedString(countryCode)).append("\n");
-    sb.append("    postCode: ").append(toIndentedString(postCode)).append("\n");
-    sb.append("    contact: ").append(toIndentedString(contact)).append("\n");
-    sb.append("    email: ").append(toIndentedString(email)).append("\n");
-    sb.append("    emailCopy: ").append(toIndentedString(emailCopy)).append("\n");
-    sb.append("    contactPhone: ").append(toIndentedString(contactPhone)).append("\n");
-    sb.append("    fax: ").append(toIndentedString(fax)).append("\n");
-    sb.append("    fingerprint: ").append(toIndentedString(fingerprint)).append("\n");
-    sb.append("    balancePackage: ").append(toIndentedString(balancePackage)).append("\n");
-    sb.append("    balanceAc: ").append(toIndentedString(balanceAc)).append("\n");
-    sb.append("    balanceSc: ").append(toIndentedString(balanceSc)).append("\n");
-    sb.append("    balanceCc: ").append(toIndentedString(balanceCc)).append("\n");
-    sb.append("    overdueAc: ").append(toIndentedString(overdueAc)).append("\n");
-    sb.append("    creditLimitAc: ").append(toIndentedString(creditLimitAc)).append("\n");
-    sb.append("    creditLimitCc: ").append(toIndentedString(creditLimitCc)).append("\n");
-    sb.append("    creditLimitSc: ").append(toIndentedString(creditLimitSc)).append("\n");
-    sb.append("    overdueCc: ").append(toIndentedString(overdueCc)).append("\n");
-    sb.append("    overdueSc: ").append(toIndentedString(overdueSc)).append("\n");
-    sb.append("    companyCurrencyCode: ").append(toIndentedString(companyCurrencyCode)).append("\n");
-    sb.append("    createdDate: ").append(toIndentedString(createdDate)).append("\n");
-    sb.append("    takeOn: ").append(toIndentedString(takeOn)).append("\n");
-    sb.append("    createdId: ").append(toIndentedString(createdId)).append("\n");
-    sb.append("    closedId: ").append(toIndentedString(closedId)).append("\n");
-    sb.append("    updatedId: ").append(toIndentedString(updatedId)).append("\n");
-    sb.append("    deletedId: ").append(toIndentedString(deletedId)).append("\n");
-    sb.append("    externalRef1: ").append(toIndentedString(externalRef1)).append("\n");
-    sb.append("    externalRef2: ").append(toIndentedString(externalRef2)).append("\n");
-    sb.append("    externalRef3: ").append(toIndentedString(externalRef3)).append("\n");
-    sb.append("    currencyCode: ").append(toIndentedString(currencyCode)).append("\n");
-    sb.append("    accountNotified: ").append(toIndentedString(accountNotified)).append("\n");
-    sb.append("    accountAutoNonNotified: ").append(toIndentedString(accountAutoNonNotified)).append("\n");
-    sb.append("    export: ").append(toIndentedString(export)).append("\n");
-    sb.append("    companyId: ").append(toIndentedString(companyId)).append("\n");
-    sb.append("    vatNumber: ").append(toIndentedString(vatNumber)).append("\n");
-    sb.append("    dunsNumber: ").append(toIndentedString(dunsNumber)).append("\n");
-    sb.append("    termsCode: ").append(toIndentedString(termsCode)).append("\n");
-    sb.append("    termsDescription: ").append(toIndentedString(termsDescription)).append("\n");
-    sb.append("}");
-    return sb.toString();
+    String sb = "class Customer {\n" +
+        "    accountName: " + toIndentedString(accountName) + "\n" +
+        "    uniqueKey: " + toIndentedString(uniqueKey) + "\n" +
+        "    reference: " + toIndentedString(reference) + "\n" +
+        "    address1: " + toIndentedString(address1) + "\n" +
+        "    address2: " + toIndentedString(address2) + "\n" +
+        "    address3: " + toIndentedString(address3) + "\n" +
+        "    address4: " + toIndentedString(address4) + "\n" +
+        "    countryCode: " + toIndentedString(countryCode) + "\n" +
+        "    postCode: " + toIndentedString(postCode) + "\n" +
+        "    contact: " + toIndentedString(contact) + "\n" +
+        "    email: " + toIndentedString(email) + "\n" +
+        "    emailCopy: " + toIndentedString(emailCopy) + "\n" +
+        "    contactPhone: " + toIndentedString(contactPhone) + "\n" +
+        "    fax: " + toIndentedString(fax) + "\n" +
+        "    fingerprint: " + toIndentedString(fingerprint) + "\n" +
+        "    balancePackage: " + toIndentedString(balancePackage) + "\n" +
+        "    balanceAc: " + toIndentedString(balanceAc) + "\n" +
+        "    balanceSc: " + toIndentedString(balanceSc) + "\n" +
+        "    balanceCc: " + toIndentedString(balanceCc) + "\n" +
+        "    overdueAc: " + toIndentedString(overdueAc) + "\n" +
+        "    creditLimitAc: " + toIndentedString(creditLimitAc) + "\n" +
+        "    creditLimitCc: " + toIndentedString(creditLimitCc) + "\n" +
+        "    creditLimitSc: " + toIndentedString(creditLimitSc) + "\n" +
+        "    overdueCc: " + toIndentedString(overdueCc) + "\n" +
+        "    overdueSc: " + toIndentedString(overdueSc) + "\n" +
+        "    companyCurrencyCode: " + toIndentedString(companyCurrencyCode) + "\n" +
+        "    createdDate: " + toIndentedString(createdDate) + "\n" +
+        "    takeOn: " + toIndentedString(takeOn) + "\n" +
+        "    createdId: " + toIndentedString(createdId) + "\n" +
+        "    closedId: " + toIndentedString(closedId) + "\n" +
+        "    updatedId: " + toIndentedString(updatedId) + "\n" +
+        "    deletedId: " + toIndentedString(deletedId) + "\n" +
+        "    externalRef1: " + toIndentedString(externalRef1) + "\n" +
+        "    externalRef2: " + toIndentedString(externalRef2) + "\n" +
+        "    externalRef3: " + toIndentedString(externalRef3) + "\n" +
+        "    currencyCode: " + toIndentedString(currencyCode) + "\n" +
+        "    accountNotified: " + toIndentedString(accountNotified) + "\n" +
+        "    accountAutoNonNotified: " + toIndentedString(accountAutoNonNotified) + "\n" +
+        "    export: " + toIndentedString(export) + "\n" +
+        "    companyId: " + toIndentedString(companyId) + "\n" +
+        "    vatNumber: " + toIndentedString(vatNumber) + "\n" +
+        "    dunsNumber: " + toIndentedString(dunsNumber) + "\n" +
+        "    termsCode: " + toIndentedString(termsCode) + "\n" +
+        "    termsDescription: " + toIndentedString(termsDescription) + "\n" +
+        "}";
+    return sb;
   }
 
   /**

@@ -1,22 +1,16 @@
 package com.broughty.restapi.model;
 
-import java.net.URI;
-import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
-import java.math.BigDecimal;
-import java.time.OffsetDateTime;
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.annotation.Generated;
+import jakarta.validation.Valid;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.lang.Nullable;
+
+import java.math.BigDecimal;
 import java.time.OffsetDateTime;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.*;
-import io.swagger.v3.oas.annotations.media.Schema;
-
-
-import java.util.*;
-import jakarta.annotation.Generated;
+import java.util.Objects;
 
 /**
  * If the DataFile was suspended (status&#x3D;40) then this will hold details of why
@@ -45,6 +39,7 @@ public class DataFileSuspendedDetails {
 
   /**
    * Suspended data id
+   *
    * @return id
    */
 
@@ -65,9 +60,10 @@ public class DataFileSuspendedDetails {
 
   /**
    * Date file was suspended
+   *
    * @return supsendedDate
    */
-  @Valid 
+  @Valid
   @Schema(name = "supsendedDate", description = "Date file was suspended", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("supsendedDate")
   public OffsetDateTime getSupsendedDate() {
@@ -85,9 +81,10 @@ public class DataFileSuspendedDetails {
 
   /**
    * Previous sales ledger balance prior to this DataFile
+   *
    * @return previousSalesBalanceCc
    */
-  @Valid 
+  @Valid
   @Schema(name = "previousSalesBalanceCc", description = "Previous sales ledger balance prior to this DataFile", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("previousSalesBalanceCc")
   public BigDecimal getPreviousSalesBalanceCc() {
@@ -105,9 +102,10 @@ public class DataFileSuspendedDetails {
 
   /**
    * Proposed sales ledger balance if this DataFile let through
+   *
    * @return proposedSalesBalanceCc
    */
-  @Valid 
+  @Valid
   @Schema(name = "proposedSalesBalanceCc", description = "Proposed sales ledger balance if this DataFile let through", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("proposedSalesBalanceCc")
   public BigDecimal getProposedSalesBalanceCc() {
@@ -125,6 +123,7 @@ public class DataFileSuspendedDetails {
 
   /**
    * Proposed Sales Ledger Balance change
+   *
    * @return proposedSalesBalanceChangePercent
    */
 
@@ -161,15 +160,14 @@ public class DataFileSuspendedDetails {
 
   @Override
   public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("class DataFileSuspendedDetails {\n");
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    supsendedDate: ").append(toIndentedString(supsendedDate)).append("\n");
-    sb.append("    previousSalesBalanceCc: ").append(toIndentedString(previousSalesBalanceCc)).append("\n");
-    sb.append("    proposedSalesBalanceCc: ").append(toIndentedString(proposedSalesBalanceCc)).append("\n");
-    sb.append("    proposedSalesBalanceChangePercent: ").append(toIndentedString(proposedSalesBalanceChangePercent)).append("\n");
-    sb.append("}");
-    return sb.toString();
+    String sb = "class DataFileSuspendedDetails {\n" +
+        "    id: " + toIndentedString(id) + "\n" +
+        "    supsendedDate: " + toIndentedString(supsendedDate) + "\n" +
+        "    previousSalesBalanceCc: " + toIndentedString(previousSalesBalanceCc) + "\n" +
+        "    proposedSalesBalanceCc: " + toIndentedString(proposedSalesBalanceCc) + "\n" +
+        "    proposedSalesBalanceChangePercent: " + toIndentedString(proposedSalesBalanceChangePercent) + "\n" +
+        "}";
+    return sb;
   }
 
   /**

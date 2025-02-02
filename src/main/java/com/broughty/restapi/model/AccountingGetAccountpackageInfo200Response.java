@@ -1,20 +1,13 @@
 package com.broughty.restapi.model;
 
-import java.net.URI;
-import java.util.Objects;
-import com.broughty.restapi.model.PackageInfo;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
-import org.springframework.lang.Nullable;
-import java.time.OffsetDateTime;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.*;
 import io.swagger.v3.oas.annotations.media.Schema;
-
-
-import java.util.*;
 import jakarta.annotation.Generated;
+import jakarta.validation.Valid;
+import org.springframework.lang.Nullable;
+
+import java.util.Objects;
 
 /**
  * AccountingGetAccountpackageInfo200Response
@@ -33,9 +26,10 @@ public class AccountingGetAccountpackageInfo200Response {
 
   /**
    * Get company
+   *
    * @return company
    */
-  @Valid 
+  @Valid
   @Schema(name = "company", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("company")
   public PackageInfo getCompany() {
@@ -65,11 +59,10 @@ public class AccountingGetAccountpackageInfo200Response {
 
   @Override
   public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("class AccountingGetAccountpackageInfo200Response {\n");
-    sb.append("    company: ").append(toIndentedString(company)).append("\n");
-    sb.append("}");
-    return sb.toString();
+    String sb = "class AccountingGetAccountpackageInfo200Response {\n" +
+        "    company: " + toIndentedString(company) + "\n" +
+        "}";
+    return sb;
   }
 
   /**

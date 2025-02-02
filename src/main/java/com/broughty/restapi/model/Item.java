@@ -1,21 +1,17 @@
 package com.broughty.restapi.model;
 
-import java.net.URI;
-import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import java.math.BigDecimal;
-import java.time.LocalDate;
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.annotation.Generated;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.lang.Nullable;
-import java.time.OffsetDateTime;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.*;
-import io.swagger.v3.oas.annotations.media.Schema;
 
-
-import java.util.*;
-import jakarta.annotation.Generated;
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.Objects;
 
 /**
  * The Item record represents all open, changed and closed items on the Sales Ledger (Customer items) and Purchase Ledger (Supplier items).  An open item is either an item where the balance is zero or where the close date is a date in the past.   The Item record will include all Debits (Invoices, Debit Adjustments), Credits (Credit Notes, Credit Adjustments, Discounts) and Cash on both the Sales and Purchase ledger - see Transaction Type.    It is expected that the various account transaction types will be    Transaction Type.    It is expected that the various account transaction types present in the various account packages/ERP systems will be mapped to the five OA transaction types.  The transaction type is stored in the item#TYPE field.  A 3 character string field that accepts the following:  INV  (Invoices)  CRD (Credit Notes)  PAY (Cash, Cheque, etc.)  CRA (Credit Adjustments)  DBA (Debit Adjustments)  The INV and DBA transactions are debits and should be positive (for sales and purchase ledger).  The CRD, PAY, CRA transactions are credits and should be negative (for sales and purchase ledger).   Only the Ledger Item Amount and Balance in the original Customer or Supplier currency are pulled – the OA laoding service completes further currency conversions.  The currency of the item is derived from the owning Supplier or Customer.  It is assumed that when an Item&#39;s Balance is zero that it is closed.   The OA Service will truncate all field values if they exceed the maximum size limit.
@@ -123,10 +119,11 @@ public class Item {
   }
 
   /**
-   * Transaction Type.  It is expected that the various account transaction types present in the various account packages/ERP systems will be mapped to the five Open Accounting transaction types.    A 3 character string field that accepts the following:    - INV  (Invoices) +  - CRD (Credit Notes) -  - PAY (Cash, Cheque, etc.) -  - CRA (Credit Adjustments) -  - DBA (Debit Adjustments) +    The INV and DBA transactions are debits and should be positive (for sales and purchase ledger).  The CRD, PAY, CRA transactions are credits and should be negative (for sales and purchase ledger).     If you sum up all Balance items for a company then this WILL ALWAYS equal the Sales or Purchase Ledger balance  
+   * Transaction Type.  It is expected that the various account transaction types present in the various account packages/ERP systems will be mapped to the five Open Accounting transaction types.    A 3 character string field that accepts the following:    - INV  (Invoices) +  - CRD (Credit Notes) -  - PAY (Cash, Cheque, etc.) -  - CRA (Credit Adjustments) -  - DBA (Debit Adjustments) +    The INV and DBA transactions are debits and should be positive (for sales and purchase ledger).  The CRD, PAY, CRA transactions are credits and should be negative (for sales and purchase ledger).     If you sum up all Balance items for a company then this WILL ALWAYS equal the Sales or Purchase Ledger balance
+   *
    * @return type
    */
-  @Size(min = 3, max = 3) 
+  @Size(min = 3, max = 3)
   @Schema(name = "type", accessMode = Schema.AccessMode.READ_ONLY, description = "Transaction Type.  It is expected that the various account transaction types present in the various account packages/ERP systems will be mapped to the five Open Accounting transaction types.    A 3 character string field that accepts the following:    - INV  (Invoices) +  - CRD (Credit Notes) -  - PAY (Cash, Cheque, etc.) -  - CRA (Credit Adjustments) -  - DBA (Debit Adjustments) +    The INV and DBA transactions are debits and should be positive (for sales and purchase ledger).  The CRD, PAY, CRA transactions are credits and should be negative (for sales and purchase ledger).     If you sum up all Balance items for a company then this WILL ALWAYS equal the Sales or Purchase Ledger balance  ", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("type")
   public String getType() {
@@ -144,6 +141,7 @@ public class Item {
 
   /**
    * Item original amount in Company currency
+   *
    * @return amountCc
    */
   @NotNull
@@ -164,7 +162,8 @@ public class Item {
   }
 
   /**
-   * Item balance in company currency  
+   * Item balance in company currency
+   *
    * @return balanceCc
    */
   @NotNull
@@ -186,6 +185,7 @@ public class Item {
 
   /**
    * Amount in account currency
+   *
    * @return amountAc
    */
   @NotNull
@@ -207,6 +207,7 @@ public class Item {
 
   /**
    * Outsatnding Balance in account currency
+   *
    * @return balanceAc
    */
   @NotNull
@@ -228,9 +229,10 @@ public class Item {
 
   /**
    * Amount in system currency
+   *
    * @return amountSc
    */
-  @Valid 
+  @Valid
   @Schema(name = "amountSc", description = "Amount in system currency", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("amountSc")
   public BigDecimal getAmountSc() {
@@ -248,9 +250,10 @@ public class Item {
 
   /**
    * Balance in system currency
+   *
    * @return balanceSc
    */
-  @Valid 
+  @Valid
   @Schema(name = "balanceSc", description = "Balance in system currency", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("balanceSc")
   public BigDecimal getBalanceSc() {
@@ -268,9 +271,10 @@ public class Item {
 
   /**
    * Tax amount in Customer/Supplier currency
+   *
    * @return taxAmountAc
    */
-  @Valid 
+  @Valid
   @Schema(name = "taxAmountAc", description = "Tax amount in Customer/Supplier currency", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("taxAmountAc")
   public BigDecimal getTaxAmountAc() {
@@ -288,9 +292,10 @@ public class Item {
 
   /**
    * Tax amount in Company currency
+   *
    * @return taxAmountCc
    */
-  @Valid 
+  @Valid
   @Schema(name = "taxAmountCc", description = "Tax amount in Company currency", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("taxAmountCc")
   public BigDecimal getTaxAmountCc() {
@@ -308,9 +313,10 @@ public class Item {
 
   /**
    * Tax amount in System currency.
+   *
    * @return taxAmountSc
    */
-  @Valid 
+  @Valid
   @Schema(name = "taxAmountSc", description = "Tax amount in System currency.", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("taxAmountSc")
   public BigDecimal getTaxAmountSc() {
@@ -328,9 +334,10 @@ public class Item {
 
   /**
    * User populated reference for the item.  Could be empty.
+   *
    * @return reference
    */
-  @Size(max = 30) 
+  @Size(max = 30)
   @Schema(name = "reference", accessMode = Schema.AccessMode.READ_ONLY, description = "User populated reference for the item.  Could be empty.", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("reference")
   public String getReference() {
@@ -348,6 +355,7 @@ public class Item {
 
   /**
    * The Customer or Supplier reference
+   *
    * @return accountReference
    */
   @NotNull
@@ -369,9 +377,10 @@ public class Item {
 
   /**
    * An internal hash used to indicate current state of item.  Changes between snapshots if the item changes.
+   *
    * @return fingerprint
    */
-  @NotNull 
+  @NotNull
   @Schema(name = "fingerprint", description = "An internal hash used to indicate current state of item.  Changes between snapshots if the item changes.", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("fingerprint")
   public String getFingerprint() {
@@ -389,6 +398,7 @@ public class Item {
 
   /**
    * Indicates if the item has been retained.  See the Company retained days for more information
+   *
    * @return retained
    */
 
@@ -409,6 +419,7 @@ public class Item {
 
   /**
    * true - if the item was non-notified at take-on, i.e. if customer was non-notified when the item was first created.
+   *
    * @return nonNotifiedTakeOn
    */
 
@@ -429,9 +440,10 @@ public class Item {
 
   /**
    * A value that can be guaranteed to be unique and static for each individual extracted Item.    This uniqueKey can be used to find individual items
+   *
    * @return uniqueKey
    */
-  @Size(max = 50) 
+  @Size(max = 50)
   @Schema(name = "uniqueKey", accessMode = Schema.AccessMode.READ_ONLY, description = "A value that can be guaranteed to be unique and static for each individual extracted Item.    This uniqueKey can be used to find individual items", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("uniqueKey")
   public String getUniqueKey() {
@@ -449,9 +461,10 @@ public class Item {
 
   /**
    * Get entryUserName
+   *
    * @return entryUserName
    */
-  @Size(max = 50) 
+  @Size(max = 50)
   @Schema(name = "entryUserName", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("entryUserName")
   public String getEntryUserName() {
@@ -468,10 +481,11 @@ public class Item {
   }
 
   /**
-   * Original document date 
+   * Original document date
+   *
    * @return documentDate
    */
-  @Valid 
+  @Valid
   @Schema(name = "documentDate", description = "Original document date ", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("documentDate")
   public LocalDate getDocumentDate() {
@@ -489,9 +503,10 @@ public class Item {
 
   /**
    * Date item is due.  Typically only populated for debit   items
+   *
    * @return dueDate
    */
-  @Valid 
+  @Valid
   @Schema(name = "dueDate", description = "Date item is due.  Typically only populated for debit   items", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("dueDate")
   public LocalDate getDueDate() {
@@ -509,9 +524,10 @@ public class Item {
 
   /**
    * Date item was physically entered into accounting package (by UserName).
+   *
    * @return entryDate
    */
-  @Valid 
+  @Valid
   @Schema(name = "entryDate", description = "Date item was physically entered into accounting package (by UserName).", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("entryDate")
   public LocalDate getEntryDate() {
@@ -529,9 +545,10 @@ public class Item {
 
   /**
    * Date that Open Accounting first saw the item
+   *
    * @return itemReceivedDate
    */
-  @Valid 
+  @Valid
   @Schema(name = "itemReceivedDate", description = "Date that Open Accounting first saw the item", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("itemReceivedDate")
   public LocalDate getItemReceivedDate() {
@@ -549,6 +566,7 @@ public class Item {
 
   /**
    * Was the item created as part of the take-on
+   *
    * @return takeOn
    */
 
@@ -569,9 +587,10 @@ public class Item {
 
   /**
    * Snapshot ID that created this item.  Always populated.
+   *
    * @return createdId
    */
-  @NotNull 
+  @NotNull
   @Schema(name = "createdId", description = "Snapshot ID that created this item.  Always populated.", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("createdId")
   public Integer getCreatedId() {
@@ -588,7 +607,8 @@ public class Item {
   }
 
   /**
-   * Snapshot ID that updated this item. 
+   * Snapshot ID that updated this item.
+   *
    * @return updatedId
    */
 
@@ -609,6 +629,7 @@ public class Item {
 
   /**
    * Snapshot ID that closed this item. If this ID is populated then then the balance will be 0
+   *
    * @return closedId
    */
 
@@ -629,6 +650,7 @@ public class Item {
 
   /**
    * Snapshot ID that deleted  this item.  Indicates the item went missing
+   *
    * @return deletedId
    */
 
@@ -648,7 +670,8 @@ public class Item {
   }
 
   /**
-   * The account (customer or supplier) name  
+   * The account (customer or supplier) name
+   *
    * @return accountName
    */
 
@@ -669,6 +692,7 @@ public class Item {
 
   /**
    * The customer or supplier snapshot id that created the account
+   *
    * @return accountCreatedId
    */
 
@@ -689,6 +713,7 @@ public class Item {
 
   /**
    * Customer or Supplier currency code.  This will be the currency of the item
+   *
    * @return accountCurrencyCode
    */
 
@@ -709,6 +734,7 @@ public class Item {
 
   /**
    * Is the Customer notified
+   *
    * @return accountNotified
    */
 
@@ -729,6 +755,7 @@ public class Item {
 
   /**
    * Was the Customer auto non-notified - i.e. Customer had a zero balance at take-on
+   *
    * @return accountAutoNonNotified
    */
 
@@ -748,10 +775,11 @@ public class Item {
   }
 
   /**
-   * Future use item level currency field.  Will allow multiple currency items  
+   * Future use item level currency field.  Will allow multiple currency items
+   *
    * @return itemCurrencyCode
    */
-  @Size(max = 3) 
+  @Size(max = 3)
   @Schema(name = "itemCurrencyCode", description = "Future use item level currency field.  Will allow multiple currency items  ", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("itemCurrencyCode")
   public String getItemCurrencyCode() {
@@ -769,9 +797,10 @@ public class Item {
 
   /**
    * Owning company currency code
+   *
    * @return companyCurrencyCode
    */
-  @Size(max = 3) 
+  @Size(max = 3)
   @Schema(name = "companyCurrencyCode", description = "Owning company currency code", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("companyCurrencyCode")
   public String getCompanyCurrencyCode() {
@@ -789,6 +818,7 @@ public class Item {
 
   /**
    * The Company UUID
+   *
    * @return companyId
    */
   @NotNull
@@ -855,44 +885,43 @@ public class Item {
 
   @Override
   public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("class Item {\n");
-    sb.append("    type: ").append(toIndentedString(type)).append("\n");
-    sb.append("    amountCc: ").append(toIndentedString(amountCc)).append("\n");
-    sb.append("    balanceCc: ").append(toIndentedString(balanceCc)).append("\n");
-    sb.append("    amountAc: ").append(toIndentedString(amountAc)).append("\n");
-    sb.append("    balanceAc: ").append(toIndentedString(balanceAc)).append("\n");
-    sb.append("    amountSc: ").append(toIndentedString(amountSc)).append("\n");
-    sb.append("    balanceSc: ").append(toIndentedString(balanceSc)).append("\n");
-    sb.append("    taxAmountAc: ").append(toIndentedString(taxAmountAc)).append("\n");
-    sb.append("    taxAmountCc: ").append(toIndentedString(taxAmountCc)).append("\n");
-    sb.append("    taxAmountSc: ").append(toIndentedString(taxAmountSc)).append("\n");
-    sb.append("    reference: ").append(toIndentedString(reference)).append("\n");
-    sb.append("    accountReference: ").append(toIndentedString(accountReference)).append("\n");
-    sb.append("    fingerprint: ").append(toIndentedString(fingerprint)).append("\n");
-    sb.append("    retained: ").append(toIndentedString(retained)).append("\n");
-    sb.append("    nonNotifiedTakeOn: ").append(toIndentedString(nonNotifiedTakeOn)).append("\n");
-    sb.append("    uniqueKey: ").append(toIndentedString(uniqueKey)).append("\n");
-    sb.append("    entryUserName: ").append(toIndentedString(entryUserName)).append("\n");
-    sb.append("    documentDate: ").append(toIndentedString(documentDate)).append("\n");
-    sb.append("    dueDate: ").append(toIndentedString(dueDate)).append("\n");
-    sb.append("    entryDate: ").append(toIndentedString(entryDate)).append("\n");
-    sb.append("    itemReceivedDate: ").append(toIndentedString(itemReceivedDate)).append("\n");
-    sb.append("    takeOn: ").append(toIndentedString(takeOn)).append("\n");
-    sb.append("    createdId: ").append(toIndentedString(createdId)).append("\n");
-    sb.append("    updatedId: ").append(toIndentedString(updatedId)).append("\n");
-    sb.append("    closedId: ").append(toIndentedString(closedId)).append("\n");
-    sb.append("    deletedId: ").append(toIndentedString(deletedId)).append("\n");
-    sb.append("    accountName: ").append(toIndentedString(accountName)).append("\n");
-    sb.append("    accountCreatedId: ").append(toIndentedString(accountCreatedId)).append("\n");
-    sb.append("    accountCurrencyCode: ").append(toIndentedString(accountCurrencyCode)).append("\n");
-    sb.append("    accountNotified: ").append(toIndentedString(accountNotified)).append("\n");
-    sb.append("    accountAutoNonNotified: ").append(toIndentedString(accountAutoNonNotified)).append("\n");
-    sb.append("    itemCurrencyCode: ").append(toIndentedString(itemCurrencyCode)).append("\n");
-    sb.append("    companyCurrencyCode: ").append(toIndentedString(companyCurrencyCode)).append("\n");
-    sb.append("    companyId: ").append(toIndentedString(companyId)).append("\n");
-    sb.append("}");
-    return sb.toString();
+    String sb = "class Item {\n" +
+        "    type: " + toIndentedString(type) + "\n" +
+        "    amountCc: " + toIndentedString(amountCc) + "\n" +
+        "    balanceCc: " + toIndentedString(balanceCc) + "\n" +
+        "    amountAc: " + toIndentedString(amountAc) + "\n" +
+        "    balanceAc: " + toIndentedString(balanceAc) + "\n" +
+        "    amountSc: " + toIndentedString(amountSc) + "\n" +
+        "    balanceSc: " + toIndentedString(balanceSc) + "\n" +
+        "    taxAmountAc: " + toIndentedString(taxAmountAc) + "\n" +
+        "    taxAmountCc: " + toIndentedString(taxAmountCc) + "\n" +
+        "    taxAmountSc: " + toIndentedString(taxAmountSc) + "\n" +
+        "    reference: " + toIndentedString(reference) + "\n" +
+        "    accountReference: " + toIndentedString(accountReference) + "\n" +
+        "    fingerprint: " + toIndentedString(fingerprint) + "\n" +
+        "    retained: " + toIndentedString(retained) + "\n" +
+        "    nonNotifiedTakeOn: " + toIndentedString(nonNotifiedTakeOn) + "\n" +
+        "    uniqueKey: " + toIndentedString(uniqueKey) + "\n" +
+        "    entryUserName: " + toIndentedString(entryUserName) + "\n" +
+        "    documentDate: " + toIndentedString(documentDate) + "\n" +
+        "    dueDate: " + toIndentedString(dueDate) + "\n" +
+        "    entryDate: " + toIndentedString(entryDate) + "\n" +
+        "    itemReceivedDate: " + toIndentedString(itemReceivedDate) + "\n" +
+        "    takeOn: " + toIndentedString(takeOn) + "\n" +
+        "    createdId: " + toIndentedString(createdId) + "\n" +
+        "    updatedId: " + toIndentedString(updatedId) + "\n" +
+        "    closedId: " + toIndentedString(closedId) + "\n" +
+        "    deletedId: " + toIndentedString(deletedId) + "\n" +
+        "    accountName: " + toIndentedString(accountName) + "\n" +
+        "    accountCreatedId: " + toIndentedString(accountCreatedId) + "\n" +
+        "    accountCurrencyCode: " + toIndentedString(accountCurrencyCode) + "\n" +
+        "    accountNotified: " + toIndentedString(accountNotified) + "\n" +
+        "    accountAutoNonNotified: " + toIndentedString(accountAutoNonNotified) + "\n" +
+        "    itemCurrencyCode: " + toIndentedString(itemCurrencyCode) + "\n" +
+        "    companyCurrencyCode: " + toIndentedString(companyCurrencyCode) + "\n" +
+        "    companyId: " + toIndentedString(companyId) + "\n" +
+        "}";
+    return sb;
   }
 
   /**

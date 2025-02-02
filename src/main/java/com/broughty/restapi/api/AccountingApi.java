@@ -5,50 +5,33 @@
  */
 package com.broughty.restapi.api;
 
-import com.broughty.restapi.model.AgeingBucket;
-import com.broughty.restapi.model.Bank;
-import com.broughty.restapi.model.BankItems;
-import java.math.BigDecimal;
-import com.broughty.restapi.model.Customer;
-import com.broughty.restapi.model.Customers;
-import com.broughty.restapi.model.DataFile;
-import com.broughty.restapi.model.DataFiles;
-import org.springframework.format.annotation.DateTimeFormat;
 import com.broughty.restapi.model.Error;
-import com.broughty.restapi.model.Item;
-import com.broughty.restapi.model.Items;
-import java.time.LocalDate;
-import com.broughty.restapi.model.NominalAccount;
-import com.broughty.restapi.model.PackageInfo;
-import com.broughty.restapi.model.Snapshot;
-import com.broughty.restapi.model.Snapshots;
-import com.broughty.restapi.model.Supplier;
-import com.broughty.restapi.model.Suppliers;
-import io.swagger.v3.oas.annotations.ExternalDocumentation;
+import com.broughty.restapi.model.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import io.swagger.v3.oas.annotations.enums.ParameterIn;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
+import jakarta.annotation.Generated;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.request.NativeWebRequest;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.*;
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import jakarta.annotation.Generated;
 
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-02-02T13:18:41.397887300Z[Europe/London]", comments = "Generator version: 7.11.0")
 @Validated
@@ -100,50 +83,51 @@ public interface AccountingApi {
   );
 
 
-    /**
-     * GET /accounting/companies/{companyId}/agedCreditor : Get aged creditor report
-     * Gets the aged  creditor report - i.e. ages by supplier.  
-     *
-     * @param companyId The main UUID representing the Company.  Static and unique. (required)
-     * @param ageingDate The date field to use for ageing.  Defaults to dueDate. (optional, default to dueDate)
-     * @return OK (status code 200)
-     *         or Access Denied (status code 403)
-     *         or One or more of the resources you referenced could not be found. This might be because your company id is incorrect. (status code 404)
-     *         or There is a problem with our API service. Please try again later. (status code 500)
-     *         or General Client Error.  Check logs and request (status code 4XX)
-     */
-    @Operation(
-        operationId = "accountingGetAgedCreditor",
-        summary = "Get aged creditor report",
-        description = "Gets the aged  creditor report - i.e. ages by supplier.  ",
-        tags = {"aged-creditor"},
-        responses = {
-            @ApiResponse(responseCode = "200", description = "OK", content = {
-                @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = AgeingBucket.class)))
-            }),
-            @ApiResponse(responseCode = "403", description = "Access Denied", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class))
-            }),
-            @ApiResponse(responseCode = "404", description = "One or more of the resources you referenced could not be found. This might be because your company id is incorrect.", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class))
-            }),
-            @ApiResponse(responseCode = "500", description = "There is a problem with our API service. Please try again later.", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class))
-            }),
-            @ApiResponse(responseCode = "4XX", description = "General Client Error.  Check logs and request", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class))
-            })
-        }
-    )
-    @RequestMapping(
-        method = RequestMethod.GET,
-        value = "/accounting/companies/{companyId}/agedCreditor",
-        produces = {"application/json"}
-    )
-    ResponseEntity<List<AgeingBucket>> accountingGetAgedCreditor(
-        @Size(min = 36, max = 36) @Parameter(name = "companyId", description = "The main UUID representing the Company.  Static and unique.", required = true, in = ParameterIn.PATH) @PathVariable("companyId") String companyId,
-        @Parameter(name = "ageingDate", description = "The date field to use for ageing.  Defaults to dueDate.", in = ParameterIn.QUERY) @Valid @RequestParam(value = "ageingDate", required = false, defaultValue = "dueDate") String ageingDate
-    );
+  /**
+   * GET /accounting/companies/{companyId}/agedCreditor : Get aged creditor report
+   * Gets the aged  creditor report - i.e. ages by supplier.
+   *
+   * @param companyId The main UUID representing the Company.  Static and unique. (required)
+   * @param ageingDate The date field to use for ageing.  Defaults to dueDate. (optional, default to dueDate)
+   *
+   * @return OK (status code 200)
+   * or Access Denied (status code 403)
+   * or One or more of the resources you referenced could not be found. This might be because your company id is incorrect. (status code 404)
+   * or There is a problem with our API service. Please try again later. (status code 500)
+   * or General Client Error.  Check logs and request (status code 4XX)
+   */
+  @Operation(
+      operationId = "accountingGetAgedCreditor",
+      summary = "Get aged creditor report",
+      description = "Gets the aged  creditor report - i.e. ages by supplier.  ",
+      tags = {"aged-creditor"},
+      responses = {
+          @ApiResponse(responseCode = "200", description = "OK", content = {
+              @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = AgeingBucket.class)))
+          }),
+          @ApiResponse(responseCode = "403", description = "Access Denied", content = {
+              @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class))
+          }),
+          @ApiResponse(responseCode = "404", description = "One or more of the resources you referenced could not be found. This might be because your company id is incorrect.", content = {
+              @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class))
+          }),
+          @ApiResponse(responseCode = "500", description = "There is a problem with our API service. Please try again later.", content = {
+              @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class))
+          }),
+          @ApiResponse(responseCode = "4XX", description = "General Client Error.  Check logs and request", content = {
+              @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class))
+          })
+      }
+  )
+  @RequestMapping(
+      method = RequestMethod.GET,
+      value = "/accounting/companies/{companyId}/agedCreditor",
+      produces = {"application/json"}
+  )
+  ResponseEntity<List<AgeingBucket>> accountingGetAgedCreditor(
+      @Size(min = 36, max = 36) @Parameter(name = "companyId", description = "The main UUID representing the Company.  Static and unique.", required = true, in = ParameterIn.PATH) @PathVariable("companyId") String companyId,
+      @Parameter(name = "ageingDate", description = "The date field to use for ageing.  Defaults to dueDate.", in = ParameterIn.QUERY) @Valid @RequestParam(value = "ageingDate", required = false, defaultValue = "dueDate") String ageingDate
+  );
 
 
   /**
@@ -153,11 +137,12 @@ public interface AccountingApi {
    * @param companyId The main UUID representing the Company.  Static and unique. (required)
    * @param notified Is the Customer notified - tue, false or include all (optional, default to all)
    * @param ageingDate The date field to use for ageing.  Defaults to dueDate. (optional, default to dueDate)
+   *
    * @return OK (status code 200)
-   *         or Access Denied (status code 403)
-   *         or One or more of the resources you referenced could not be found. This might be because your company id is incorrect. (status code 404)
-   *         or There is a problem with our API service. Please try again later. (status code 500)
-   *         or General Client Error.  Check logs and request (status code 4XX)
+   * or Access Denied (status code 403)
+   * or One or more of the resources you referenced could not be found. This might be because your company id is incorrect. (status code 404)
+   * or There is a problem with our API service. Please try again later. (status code 500)
+   * or General Client Error.  Check logs and request (status code 4XX)
    */
   @Operation(
       operationId = "accountingGetAgedDebtor",
@@ -199,11 +184,12 @@ public interface AccountingApi {
    * Gets the current Snapshot - any company with data must have at least one Snapshot.  This endpoint will return the latest.    The Snapshot ID can be used in the List items and customers/suppliers to deteremine the items and accounts that were created, modified, deleted or closed by this snapshot
    *
    * @param companyId The main UUID representing the Company.  Static and unique. (required)
+   *
    * @return OK (status code 200)
-   *         or Access Denied (status code 403)
-   *         or One or more of the resources you referenced could not be found. This might be because your company id is incorrect. (status code 404)
-   *         or There is a problem with our API service. Please try again later. (status code 500)
-   *         or General Client Error.  Check logs and request (status code 4XX)
+   * or Access Denied (status code 403)
+   * or One or more of the resources you referenced could not be found. This might be because your company id is incorrect. (status code 404)
+   * or There is a problem with our API service. Please try again later. (status code 500)
+   * or General Client Error.  Check logs and request (status code 4XX)
    */
   @Operation(
       operationId = "accountingGetCurrentSnapshot",
@@ -244,10 +230,11 @@ public interface AccountingApi {
    *
    * @param companyId The main UUID representing the Company.  Static and unique. (required)
    * @param customerId The uniqueKey for the Customer.  Data source controlled.  Static and unique.  (required)
+   *
    * @return OK (status code 200)
-   *         or One or more of the resources you referenced could not be found. This might be because your company id is incorrect. (status code 404)
-   *         or There is a problem with our API service. Please try again later. (status code 500)
-   *         or General Client Error.  Check logs and request (status code 4XX)
+   * or One or more of the resources you referenced could not be found. This might be because your company id is incorrect. (status code 404)
+   * or There is a problem with our API service. Please try again later. (status code 500)
+   * or General Client Error.  Check logs and request (status code 4XX)
    */
   @Operation(
       operationId = "accountingGetCustomerById",
@@ -286,11 +273,12 @@ public interface AccountingApi {
    *
    * @param companyId The main UUID representing the Company.  Static and unique. (required)
    * @param dataFileId Data File Id (required)
+   *
    * @return OK (status code 200)
-   *         or Access Denied (status code 403)
-   *         or One or more of the resources you referenced could not be found. This might be because your company id is incorrect. (status code 404)
-   *         or There is a problem with our API service. Please try again later. (status code 500)
-   *         or General Client Error.  Check logs and request (status code 4XX)
+   * or Access Denied (status code 403)
+   * or One or more of the resources you referenced could not be found. This might be because your company id is incorrect. (status code 404)
+   * or There is a problem with our API service. Please try again later. (status code 500)
+   * or General Client Error.  Check logs and request (status code 4XX)
    */
   @Operation(
       operationId = "accountingGetDatafile",
@@ -331,11 +319,12 @@ public interface AccountingApi {
    * Gets the previous snapshot - i.e. the snapshot before the current snapshot.  A company may only have one snapshot so this could return empty
    *
    * @param companyId The main UUID representing the Company.  Static and unique. (required)
+   *
    * @return OK (status code 200)
-   *         or Access Denied (status code 403)
-   *         or One or more of the resources you referenced could not be found. This might be because your company id is incorrect. (status code 404)
-   *         or There is a problem with our API service. Please try again later. (status code 500)
-   *         or General Client Error.  Check logs and request (status code 4XX)
+   * or Access Denied (status code 403)
+   * or One or more of the resources you referenced could not be found. This might be because your company id is incorrect. (status code 404)
+   * or There is a problem with our API service. Please try again later. (status code 500)
+   * or General Client Error.  Check logs and request (status code 4XX)
    */
   @Operation(
       operationId = "accountingGetPreviousSnapshot",
@@ -376,10 +365,11 @@ public interface AccountingApi {
    *
    * @param companyId The main UUID representing the Company.  Static and unique. (required)
    * @param itemKey Unique identifier for the item (required)
+   *
    * @return Extracts (status code 200)
-   *         or One or more of the resources you referenced could not be found. This might be because your company id is incorrect. (status code 404)
-   *         or There is a problem with our API service. Please try again later. (status code 5XX)
-   *         or General Client Error.  Check logs and request (status code 4XX)
+   * or One or more of the resources you referenced could not be found. This might be because your company id is incorrect. (status code 404)
+   * or There is a problem with our API service. Please try again later. (status code 5XX)
+   * or General Client Error.  Check logs and request (status code 4XX)
    */
   @Operation(
       operationId = "accountingGetSalesItem",
@@ -418,10 +408,11 @@ public interface AccountingApi {
    *
    * @param companyId The main UUID representing the Company.  Static and unique. (required)
    * @param supplierId The uniqueKey for the Supplier.  Data soure controlled.  Static and unique.  (required)
+   *
    * @return OK (status code 200)
-   *         or One or more of the resources you referenced could not be found. This might be because your company id is incorrect. (status code 404)
-   *         or There is a problem with our API service. Please try again later. (status code 500)
-   *         or General Client Error.  Check logs and request (status code 4XX)
+   * or One or more of the resources you referenced could not be found. This might be because your company id is incorrect. (status code 404)
+   * or There is a problem with our API service. Please try again later. (status code 500)
+   * or General Client Error.  Check logs and request (status code 4XX)
    */
   @Operation(
       operationId = "accountingGetSupplierById",
@@ -459,11 +450,12 @@ public interface AccountingApi {
    * Lists banks.  The bank accounts are only available for a subset of the native connectors and only pulled if.  the Company.banksAccounts is set to true.    **Note:** This list query is not paged as there will usually only be a handful of bank accounts on the Company
    *
    * @param companyId The main UUID representing the Company.  Static and unqiue (required)
+   *
    * @return OK (status code 200)
-   *         or Access Denied (status code 403)
-   *         or One or more of the resources you referenced could not be found. This might be because your company id is incorrect. (status code 404)
-   *         or There is a problem with our API service. Please try again later. (status code 500)
-   *         or General Client Error.  Check logs and request (status code 4XX)
+   * or Access Denied (status code 403)
+   * or One or more of the resources you referenced could not be found. This might be because your company id is incorrect. (status code 404)
+   * or There is a problem with our API service. Please try again later. (status code 500)
+   * or General Client Error.  Check logs and request (status code 4XX)
    */
   @Operation(
       operationId = "accountingListBanks",
@@ -504,11 +496,12 @@ public interface AccountingApi {
    *
    * @param companyId The main UUID representing the Company.  Static and unqiue (required)
    * @param bankUniqueKey The Bank&#39;s unique key (required)
+   *
    * @return OK (status code 200)
-   *         or Access Denied (status code 403)
-   *         or One or more of the resources you referenced could not be found. This might be because your company id is incorrect. (status code 404)
-   *         or There is a problem with our API service. Please try again later. (status code 500)
-   *         or General Client Error.  Check logs and request (status code 4XX)
+   * or Access Denied (status code 403)
+   * or One or more of the resources you referenced could not be found. This might be because your company id is incorrect. (status code 404)
+   * or There is a problem with our API service. Please try again later. (status code 500)
+   * or General Client Error.  Check logs and request (status code 4XX)
    */
   @Operation(
       operationId = "accountingListBanksItems",
@@ -560,11 +553,12 @@ public interface AccountingApi {
    * @param balanceLt Specify an amount that the balance (company currency) needs to be less than. Can be negative. (optional)
    * @param notified Is the Customer notified - tue, false or include all (optional, default to all)
    * @param notified2 Is the Customer notified - tue, false or include all (optional, default to all)
+   *
    * @return OK (status code 200)
-   *         or Access Denied (status code 403)
-   *         or One or more of the resources you referenced could not be found. This might be because your company id is incorrect. (status code 404)
-   *         or There is a problem with our API service. Please try again later. (status code 500)
-   *         or General Client Error.  Check logs and request (status code 4XX)
+   * or Access Denied (status code 403)
+   * or One or more of the resources you referenced could not be found. This might be because your company id is incorrect. (status code 404)
+   * or There is a problem with our API service. Please try again later. (status code 500)
+   * or General Client Error.  Check logs and request (status code 4XX)
    */
   @Operation(
       operationId = "accountingListCustomers",
@@ -619,11 +613,12 @@ public interface AccountingApi {
    * @param pageSize The number of records to return - defaults to 100 (required)
    * @param companyId The main UUID representing the Company.  Static and unique. (required)
    * @param createdId The SnapshotId that created the item or account (optional)
+   *
    * @return OK (status code 200)
-   *         or Access Denied (status code 403)
-   *         or One or more of the resources you referenced could not be found. This might be because your company id is incorrect. (status code 404)
-   *         or There is a problem with our API service. Please try again later. (status code 500)
-   *         or General Client Error.  Check logs and request (status code 4XX)
+   * or Access Denied (status code 403)
+   * or One or more of the resources you referenced could not be found. This might be because your company id is incorrect. (status code 404)
+   * or There is a problem with our API service. Please try again later. (status code 500)
+   * or General Client Error.  Check logs and request (status code 4XX)
    */
   @Operation(
       operationId = "accountingListDatafiles",
@@ -667,11 +662,12 @@ public interface AccountingApi {
    * Lists nominal items.      The nominal accounts are only available for a subset of the native connectors and only pulled if.  the Company.trialBalance is set to true.
    *
    * @param companyId The main UUID representing the Company.  Static and unqiue (required)
+   *
    * @return OK (status code 200)
-   *         or Access Denied (status code 403)
-   *         or One or more of the resources you referenced could not be found. This might be because your company id is incorrect. (status code 404)
-   *         or There is a problem with our API service. Please try again later. (status code 500)
-   *         or General Client Error.  Check logs and request (status code 4XX)
+   * or Access Denied (status code 403)
+   * or One or more of the resources you referenced could not be found. This might be because your company id is incorrect. (status code 404)
+   * or There is a problem with our API service. Please try again later. (status code 500)
+   * or General Client Error.  Check logs and request (status code 4XX)
    */
   @Operation(
       operationId = "accountingListNominal",
@@ -722,10 +718,11 @@ public interface AccountingApi {
    * @param deletedId The Snapshot ID that deleted the item or account (optional)
    * @param balanceGtEq Specify an amount that the balance (company currency) needs to be greater than or equal to. Can be negative. (optional)
    * @param balanceLt Specify an amount that the balance (company currency) needs to be less than. Can be negative. (optional)
+   *
    * @return List Purchase items (supplier items) (status code 200)
-   *         or One or more of the resources you referenced could not be found. This might be because your company id is incorrect. (status code 404)
-   *         or There is a problem with our API service. Please try again later. (status code 500)
-   *         or General Client Error.  Check logs and request (status code 4XX)
+   * or One or more of the resources you referenced could not be found. This might be because your company id is incorrect. (status code 404)
+   * or There is a problem with our API service. Please try again later. (status code 500)
+   * or General Client Error.  Check logs and request (status code 4XX)
    */
   @Operation(
       operationId = "accountingListPurchaseItems",
@@ -785,11 +782,12 @@ public interface AccountingApi {
    * @param balanceGtEq Specify an amount that the balance (company currency) needs to be greater than or equal to. Can be negative. (optional)
    * @param balanceLt Specify an amount that the balance (company currency) needs to be less than. Can be negative. (optional)
    * @param notified Is the Customer notified - tue, false or include all (optional, default to all)
+   *
    * @return Returns back 0 or more sales items for the Company.  The Company must have 1 or more Snapshots. (status code 200)
-   *         or Access Denied (status code 401)
-   *         or One or more of the resources you referenced could not be found. This might be because your company id is incorrect. (status code 404)
-   *         or There is a problem with our API service. Please try again later. (status code 500)
-   *         or General Client Error.  Check logs and request (status code 4XX)
+   * or Access Denied (status code 401)
+   * or One or more of the resources you referenced could not be found. This might be because your company id is incorrect. (status code 404)
+   * or There is a problem with our API service. Please try again later. (status code 500)
+   * or General Client Error.  Check logs and request (status code 4XX)
    */
   @Operation(
       operationId = "accountingListSalesItems",
@@ -847,10 +845,11 @@ public interface AccountingApi {
    * @param snapshotDateGtEq A date string to limit the Snapshot list to being greater to or equal to (i.e. on or after) - based on the Snapshot receivedDate. (optional)
    * @param snapshotDateLt A date string to limit the Snapshot list to being less than (i.e. before) - based on the Snapshot receivedDate. (optional)
    * @param snapshotSalesBalanceChange true to restrict list of Snaphots to those that had a balance change based on the previous sales ledger Balance in Company currency compared to this Snapshots balance (startBalanceCc !&#x3D; balanceCc ) (optional)
+   *
    * @return OK (status code 200)
-   *         or One or more of the resources you referenced could not be found. This might be because your company id is incorrect. (status code 404)
-   *         or There is a problem with our API service. Please try again later. (status code 500)
-   *         or General Client Error.  Check logs and request (status code 4XX)
+   * or One or more of the resources you referenced could not be found. This might be because your company id is incorrect. (status code 404)
+   * or There is a problem with our API service. Please try again later. (status code 500)
+   * or General Client Error.  Check logs and request (status code 4XX)
    */
   @Operation(
       operationId = "accountingListSnapshots",
@@ -902,10 +901,11 @@ public interface AccountingApi {
    * @param deletedId The Snapshot ID that deleted the item or account (optional)
    * @param balanceLt Specify an amount that the balance (company currency) needs to be less than. Can be negative. (optional)
    * @param balanceGtEq Specify an amount that the balance (company currency) needs to be greater than or equal to. Can be negative. (optional)
+   *
    * @return OK (status code 200)
-   *         or One or more of the resources you referenced could not be found. This might be because your company id is incorrect. (status code 404)
-   *         or There is a problem with our API service. Please try again later. (status code 500)
-   *         or General Client Error.  Check logs and request (status code 4XX)
+   * or One or more of the resources you referenced could not be found. This might be because your company id is incorrect. (status code 404)
+   * or There is a problem with our API service. Please try again later. (status code 500)
+   * or General Client Error.  Check logs and request (status code 4XX)
    */
   @Operation(
       operationId = "accountingListSuppliers",

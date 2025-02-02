@@ -1,21 +1,16 @@
 package com.broughty.restapi.model;
 
-import java.net.URI;
-import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import java.math.BigDecimal;
-import java.time.OffsetDateTime;
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.annotation.Generated;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Size;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.lang.Nullable;
+
+import java.math.BigDecimal;
 import java.time.OffsetDateTime;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.*;
-import io.swagger.v3.oas.annotations.media.Schema;
-
-
-import java.util.*;
-import jakarta.annotation.Generated;
+import java.util.Objects;
 
 /**
  * The Items in the Nominal Account   - Sales accounts: Record all sales, or separate them by product group or product - Wages: Recorded in the cash book and wages account in the nominal ledger - Assets: Recorded in the nominal ledger - Expenses: Recorded in the nominal ledger - Payments: Recorded in the nominal ledger - Accruals and prepayments: Recorded in the nominal ledger
@@ -49,6 +44,7 @@ public class NominalItem {
 
   /**
    * Transaction identifier
+   *
    * @return id
    */
 
@@ -69,9 +65,10 @@ public class NominalItem {
 
   /**
    * Code for the transaction
+   *
    * @return code
    */
-  @Size(max = 30) 
+  @Size(max = 30)
   @Schema(name = "code", description = "Code for the transaction", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("code")
   public String getCode() {
@@ -89,9 +86,10 @@ public class NominalItem {
 
   /**
    * Name of transaction
+   *
    * @return name
    */
-  @Size(max = 60) 
+  @Size(max = 60)
   @Schema(name = "name", description = "Name of transaction", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("name")
   public String getName() {
@@ -109,9 +107,10 @@ public class NominalItem {
 
   /**
    * Populated if a debit transaction
+   *
    * @return debitCc
    */
-  @Valid 
+  @Valid
   @Schema(name = "debitCc", description = "Populated if a debit transaction", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("debitCc")
   public BigDecimal getDebitCc() {
@@ -129,9 +128,10 @@ public class NominalItem {
 
   /**
    * Get creditCc
+   *
    * @return creditCc
    */
-  @Valid 
+  @Valid
   @Schema(name = "creditCc", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("creditCc")
   public BigDecimal getCreditCc() {
@@ -149,6 +149,7 @@ public class NominalItem {
 
   /**
    * Id of the Snapshot that created the transaction
+   *
    * @return createdId
    */
 
@@ -169,9 +170,10 @@ public class NominalItem {
 
   /**
    * Owning Company Id
+   *
    * @return companyId
    */
-  @Size(min = 36, max = 36) 
+  @Size(min = 36, max = 36)
   @Schema(name = "companyId", description = "Owning Company Id", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("companyId")
   public String getCompanyId() {
@@ -189,9 +191,10 @@ public class NominalItem {
 
   /**
    * Get periodDate
+   *
    * @return periodDate
    */
-  @Valid 
+  @Valid
   @Schema(name = "periodDate", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("periodDate")
   public OffsetDateTime getPeriodDate() {
@@ -228,18 +231,17 @@ public class NominalItem {
 
   @Override
   public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("class NominalItem {\n");
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    code: ").append(toIndentedString(code)).append("\n");
-    sb.append("    name: ").append(toIndentedString(name)).append("\n");
-    sb.append("    debitCc: ").append(toIndentedString(debitCc)).append("\n");
-    sb.append("    creditCc: ").append(toIndentedString(creditCc)).append("\n");
-    sb.append("    createdId: ").append(toIndentedString(createdId)).append("\n");
-    sb.append("    companyId: ").append(toIndentedString(companyId)).append("\n");
-    sb.append("    periodDate: ").append(toIndentedString(periodDate)).append("\n");
-    sb.append("}");
-    return sb.toString();
+    String sb = "class NominalItem {\n" +
+        "    id: " + toIndentedString(id) + "\n" +
+        "    code: " + toIndentedString(code) + "\n" +
+        "    name: " + toIndentedString(name) + "\n" +
+        "    debitCc: " + toIndentedString(debitCc) + "\n" +
+        "    creditCc: " + toIndentedString(creditCc) + "\n" +
+        "    createdId: " + toIndentedString(createdId) + "\n" +
+        "    companyId: " + toIndentedString(companyId) + "\n" +
+        "    periodDate: " + toIndentedString(periodDate) + "\n" +
+        "}";
+    return sb;
   }
 
   /**

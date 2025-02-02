@@ -1,19 +1,15 @@
 package com.broughty.restapi.model;
 
-import java.net.URI;
-import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import java.math.BigDecimal;
-import org.springframework.lang.Nullable;
-import java.time.OffsetDateTime;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.*;
 import io.swagger.v3.oas.annotations.media.Schema;
-
-
-import java.util.*;
 import jakarta.annotation.Generated;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import org.springframework.lang.Nullable;
+
+import java.math.BigDecimal;
+import java.util.Objects;
 
 /**
  * A Snapshot is at Company Level and represents the state of the originating data source at a point in time.  The balances are all at either Company or System level
@@ -117,6 +113,7 @@ public class Snapshot {
 
   /**
    * The DataFile id that resulted in the snapshot
+   *
    * @return dataFileId
    */
 
@@ -137,9 +134,10 @@ public class Snapshot {
 
   /**
    * Id of the Snapshot.  Used as the createdId, closedId, updatedId and deletedId in Customer, Supplier and Items records.
+   *
    * @return snapshotId
    */
-  @NotNull 
+  @NotNull
   @Schema(name = "snapshotId", description = "Id of the Snapshot.  Used as the createdId, closedId, updatedId and deletedId in Customer, Supplier and Items records.", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("snapshotId")
   public Integer getSnapshotId() {
@@ -157,6 +155,7 @@ public class Snapshot {
 
   /**
    * Get dataFileReceived
+   *
    * @return dataFileReceived
    */
 
@@ -177,6 +176,7 @@ public class Snapshot {
 
   /**
    * Get receivedDate
+   *
    * @return receivedDate
    */
 
@@ -197,6 +197,7 @@ public class Snapshot {
 
   /**
    * Get loadStarted
+   *
    * @return loadStarted
    */
 
@@ -217,6 +218,7 @@ public class Snapshot {
 
   /**
    * Get loadFinished
+   *
    * @return loadFinished
    */
 
@@ -237,6 +239,7 @@ public class Snapshot {
 
   /**
    * Get extractDate
+   *
    * @return extractDate
    */
 
@@ -257,9 +260,10 @@ public class Snapshot {
 
   /**
    * Get balanceCc
+   *
    * @return balanceCc
    */
-  @Valid 
+  @Valid
   @Schema(name = "balanceCc", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("balanceCc")
   public BigDecimal getBalanceCc() {
@@ -277,9 +281,10 @@ public class Snapshot {
 
   /**
    * Slaes ledger balance in Company currency as a result of this snapshot.
+   *
    * @return balanceSc
    */
-  @Valid 
+  @Valid
   @Schema(name = "balanceSc", description = "Slaes ledger balance in Company currency as a result of this snapshot.", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("balanceSc")
   public BigDecimal getBalanceSc() {
@@ -297,9 +302,10 @@ public class Snapshot {
 
   /**
    * Get purchaseBalanceCc
+   *
    * @return purchaseBalanceCc
    */
-  @Valid 
+  @Valid
   @Schema(name = "purchaseBalanceCc", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("purchaseBalanceCc")
   public BigDecimal getPurchaseBalanceCc() {
@@ -317,9 +323,10 @@ public class Snapshot {
 
   /**
    * Get purchaseBalanceSc
+   *
    * @return purchaseBalanceSc
    */
-  @Valid 
+  @Valid
   @Schema(name = "purchaseBalanceSc", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("purchaseBalanceSc")
   public BigDecimal getPurchaseBalanceSc() {
@@ -337,9 +344,10 @@ public class Snapshot {
 
   /**
    * Get overdueCc
+   *
    * @return overdueCc
    */
-  @Valid 
+  @Valid
   @Schema(name = "overdueCc", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("overdueCc")
   public BigDecimal getOverdueCc() {
@@ -357,9 +365,10 @@ public class Snapshot {
 
   /**
    * Get overdueSc
+   *
    * @return overdueSc
    */
-  @Valid 
+  @Valid
   @Schema(name = "overdueSc", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("overdueSc")
   public BigDecimal getOverdueSc() {
@@ -377,9 +386,10 @@ public class Snapshot {
 
   /**
    * Get balanceExcCc
+   *
    * @return balanceExcCc
    */
-  @Valid 
+  @Valid
   @Schema(name = "balanceExcCc", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("balanceExcCc")
   public BigDecimal getBalanceExcCc() {
@@ -397,9 +407,10 @@ public class Snapshot {
 
   /**
    * Get balanceExcSc
+   *
    * @return balanceExcSc
    */
-  @Valid 
+  @Valid
   @Schema(name = "balanceExcSc", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("balanceExcSc")
   public BigDecimal getBalanceExcSc() {
@@ -417,6 +428,7 @@ public class Snapshot {
 
   /**
    * Get deletedItems
+   *
    * @return deletedItems
    */
 
@@ -437,6 +449,7 @@ public class Snapshot {
 
   /**
    * Get modifiedItems
+   *
    * @return modifiedItems
    */
 
@@ -457,6 +470,7 @@ public class Snapshot {
 
   /**
    * Get newItems
+   *
    * @return newItems
    */
 
@@ -477,6 +491,7 @@ public class Snapshot {
 
   /**
    * Get cashBalanceCc
+   *
    * @return cashBalanceCc
    */
 
@@ -497,6 +512,7 @@ public class Snapshot {
 
   /**
    * Get cashBalanceSc
+   *
    * @return cashBalanceSc
    */
 
@@ -517,6 +533,7 @@ public class Snapshot {
 
   /**
    * Get cashNewBalanceCc
+   *
    * @return cashNewBalanceCc
    */
 
@@ -537,6 +554,7 @@ public class Snapshot {
 
   /**
    * Get cashNewBalanceSc
+   *
    * @return cashNewBalanceSc
    */
 
@@ -557,6 +575,7 @@ public class Snapshot {
 
   /**
    * Get deletedPurchaseItems
+   *
    * @return deletedPurchaseItems
    */
 
@@ -577,6 +596,7 @@ public class Snapshot {
 
   /**
    * Get modifiedPurchaseItems
+   *
    * @return modifiedPurchaseItems
    */
 
@@ -597,6 +617,7 @@ public class Snapshot {
 
   /**
    * Get newPurchaseItems
+   *
    * @return newPurchaseItems
    */
 
@@ -617,9 +638,10 @@ public class Snapshot {
 
   /**
    * Get invoiceBalanceCc
+   *
    * @return invoiceBalanceCc
    */
-  @Valid 
+  @Valid
   @Schema(name = "invoiceBalanceCc", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("invoiceBalanceCc")
   public BigDecimal getInvoiceBalanceCc() {
@@ -637,9 +659,10 @@ public class Snapshot {
 
   /**
    * Get invoiceBalanceSc
+   *
    * @return invoiceBalanceSc
    */
-  @Valid 
+  @Valid
   @Schema(name = "invoiceBalanceSc", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("invoiceBalanceSc")
   public BigDecimal getInvoiceBalanceSc() {
@@ -657,6 +680,7 @@ public class Snapshot {
 
   /**
    * Get invoiceChangedCc
+   *
    * @return invoiceChangedCc
    */
 
@@ -677,6 +701,7 @@ public class Snapshot {
 
   /**
    * Get invoiceChangedSc
+   *
    * @return invoiceChangedSc
    */
 
@@ -697,9 +722,10 @@ public class Snapshot {
 
   /**
    * Get invoiceClosedCc
+   *
    * @return invoiceClosedCc
    */
-  @Valid 
+  @Valid
   @Schema(name = "invoiceClosedCc", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("invoiceClosedCc")
   public BigDecimal getInvoiceClosedCc() {
@@ -717,6 +743,7 @@ public class Snapshot {
 
   /**
    * Get invoiceDeletedCc
+   *
    * @return invoiceDeletedCc
    */
 
@@ -737,6 +764,7 @@ public class Snapshot {
 
   /**
    * Get invoiceDeletedSc
+   *
    * @return invoiceDeletedSc
    */
 
@@ -757,6 +785,7 @@ public class Snapshot {
 
   /**
    * Get invoiceMissing
+   *
    * @return invoiceMissing
    */
 
@@ -777,6 +806,7 @@ public class Snapshot {
 
   /**
    * Get invoiceNew
+   *
    * @return invoiceNew
    */
 
@@ -797,9 +827,10 @@ public class Snapshot {
 
   /**
    * The Company Identifier UUID
+   *
    * @return companyId
    */
-  @Size(min = 36, max = 36) 
+  @Size(min = 36, max = 36)
   @Schema(name = "companyId", description = "The Company Identifier UUID", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("companyId")
   public String getCompanyId() {
@@ -817,9 +848,10 @@ public class Snapshot {
 
   /**
    * Sales ledger balance in Company Currency before this Snapshot.
+   *
    * @return startBalanceCc
    */
-  @Valid 
+  @Valid
   @Schema(name = "startBalanceCc", description = "Sales ledger balance in Company Currency before this Snapshot.", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("startBalanceCc")
   public BigDecimal getStartBalanceCc() {
@@ -837,9 +869,10 @@ public class Snapshot {
 
   /**
    * Sales ledger balance in System Currency before this Snapshot
+   *
    * @return startBalanceSc
    */
-  @Valid 
+  @Valid
   @Schema(name = "startBalanceSc", description = "Sales ledger balance in System Currency before this Snapshot", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("startBalanceSc")
   public BigDecimal getStartBalanceSc() {
@@ -857,9 +890,10 @@ public class Snapshot {
 
   /**
    * This snapshot id
+   *
    * @return id
    */
-  @Valid 
+  @Valid
   @Schema(name = "id", description = "This snapshot id", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("id")
   public BigDecimal getId() {
@@ -926,48 +960,47 @@ public class Snapshot {
 
   @Override
   public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("class Snapshot {\n");
-    sb.append("    dataFileId: ").append(toIndentedString(dataFileId)).append("\n");
-    sb.append("    snapshotId: ").append(toIndentedString(snapshotId)).append("\n");
-    sb.append("    dataFileReceived: ").append(toIndentedString(dataFileReceived)).append("\n");
-    sb.append("    receivedDate: ").append(toIndentedString(receivedDate)).append("\n");
-    sb.append("    loadStarted: ").append(toIndentedString(loadStarted)).append("\n");
-    sb.append("    loadFinished: ").append(toIndentedString(loadFinished)).append("\n");
-    sb.append("    extractDate: ").append(toIndentedString(extractDate)).append("\n");
-    sb.append("    balanceCc: ").append(toIndentedString(balanceCc)).append("\n");
-    sb.append("    balanceSc: ").append(toIndentedString(balanceSc)).append("\n");
-    sb.append("    purchaseBalanceCc: ").append(toIndentedString(purchaseBalanceCc)).append("\n");
-    sb.append("    purchaseBalanceSc: ").append(toIndentedString(purchaseBalanceSc)).append("\n");
-    sb.append("    overdueCc: ").append(toIndentedString(overdueCc)).append("\n");
-    sb.append("    overdueSc: ").append(toIndentedString(overdueSc)).append("\n");
-    sb.append("    balanceExcCc: ").append(toIndentedString(balanceExcCc)).append("\n");
-    sb.append("    balanceExcSc: ").append(toIndentedString(balanceExcSc)).append("\n");
-    sb.append("    deletedItems: ").append(toIndentedString(deletedItems)).append("\n");
-    sb.append("    modifiedItems: ").append(toIndentedString(modifiedItems)).append("\n");
-    sb.append("    newItems: ").append(toIndentedString(newItems)).append("\n");
-    sb.append("    cashBalanceCc: ").append(toIndentedString(cashBalanceCc)).append("\n");
-    sb.append("    cashBalanceSc: ").append(toIndentedString(cashBalanceSc)).append("\n");
-    sb.append("    cashNewBalanceCc: ").append(toIndentedString(cashNewBalanceCc)).append("\n");
-    sb.append("    cashNewBalanceSc: ").append(toIndentedString(cashNewBalanceSc)).append("\n");
-    sb.append("    deletedPurchaseItems: ").append(toIndentedString(deletedPurchaseItems)).append("\n");
-    sb.append("    modifiedPurchaseItems: ").append(toIndentedString(modifiedPurchaseItems)).append("\n");
-    sb.append("    newPurchaseItems: ").append(toIndentedString(newPurchaseItems)).append("\n");
-    sb.append("    invoiceBalanceCc: ").append(toIndentedString(invoiceBalanceCc)).append("\n");
-    sb.append("    invoiceBalanceSc: ").append(toIndentedString(invoiceBalanceSc)).append("\n");
-    sb.append("    invoiceChangedCc: ").append(toIndentedString(invoiceChangedCc)).append("\n");
-    sb.append("    invoiceChangedSc: ").append(toIndentedString(invoiceChangedSc)).append("\n");
-    sb.append("    invoiceClosedCc: ").append(toIndentedString(invoiceClosedCc)).append("\n");
-    sb.append("    invoiceDeletedCc: ").append(toIndentedString(invoiceDeletedCc)).append("\n");
-    sb.append("    invoiceDeletedSc: ").append(toIndentedString(invoiceDeletedSc)).append("\n");
-    sb.append("    invoiceMissing: ").append(toIndentedString(invoiceMissing)).append("\n");
-    sb.append("    invoiceNew: ").append(toIndentedString(invoiceNew)).append("\n");
-    sb.append("    companyId: ").append(toIndentedString(companyId)).append("\n");
-    sb.append("    startBalanceCc: ").append(toIndentedString(startBalanceCc)).append("\n");
-    sb.append("    startBalanceSc: ").append(toIndentedString(startBalanceSc)).append("\n");
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("}");
-    return sb.toString();
+    String sb = "class Snapshot {\n" +
+        "    dataFileId: " + toIndentedString(dataFileId) + "\n" +
+        "    snapshotId: " + toIndentedString(snapshotId) + "\n" +
+        "    dataFileReceived: " + toIndentedString(dataFileReceived) + "\n" +
+        "    receivedDate: " + toIndentedString(receivedDate) + "\n" +
+        "    loadStarted: " + toIndentedString(loadStarted) + "\n" +
+        "    loadFinished: " + toIndentedString(loadFinished) + "\n" +
+        "    extractDate: " + toIndentedString(extractDate) + "\n" +
+        "    balanceCc: " + toIndentedString(balanceCc) + "\n" +
+        "    balanceSc: " + toIndentedString(balanceSc) + "\n" +
+        "    purchaseBalanceCc: " + toIndentedString(purchaseBalanceCc) + "\n" +
+        "    purchaseBalanceSc: " + toIndentedString(purchaseBalanceSc) + "\n" +
+        "    overdueCc: " + toIndentedString(overdueCc) + "\n" +
+        "    overdueSc: " + toIndentedString(overdueSc) + "\n" +
+        "    balanceExcCc: " + toIndentedString(balanceExcCc) + "\n" +
+        "    balanceExcSc: " + toIndentedString(balanceExcSc) + "\n" +
+        "    deletedItems: " + toIndentedString(deletedItems) + "\n" +
+        "    modifiedItems: " + toIndentedString(modifiedItems) + "\n" +
+        "    newItems: " + toIndentedString(newItems) + "\n" +
+        "    cashBalanceCc: " + toIndentedString(cashBalanceCc) + "\n" +
+        "    cashBalanceSc: " + toIndentedString(cashBalanceSc) + "\n" +
+        "    cashNewBalanceCc: " + toIndentedString(cashNewBalanceCc) + "\n" +
+        "    cashNewBalanceSc: " + toIndentedString(cashNewBalanceSc) + "\n" +
+        "    deletedPurchaseItems: " + toIndentedString(deletedPurchaseItems) + "\n" +
+        "    modifiedPurchaseItems: " + toIndentedString(modifiedPurchaseItems) + "\n" +
+        "    newPurchaseItems: " + toIndentedString(newPurchaseItems) + "\n" +
+        "    invoiceBalanceCc: " + toIndentedString(invoiceBalanceCc) + "\n" +
+        "    invoiceBalanceSc: " + toIndentedString(invoiceBalanceSc) + "\n" +
+        "    invoiceChangedCc: " + toIndentedString(invoiceChangedCc) + "\n" +
+        "    invoiceChangedSc: " + toIndentedString(invoiceChangedSc) + "\n" +
+        "    invoiceClosedCc: " + toIndentedString(invoiceClosedCc) + "\n" +
+        "    invoiceDeletedCc: " + toIndentedString(invoiceDeletedCc) + "\n" +
+        "    invoiceDeletedSc: " + toIndentedString(invoiceDeletedSc) + "\n" +
+        "    invoiceMissing: " + toIndentedString(invoiceMissing) + "\n" +
+        "    invoiceNew: " + toIndentedString(invoiceNew) + "\n" +
+        "    companyId: " + toIndentedString(companyId) + "\n" +
+        "    startBalanceCc: " + toIndentedString(startBalanceCc) + "\n" +
+        "    startBalanceSc: " + toIndentedString(startBalanceSc) + "\n" +
+        "    id: " + toIndentedString(id) + "\n" +
+        "}";
+    return sb;
   }
 
   /**
