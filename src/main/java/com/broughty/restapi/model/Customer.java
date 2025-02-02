@@ -2,25 +2,19 @@ package com.broughty.restapi.model;
 
 import java.net.URI;
 import java.util.Objects;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-
 import java.math.BigDecimal;
 import java.time.LocalDate;
-
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.lang.Nullable;
-
 import java.time.OffsetDateTime;
-
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 
 import java.util.*;
-
 import jakarta.annotation.Generated;
 
 /**
@@ -28,7 +22,7 @@ import jakarta.annotation.Generated;
  */
 
 @Schema(name = "Customer", description = "The Sales Ledger Account - i.e. a Customer/Debtor All Customer records on the Sales Ledger will be pulled.")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-02-01T19:26:55.251389700Z[Europe/London]", comments = "Generator version: 7.11.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-02-02T13:18:41.397887300Z[Europe/London]", comments = "Generator version: 7.11.0")
 public class Customer {
 
   private @Nullable String accountName;
@@ -139,10 +133,9 @@ public class Customer {
 
   /**
    * Customer or supplier name
-   *
    * @return accountName
    */
-  @Size(max = 60)
+  @Size(max = 60) 
   @Schema(name = "accountName", description = "Customer or supplier name", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("accountName")
   public String getAccountName() {
@@ -160,7 +153,6 @@ public class Customer {
 
   /**
    * The ID of the custo mer- a Unique static identifier
-   *
    * @return uniqueKey
    */
   @NotNull
@@ -182,7 +174,6 @@ public class Customer {
 
   /**
    * Get reference
-   *
    * @return reference
    */
   @NotNull
@@ -204,10 +195,9 @@ public class Customer {
 
   /**
    * Address line 1 field
-   *
    * @return address1
    */
-  @Size(max = 60)
+  @Size(max = 60) 
   @Schema(name = "address1", description = "Address line 1 field", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("address1")
   public String getAddress1() {
@@ -225,10 +215,9 @@ public class Customer {
 
   /**
    * Address line 2 field
-   *
    * @return address2
    */
-  @Size(max = 60)
+  @Size(max = 60) 
   @Schema(name = "address2", description = "Address line 2 field", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("address2")
   public String getAddress2() {
@@ -246,10 +235,9 @@ public class Customer {
 
   /**
    * Address line 3 field
-   *
    * @return address3
    */
-  @Size(max = 60)
+  @Size(max = 60) 
   @Schema(name = "address3", description = "Address line 3 field", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("address3")
   public String getAddress3() {
@@ -267,10 +255,9 @@ public class Customer {
 
   /**
    * Address line 4 field
-   *
    * @return address4
    */
-  @Size(max = 60)
+  @Size(max = 60) 
   @Schema(name = "address4", description = "Address line 4 field", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("address4")
   public String getAddress4() {
@@ -288,10 +275,9 @@ public class Customer {
 
   /**
    * ISO country code - although may contain non ISO country codes
-   *
    * @return countryCode
    */
-  @Size(max = 2)
+  @Size(max = 2) 
   @Schema(name = "countryCode", description = "ISO country code - although may contain non ISO country codes", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("countryCode")
   public String getCountryCode() {
@@ -309,10 +295,9 @@ public class Customer {
 
   /**
    * Postal code/Zip code
-   *
    * @return postCode
    */
-  @Size(max = 20)
+  @Size(max = 20) 
   @Schema(name = "postCode", description = "Postal code/Zip code", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("postCode")
   public String getPostCode() {
@@ -330,10 +315,9 @@ public class Customer {
 
   /**
    * Contact details - usually a name
-   *
    * @return contact
    */
-  @Size(max = 60)
+  @Size(max = 60) 
   @Schema(name = "contact", description = "Contact details - usually a name", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("contact")
   public String getContact() {
@@ -351,10 +335,9 @@ public class Customer {
 
   /**
    * Get email
-   *
    * @return email
    */
-  @Size(max = 128)
+  @Size(max = 128) 
   @Schema(name = "email", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("email")
   public String getEmail() {
@@ -372,10 +355,9 @@ public class Customer {
 
   /**
    * Get emailCopy
-   *
    * @return emailCopy
    */
-  @Size(max = 128)
+  @Size(max = 128) 
   @Schema(name = "email_copy", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("email_copy")
   public String getEmailCopy() {
@@ -393,10 +375,9 @@ public class Customer {
 
   /**
    * The contacts phone number
-   *
    * @return contactPhone
    */
-  @Size(max = 25)
+  @Size(max = 25) 
   @Schema(name = "contactPhone", description = "The contacts phone number", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("contactPhone")
   public String getContactPhone() {
@@ -414,10 +395,9 @@ public class Customer {
 
   /**
    * Fax or other contact number
-   *
    * @return fax
    */
-  @Size(max = 25)
+  @Size(max = 25) 
   @Schema(name = "fax", description = "Fax or other contact number", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("fax")
   public String getFax() {
@@ -435,10 +415,9 @@ public class Customer {
 
   /**
    * Internal hash code of Customer.  Will change when the customer changes
-   *
    * @return fingerprint
    */
-  @Size(max = 32)
+  @Size(max = 32) 
   @Schema(name = "fingerprint", description = "Internal hash code of Customer.  Will change when the customer changes", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("fingerprint")
   public String getFingerprint() {
@@ -456,10 +435,9 @@ public class Customer {
 
   /**
    * The Customer balance as reported in the origiu
-   *
    * @return balancePackage
    */
-  @Valid
+  @Valid 
   @Schema(name = "balancePackage", description = "The Customer balance as reported in the origiu", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("balancePackage")
   public BigDecimal getBalancePackage() {
@@ -477,10 +455,9 @@ public class Customer {
 
   /**
    * Sales balance in account currency - i.e. the currencyCode.
-   *
    * @return balanceAc
    */
-  @Valid
+  @Valid 
   @Schema(name = "balanceAc", description = "Sales balance in account currency - i.e. the currencyCode.", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("balanceAc")
   public BigDecimal getBalanceAc() {
@@ -498,10 +475,9 @@ public class Customer {
 
   /**
    * Sales balance in System  currency.
-   *
    * @return balanceSc
    */
-  @Valid
+  @Valid 
   @Schema(name = "balanceSc", description = "Sales balance in System  currency.", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("balanceSc")
   public BigDecimal getBalanceSc() {
@@ -519,10 +495,9 @@ public class Customer {
 
   /**
    * Sales balance in Company currency.
-   *
    * @return balanceCc
    */
-  @Valid
+  @Valid 
   @Schema(name = "balanceCc", description = "Sales balance in Company currency.", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("balanceCc")
   public BigDecimal getBalanceCc() {
@@ -540,10 +515,9 @@ public class Customer {
 
   /**
    * Overdue balance in Customer  currency.
-   *
    * @return overdueAc
    */
-  @Valid
+  @Valid 
   @Schema(name = "overdueAc", description = "Overdue balance in Customer  currency.", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("overdueAc")
   public BigDecimal getOverdueAc() {
@@ -561,10 +535,9 @@ public class Customer {
 
   /**
    * Originating data source credit limit value on account currency.
-   *
    * @return creditLimitAc
    */
-  @Valid
+  @Valid 
   @Schema(name = "creditLimitAc", description = "Originating data source credit limit value on account currency.", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("creditLimitAc")
   public BigDecimal getCreditLimitAc() {
@@ -582,10 +555,9 @@ public class Customer {
 
   /**
    * Originating data source credit limit value in company currency.
-   *
    * @return creditLimitCc
    */
-  @Valid
+  @Valid 
   @Schema(name = "creditLimitCc", description = "Originating data source credit limit value in company currency.", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("creditLimitCc")
   public BigDecimal getCreditLimitCc() {
@@ -603,10 +575,9 @@ public class Customer {
 
   /**
    * Originating data source credit limit value in System currency.
-   *
    * @return creditLimitSc
    */
-  @Valid
+  @Valid 
   @Schema(name = "creditLimitSc", description = "Originating data source credit limit value in System currency.", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("creditLimitSc")
   public BigDecimal getCreditLimitSc() {
@@ -624,10 +595,9 @@ public class Customer {
 
   /**
    * Overdue balance in Company currency.
-   *
    * @return overdueCc
    */
-  @Valid
+  @Valid 
   @Schema(name = "overdueCc", description = "Overdue balance in Company currency.", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("overdueCc")
   public BigDecimal getOverdueCc() {
@@ -645,10 +615,9 @@ public class Customer {
 
   /**
    * Overdue balance in System currency.
-   *
    * @return overdueSc
    */
-  @Valid
+  @Valid 
   @Schema(name = "overdueSc", description = "Overdue balance in System currency.", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("overdueSc")
   public BigDecimal getOverdueSc() {
@@ -666,7 +635,6 @@ public class Customer {
 
   /**
    * Company Currency Code
-   *
    * @return companyCurrencyCode
    */
 
@@ -687,10 +655,9 @@ public class Customer {
 
   /**
    * Snapshot Customer creation date- i.e. the Snapshot createdId date
-   *
    * @return createdDate
    */
-  @Valid
+  @Valid 
   @Schema(name = "createdDate", description = "Snapshot Customer creation date- i.e. the Snapshot createdId date", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("createdDate")
   public LocalDate getCreatedDate() {
@@ -707,8 +674,7 @@ public class Customer {
   }
 
   /**
-   * True if the Customer was created by the take-on (first) Snapshot for the Company.
-   *
+   * True if the Customer was created by the take-on (first) Snapshot for the Company.  
    * @return takeOn
    */
 
@@ -729,7 +695,6 @@ public class Customer {
 
   /**
    * Snapshot that created the Customer
-   *
    * @return createdId
    */
 
@@ -750,7 +715,6 @@ public class Customer {
 
   /**
    * Snapshot that closed the Customer,  Customers aren't typically closed
-   *
    * @return closedId
    */
 
@@ -771,7 +735,6 @@ public class Customer {
 
   /**
    * Snapshot that updated the Customer.  Balance changes do not count as a change
-   *
    * @return updatedId
    */
 
@@ -792,7 +755,6 @@ public class Customer {
 
   /**
    * Snapshot that deleted the Customer.  This will usually be null
-   *
    * @return deletedId
    */
 
@@ -813,10 +775,9 @@ public class Customer {
 
   /**
    * Extra field information.  Populated slightly differently depending on originating data source.
-   *
    * @return externalRef1
    */
-  @Size(max = 255)
+  @Size(max = 255) 
   @Schema(name = "externalRef1", description = "Extra field information.  Populated slightly differently depending on originating data source.", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("externalRef1")
   public String getExternalRef1() {
@@ -834,10 +795,9 @@ public class Customer {
 
   /**
    * Extra field information.  Populated slightly differently depending on originating data source.
-   *
    * @return externalRef2
    */
-  @Size(max = 255)
+  @Size(max = 255) 
   @Schema(name = "externalRef2", description = "Extra field information.  Populated slightly differently depending on originating data source.", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("externalRef2")
   public String getExternalRef2() {
@@ -855,10 +815,9 @@ public class Customer {
 
   /**
    * Extra field information.  Populated slightly differently depending on originating data source.
-   *
    * @return externalRef3
    */
-  @Size(max = 255)
+  @Size(max = 255) 
   @Schema(name = "externalRef3", description = "Extra field information.  Populated slightly differently depending on originating data source.", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("externalRef3")
   public String getExternalRef3() {
@@ -876,10 +835,9 @@ public class Customer {
 
   /**
    * ISO currency code.  All items on the Customer will be in this currency.    **Note** - some data sources will allow the field to be populated with non ISO currency codes.
-   *
    * @return currencyCode
    */
-  @Size(max = 3)
+  @Size(max = 3) 
   @Schema(name = "currencyCode", description = "ISO currency code.  All items on the Customer will be in this currency.    **Note** - some data sources will allow the field to be populated with non ISO currency codes.", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("currencyCode")
   public String getCurrencyCode() {
@@ -897,7 +855,6 @@ public class Customer {
 
   /**
    * true if Customer is notified
-   *
    * @return accountNotified
    */
 
@@ -918,7 +875,6 @@ public class Customer {
 
   /**
    * true if Customer non notified at take-on due to zero balance.
-   *
    * @return accountAutoNonNotified
    */
 
@@ -939,7 +895,6 @@ public class Customer {
 
   /**
    * true - If Customer flagged as Export.  This is not set by the originating data source, but is a manual process by an Open Accounting back office user.
-   *
    * @return export
    */
 
@@ -960,10 +915,9 @@ public class Customer {
 
   /**
    * The owning Company ID UUID
-   *
    * @return companyId
    */
-  @Size(min = 36, max = 36)
+  @Size(min = 36, max = 36) 
   @Schema(name = "companyId", description = "The owning Company ID UUID", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("companyId")
   public String getCompanyId() {
@@ -981,10 +935,9 @@ public class Customer {
 
   /**
    * Company registration number
-   *
    * @return vatNumber
    */
-  @Size(max = 20)
+  @Size(max = 20) 
   @Schema(name = "vatNumber", description = "Company registration number", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("vatNumber")
   public String getVatNumber() {
@@ -1002,10 +955,9 @@ public class Customer {
 
   /**
    * DUNS number
-   *
    * @return dunsNumber
    */
-  @Size(max = 20)
+  @Size(max = 20) 
   @Schema(name = "dunsNumber", description = "DUNS number", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("dunsNumber")
   public String getDunsNumber() {
@@ -1023,10 +975,9 @@ public class Customer {
 
   /**
    * Optional terms code
-   *
    * @return termsCode
    */
-  @Size(max = 2)
+  @Size(max = 2) 
   @Schema(name = "termsCode", description = "Optional terms code", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("termsCode")
   public String getTermsCode() {
@@ -1044,10 +995,9 @@ public class Customer {
 
   /**
    * Optional terms description for the code - i.e. 90 days
-   *
    * @return termsDescription
    */
-  @Size(max = 60)
+  @Size(max = 60) 
   @Schema(name = "termsDescription", description = "Optional terms description for the code - i.e. 90 days", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("termsDescription")
   public String getTermsDescription() {

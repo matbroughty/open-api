@@ -1,0 +1,2 @@
+curl -X GET --location "http://localhost:8080/accounting/companies/698C05F-1A28-4398-9E5A-65A8C62BA84B/customers?page=1" \
+    -H "Accept: application/json"

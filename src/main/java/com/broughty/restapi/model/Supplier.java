@@ -2,23 +2,17 @@ package com.broughty.restapi.model;
 
 import java.net.URI;
 import java.util.Objects;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-
 import java.math.BigDecimal;
-
 import org.springframework.lang.Nullable;
-
 import java.time.OffsetDateTime;
-
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 
 import java.util.*;
-
 import jakarta.annotation.Generated;
 
 /**
@@ -26,7 +20,7 @@ import jakarta.annotation.Generated;
  */
 
 @Schema(name = "Supplier", description = "The Supplier record represents a supplier on the Purchase Ledger.  All Supplier records on the Purchase Ledger (accounts payable) should be extracted.  Supplier Items are pulledbut the balance of the open creditor items is not so it is vital the Supplier.Balance is extracted from the accounting package.   The OA Service will truncate all field values if they exceed the maximum size limit.")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-02-01T19:26:55.251389700Z[Europe/London]", comments = "Generator version: 7.11.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-02-02T13:18:41.397887300Z[Europe/London]", comments = "Generator version: 7.11.0")
 public class Supplier {
 
   private String accountName;
@@ -102,7 +96,6 @@ public class Supplier {
 
   /**
    * Supplier name
-   *
    * @return accountName
    */
   @NotNull
@@ -123,8 +116,7 @@ public class Supplier {
   }
 
   /**
-   * A value that can be guaranteed to be unique and static for each extracted Supplier per Company
-   *
+   *    A value that can be guaranteed to be unique and static for each extracted Supplier per Company
    * @return uniqueKey
    */
   @NotNull
@@ -146,10 +138,9 @@ public class Supplier {
 
   /**
    * Supplier reference
-   *
    * @return reference
    */
-  @Size(max = 30)
+  @Size(max = 30) 
   @Schema(name = "reference", description = "Supplier reference", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("reference")
   public String getReference() {
@@ -167,10 +158,9 @@ public class Supplier {
 
   /**
    * Address Line 1
-   *
    * @return address1
    */
-  @Size(max = 60)
+  @Size(max = 60) 
   @Schema(name = "address1", description = "Address Line 1", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("address1")
   public String getAddress1() {
@@ -188,7 +178,6 @@ public class Supplier {
 
   /**
    * Address Line 3
-   *
    * @return address3
    */
 
@@ -209,7 +198,6 @@ public class Supplier {
 
   /**
    * Get address4
-   *
    * @return address4
    */
 
@@ -230,7 +218,6 @@ public class Supplier {
 
   /**
    * Get countryCode
-   *
    * @return countryCode
    */
 
@@ -251,10 +238,9 @@ public class Supplier {
 
   /**
    * Get postCode
-   *
    * @return postCode
    */
-  @Size(max = 20)
+  @Size(max = 20) 
   @Schema(name = "postCode", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("postCode")
   public String getPostCode() {
@@ -272,7 +258,6 @@ public class Supplier {
 
   /**
    * Get contact
-   *
    * @return contact
    */
 
@@ -293,7 +278,6 @@ public class Supplier {
 
   /**
    * Get email
-   *
    * @return email
    */
 
@@ -314,7 +298,6 @@ public class Supplier {
 
   /**
    * Get contactPhone
-   *
    * @return contactPhone
    */
 
@@ -335,7 +318,6 @@ public class Supplier {
 
   /**
    * Get fax
-   *
    * @return fax
    */
 
@@ -356,7 +338,6 @@ public class Supplier {
 
   /**
    * Get fingerprint
-   *
    * @return fingerprint
    */
 
@@ -377,10 +358,9 @@ public class Supplier {
 
   /**
    * Get balancePackage
-   *
    * @return balancePackage
    */
-  @Valid
+  @Valid 
   @Schema(name = "balancePackage", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("balancePackage")
   public BigDecimal getBalancePackage() {
@@ -398,10 +378,9 @@ public class Supplier {
 
   /**
    * Get balanceAc
-   *
    * @return balanceAc
    */
-  @Valid
+  @Valid 
   @Schema(name = "balanceAc", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("balanceAc")
   public BigDecimal getBalanceAc() {
@@ -419,10 +398,9 @@ public class Supplier {
 
   /**
    * Get balanceCc
-   *
    * @return balanceCc
    */
-  @Valid
+  @Valid 
   @Schema(name = "balanceCc", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("balanceCc")
   public BigDecimal getBalanceCc() {
@@ -440,10 +418,9 @@ public class Supplier {
 
   /**
    * Get balanceSc
-   *
    * @return balanceSc
    */
-  @Valid
+  @Valid 
   @Schema(name = "balanceSc", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("balanceSc")
   public BigDecimal getBalanceSc() {
@@ -461,10 +438,9 @@ public class Supplier {
 
   /**
    * Get overdueAc
-   *
    * @return overdueAc
    */
-  @Valid
+  @Valid 
   @Schema(name = "overdueAc", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("overdueAc")
   public BigDecimal getOverdueAc() {
@@ -482,10 +458,9 @@ public class Supplier {
 
   /**
    * Get overdueCc
-   *
    * @return overdueCc
    */
-  @Valid
+  @Valid 
   @Schema(name = "overdueCc", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("overdueCc")
   public BigDecimal getOverdueCc() {
@@ -503,10 +478,9 @@ public class Supplier {
 
   /**
    * Get overdueSc
-   *
    * @return overdueSc
    */
-  @Valid
+  @Valid 
   @Schema(name = "overdueSc", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("overdueSc")
   public BigDecimal getOverdueSc() {
@@ -524,7 +498,6 @@ public class Supplier {
 
   /**
    * Get ledgerCurrencyCode
-   *
    * @return ledgerCurrencyCode
    */
 
@@ -545,7 +518,6 @@ public class Supplier {
 
   /**
    * Get itemReceivedDate
-   *
    * @return itemReceivedDate
    */
 
@@ -566,7 +538,6 @@ public class Supplier {
 
   /**
    * Get takeOn
-   *
    * @return takeOn
    */
 
@@ -587,7 +558,6 @@ public class Supplier {
 
   /**
    * Get itemCreatedId
-   *
    * @return itemCreatedId
    */
 
@@ -608,7 +578,6 @@ public class Supplier {
 
   /**
    * Get externalRef1
-   *
    * @return externalRef1
    */
 
@@ -629,7 +598,6 @@ public class Supplier {
 
   /**
    * Get currencyCode
-   *
    * @return currencyCode
    */
 
@@ -650,10 +618,9 @@ public class Supplier {
 
   /**
    * 2nd line of address
-   *
    * @return address2
    */
-  @Size(max = 60)
+  @Size(max = 60) 
   @Schema(name = "address2", description = "2nd line of address", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("address2")
   public String getAddress2() {

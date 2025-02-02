@@ -3,7 +3,7 @@ info:
   version: '1.0'
   title: accounting
   summary: Open Accounting Base accounting data schema
-  description: "Allows access to the standardized accounts data from Open Accounting originating data sources.  These could be native desktop or cloud connectors, Universal Adaptor data files or third party integration connectors.\r\n\r\nThis API is read-only.  The data cannot be modified outside of the originating data source. \r\n\r\nBefore using these endpoints the Company Id must have been retrieved and the Company should have at least one Snapshot (for most of the accounting endpoints to return any meaningful data).\r\n\r\nThe following records all contain links back to the Snapshot that created them.\r\n\r\n- Customer\r\n- Supplier\r\n- Item\r\n- PackageInfo\r\n- Bank\r\n- BankItem\r\n\r\nUsing the following links to the Snaphot Id it is possible to drill into the Snapshot through the following fields:\r\n\r\n- createdId : The Snapshot that created the record. Fixed.\r\n- updatedId : The last snaphost to update the record - will change with later updates to a record.\r\n- closedId : The snapshot that closed the record - i.e. for items when balance goes to zero\r\n- deletedId : The snaphost where an Item (mainly concerns sales and purchase items) wasn't pulled \r\n\r\n| Endpoints | Description |\r\n| :- |:- |\r\n| Customers | Access all customer/debtor information |\r\n| Suppliers | Access all creditor/supplier information |\r\n| Aged Debtor | Aged Debtor report based on Customers and Sales Items |\r\n| Aged Creditor | Aged Creditor report based on Suppliers and Purchase Items |\r\n| Package Info | Access data about the connection and company as taken from originating data source |\r\n| Sales Items | Access all sales ledger Item transactions from the originating data source. |\r\n| Purchase Items | Access all purchase ledger Item transactions from the originating data source. |\r\n| Snapshot | Access all Snapshot information - these are the balance snapshots from a particular data load |\r\n| Data Files | Access the raw data from the originating data source.  The Data File will be converted to a Snapshot and is in a standard format |\r\n| Banks | Access the banks and items.  Only available if the Company has bank extraction enabled |\r\n| Nominal Ledger | Access the trial balance items.  Only available if the Company has nominal ledger enabled |\r\n"
+  description: "Allows access to the standardized accounts data from Open Accounting originating data sources.  These could be native desktop or cloud connectors, Universal Adaptor data files or third party integration connectors.\r\n\r\nThis API is read-only.  The data cannot be modified outside of the originating data source. \r\n\r\nBefore using these endpoints the Company Id must have been retrieved and the Company should have at least one Snapshot (for most of the accounting endpoints to return any meaningful data).\r\n\r\nThe following records all contain links back to the Snapshot that created them.\r\n\r\n- Customer\r\n- Supplier\r\n- Item\r\n- PackageInfo\r\n- Bank\r\n- BankItem\r\n\r\nUsing the following links to the Snaphot Id it is possible to drill into the Snapshot through the following fields:\r\n\r\n- createdId : The Snapshot that created the record. Fixed.\r\n- updatedId : The last Snaphost to update the record - will change with later updates to a record.\r\n- closedId : The Snapshot that closed the record - i.e. for items when balance goes to zero.\r\n- deletedId : The snaphost where an Item (mainly concerns sales and purchase items) wasn't pulled. \r\n\r\n| Endpoints | Description |\r\n| :- |:- |\r\n| Customers | Access all customer/debtor information |\r\n| Suppliers | Access all creditor/supplier information |\r\n| Aged Debtor | Aged Debtor report based on Customers and Sales Items |\r\n| Aged Creditor | Aged Creditor report based on Suppliers and Purchase Items |\r\n| Package Info | Access data about the connection and company as taken from originating data source |\r\n| Sales Items | Access all sales ledger Item transactions from the originating data source. |\r\n| Purchase Items | Access all purchase ledger Item transactions from the originating data source. |\r\n| Snapshot | Access all Snapshot information - these are the balance snapshots from a particular data load |\r\n| Data Files | Access the raw data from the originating data source.  The Data File will be converted to a Snapshot and is in a standard format |\r\n| Banks | Access the banks and items.  Only available if the Company has bank extraction enabled |\r\n| Nominal Ledger | Access the trial balance items.  Only available if the Company has nominal ledger enabled |\r\n"
   termsOfService: 'https://www.lendscape.com/'
   contact:
     name: Lendscape
@@ -29,7 +29,7 @@ paths:
 
         The query params allow selection of items by the Snapshot id for created, closed, updated and deleted ID's as well as non-notified etc.
 
-        Using this endpoint in conjuction with the Snapshot endpoints allows a detailed granular view of movements by snapshot date.
+        Using this endpoint in conjuction with the Snapshot endpoints allows a detailed granular view of movements by Snapshot date.
       operationId: accounting-list-sales-items
       parameters:
         - $ref: '#/components/parameters/page'
@@ -153,10 +153,9 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  company:
-                    $ref: '#/components/schemas/PackageInfo'
+                $ref: '#/components/schemas/PackageInfo'
+        '403':
+          $ref: '#/components/responses/Access-Denied'
         '404':
           $ref: '#/components/responses/Not-Found'
         '500':
@@ -366,8 +365,8 @@ paths:
       description: Gets a customer by the unique Customer id
       operationId: accounting-get-customer-by-id
       parameters:
-        - $ref: '#/components/parameters/customerId'
         - $ref: '#/components/parameters/companyId'
+        - $ref: '#/components/parameters/customerId'
       responses:
         '200':
           description: OK
@@ -416,8 +415,8 @@ paths:
       tags:
         - list-snapshot
         - mvp
-      summary: List snapshots
-      description: "List all snapshots - these are records of updates from the originating data source and contain balance and movement details comparing the current snapshot to the previous snapshot\r\n"
+      summary: List Snapshots
+      description: "List all Snapshots - these are records of updates from the originating data source and contain balance and movement details comparing the current Snapshot to the previous Snapshot\r\n"
       operationId: accounting-list-snapshots
       parameters:
         - $ref: '#/components/parameters/page'
@@ -506,7 +505,7 @@ paths:
         - current-snapshot
         - mvp
       summary: Get current snapshot
-      description: "Gets the current snapshot - any company with data must have at least one snapshot.  This endpoint will return the latest.\r\n\r\nThe Snapshot ID can be used in the List items and customers/suppliers to deteremine the items and accounts that were created, modified, deleted or closed by this snapshot"
+      description: "Gets the current Snapshot - any company with data must have at least one Snapshot.  This endpoint will return the latest.\r\n\r\nThe Snapshot ID can be used in the List items and customers/suppliers to deteremine the items and accounts that were created, modified, deleted or closed by this snapshot"
       operationId: accounting-get-current-snapshot
       parameters:
         - $ref: '#/components/parameters/companyId'
@@ -752,7 +751,7 @@ components:
       description: The Snapshot ID that updated the item or account
       required: false
       schema:
-        type: string
+        type: integer
     balanceGtEq:
       name: balanceGtEq
       in: query
@@ -831,7 +830,7 @@ components:
     companyId:
       name: companyId
       in: path
-      description: The main UUID representing the Company.  Static and unqiue
+      description: The main UUID representing the Company.  Static and unique.
       required: true
       schema:
         type: string
@@ -842,7 +841,7 @@ components:
     customerId:
       name: customerId
       in: path
-      description: 'The uniqueKey for the Customer.  Data soure controlled.  Static and unique. '
+      description: 'The uniqueKey for the Customer.  Data source controlled.  Static and unique. '
       required: true
       schema:
         type: string
@@ -913,7 +912,8 @@ components:
             $ref: '#/components/schemas/Error'
   schemas:
     Items:
-      title: items
+      title: Items
+      description: Sales and Purchase items
       allOf:
         - type: object
           properties:
@@ -1293,7 +1293,10 @@ components:
           industryType: COMPANY
           packageInfo: BUSINESS/DEMO
     Customers:
-      title: customers
+      title: Customers
+      description: |-
+        The Customers records represents a customer\debtor on the Sales Ledger. All Customer records on the Sales Ledger will be pulled.  It is possible to subsequently non-notify the Customer - see the Lending API - but the Customer will still be pulled.
+
       examples:
         - results:
             - accountName: Hausser Corp
@@ -1355,6 +1358,8 @@ components:
               items:
                 $ref: '#/components/schemas/Customer'
         - $ref: '#/components/schemas/Paginginfo'
+      x-tags:
+        - cutomer
     Customer:
       type: object
       description: |-
@@ -2353,17 +2358,33 @@ components:
         - $ref: '#/components/schemas/PagingInfo'
     Error:
       type: object
+      description: Describes an Error from the OA API service
       properties:
-        statusCode:
+        status:
           type: integer
-        service:
+          description: HTTP status code
+          examples:
+            - 500
+        timestamp:
           type: string
-        errorMessage:
+          description: Timestamp of error
+          examples:
+            - '2025-02-02T12:41:46.697+00:00'
+        error:
           type: string
           description: Error message string
-        retryable:
+          examples:
+            - Internal Server Error
+        path:
           type: string
-          description: Can the API call be retried.
+          description: The API path
+          examples:
+            - /accounting/companies/698C05F-1A28-4398-9E5A-65A8C62BA84B/customers/A1D001
+      examples:
+        - status: 500
+          timestamp: '2025-02-02T12:41:46.697+00:00'
+          error: Internal Server Error
+          path: /accounting/companies/698C05F-1A28-4398-9E5A-65A8C62BA84B/customers/A1D001
       x-examples:
         Example 1:
           statusCode: 0

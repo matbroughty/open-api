@@ -4,15 +4,11 @@ import java.net.URI;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-
 import java.math.BigDecimal;
 import java.time.LocalDate;
-
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.lang.Nullable;
-
 import java.time.OffsetDateTime;
-
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -26,7 +22,7 @@ import jakarta.annotation.Generated;
  */
 
 @Schema(name = "Item", description = "The Item record represents all open, changed and closed items on the Sales Ledger (Customer items) and Purchase Ledger (Supplier items).  An open item is either an item where the balance is zero or where the close date is a date in the past.   The Item record will include all Debits (Invoices, Debit Adjustments), Credits (Credit Notes, Credit Adjustments, Discounts) and Cash on both the Sales and Purchase ledger - see Transaction Type.    It is expected that the various account transaction types will be    Transaction Type.    It is expected that the various account transaction types present in the various account packages/ERP systems will be mapped to the five OA transaction types.  The transaction type is stored in the item#TYPE field.  A 3 character string field that accepts the following:  INV  (Invoices)  CRD (Credit Notes)  PAY (Cash, Cheque, etc.)  CRA (Credit Adjustments)  DBA (Debit Adjustments)  The INV and DBA transactions are debits and should be positive (for sales and purchase ledger).  The CRD, PAY, CRA transactions are credits and should be negative (for sales and purchase ledger).   Only the Ledger Item Amount and Balance in the original Customer or Supplier currency are pulled – the OA laoding service completes further currency conversions.  The currency of the item is derived from the owning Supplier or Customer.  It is assumed that when an Item's Balance is zero that it is closed.   The OA Service will truncate all field values if they exceed the maximum size limit.")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-02-01T19:26:55.251389700Z[Europe/London]", comments = "Generator version: 7.11.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-02-02T13:18:41.397887300Z[Europe/London]", comments = "Generator version: 7.11.0")
 public class Item {
 
   private String type;
@@ -130,7 +126,7 @@ public class Item {
    * Transaction Type.  It is expected that the various account transaction types present in the various account packages/ERP systems will be mapped to the five Open Accounting transaction types.    A 3 character string field that accepts the following:    - INV  (Invoices) +  - CRD (Credit Notes) -  - PAY (Cash, Cheque, etc.) -  - CRA (Credit Adjustments) -  - DBA (Debit Adjustments) +    The INV and DBA transactions are debits and should be positive (for sales and purchase ledger).  The CRD, PAY, CRA transactions are credits and should be negative (for sales and purchase ledger).     If you sum up all Balance items for a company then this WILL ALWAYS equal the Sales or Purchase Ledger balance  
    * @return type
    */
-  @Size(min = 3, max = 3)
+  @Size(min = 3, max = 3) 
   @Schema(name = "type", accessMode = Schema.AccessMode.READ_ONLY, description = "Transaction Type.  It is expected that the various account transaction types present in the various account packages/ERP systems will be mapped to the five Open Accounting transaction types.    A 3 character string field that accepts the following:    - INV  (Invoices) +  - CRD (Credit Notes) -  - PAY (Cash, Cheque, etc.) -  - CRA (Credit Adjustments) -  - DBA (Debit Adjustments) +    The INV and DBA transactions are debits and should be positive (for sales and purchase ledger).  The CRD, PAY, CRA transactions are credits and should be negative (for sales and purchase ledger).     If you sum up all Balance items for a company then this WILL ALWAYS equal the Sales or Purchase Ledger balance  ", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("type")
   public String getType() {
@@ -168,8 +164,7 @@ public class Item {
   }
 
   /**
-   * Item balance in company currency
-   *
+   * Item balance in company currency  
    * @return balanceCc
    */
   @NotNull
@@ -191,7 +186,6 @@ public class Item {
 
   /**
    * Amount in account currency
-   *
    * @return amountAc
    */
   @NotNull
@@ -213,7 +207,6 @@ public class Item {
 
   /**
    * Outsatnding Balance in account currency
-   *
    * @return balanceAc
    */
   @NotNull
@@ -235,10 +228,9 @@ public class Item {
 
   /**
    * Amount in system currency
-   *
    * @return amountSc
    */
-  @Valid
+  @Valid 
   @Schema(name = "amountSc", description = "Amount in system currency", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("amountSc")
   public BigDecimal getAmountSc() {
@@ -256,10 +248,9 @@ public class Item {
 
   /**
    * Balance in system currency
-   *
    * @return balanceSc
    */
-  @Valid
+  @Valid 
   @Schema(name = "balanceSc", description = "Balance in system currency", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("balanceSc")
   public BigDecimal getBalanceSc() {
@@ -277,10 +268,9 @@ public class Item {
 
   /**
    * Tax amount in Customer/Supplier currency
-   *
    * @return taxAmountAc
    */
-  @Valid
+  @Valid 
   @Schema(name = "taxAmountAc", description = "Tax amount in Customer/Supplier currency", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("taxAmountAc")
   public BigDecimal getTaxAmountAc() {
@@ -298,10 +288,9 @@ public class Item {
 
   /**
    * Tax amount in Company currency
-   *
    * @return taxAmountCc
    */
-  @Valid
+  @Valid 
   @Schema(name = "taxAmountCc", description = "Tax amount in Company currency", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("taxAmountCc")
   public BigDecimal getTaxAmountCc() {
@@ -319,10 +308,9 @@ public class Item {
 
   /**
    * Tax amount in System currency.
-   *
    * @return taxAmountSc
    */
-  @Valid
+  @Valid 
   @Schema(name = "taxAmountSc", description = "Tax amount in System currency.", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("taxAmountSc")
   public BigDecimal getTaxAmountSc() {
@@ -342,7 +330,7 @@ public class Item {
    * User populated reference for the item.  Could be empty.
    * @return reference
    */
-  @Size(max = 30)
+  @Size(max = 30) 
   @Schema(name = "reference", accessMode = Schema.AccessMode.READ_ONLY, description = "User populated reference for the item.  Could be empty.", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("reference")
   public String getReference() {
@@ -360,7 +348,6 @@ public class Item {
 
   /**
    * The Customer or Supplier reference
-   *
    * @return accountReference
    */
   @NotNull
@@ -384,7 +371,7 @@ public class Item {
    * An internal hash used to indicate current state of item.  Changes between snapshots if the item changes.
    * @return fingerprint
    */
-  @NotNull
+  @NotNull 
   @Schema(name = "fingerprint", description = "An internal hash used to indicate current state of item.  Changes between snapshots if the item changes.", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("fingerprint")
   public String getFingerprint() {
@@ -444,7 +431,7 @@ public class Item {
    * A value that can be guaranteed to be unique and static for each individual extracted Item.    This uniqueKey can be used to find individual items
    * @return uniqueKey
    */
-  @Size(max = 50)
+  @Size(max = 50) 
   @Schema(name = "uniqueKey", accessMode = Schema.AccessMode.READ_ONLY, description = "A value that can be guaranteed to be unique and static for each individual extracted Item.    This uniqueKey can be used to find individual items", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("uniqueKey")
   public String getUniqueKey() {
@@ -462,10 +449,9 @@ public class Item {
 
   /**
    * Get entryUserName
-   *
    * @return entryUserName
    */
-  @Size(max = 50)
+  @Size(max = 50) 
   @Schema(name = "entryUserName", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("entryUserName")
   public String getEntryUserName() {
@@ -485,7 +471,7 @@ public class Item {
    * Original document date 
    * @return documentDate
    */
-  @Valid
+  @Valid 
   @Schema(name = "documentDate", description = "Original document date ", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("documentDate")
   public LocalDate getDocumentDate() {
@@ -503,10 +489,9 @@ public class Item {
 
   /**
    * Date item is due.  Typically only populated for debit   items
-   *
    * @return dueDate
    */
-  @Valid
+  @Valid 
   @Schema(name = "dueDate", description = "Date item is due.  Typically only populated for debit   items", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("dueDate")
   public LocalDate getDueDate() {
@@ -524,10 +509,9 @@ public class Item {
 
   /**
    * Date item was physically entered into accounting package (by UserName).
-   *
    * @return entryDate
    */
-  @Valid
+  @Valid 
   @Schema(name = "entryDate", description = "Date item was physically entered into accounting package (by UserName).", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("entryDate")
   public LocalDate getEntryDate() {
@@ -545,10 +529,9 @@ public class Item {
 
   /**
    * Date that Open Accounting first saw the item
-   *
    * @return itemReceivedDate
    */
-  @Valid
+  @Valid 
   @Schema(name = "itemReceivedDate", description = "Date that Open Accounting first saw the item", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("itemReceivedDate")
   public LocalDate getItemReceivedDate() {
@@ -586,10 +569,9 @@ public class Item {
 
   /**
    * Snapshot ID that created this item.  Always populated.
-   *
    * @return createdId
    */
-  @NotNull
+  @NotNull 
   @Schema(name = "createdId", description = "Snapshot ID that created this item.  Always populated.", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("createdId")
   public Integer getCreatedId() {
@@ -627,7 +609,6 @@ public class Item {
 
   /**
    * Snapshot ID that closed this item. If this ID is populated then then the balance will be 0
-   *
    * @return closedId
    */
 
@@ -688,7 +669,6 @@ public class Item {
 
   /**
    * The customer or supplier snapshot id that created the account
-   *
    * @return accountCreatedId
    */
 
@@ -729,7 +709,6 @@ public class Item {
 
   /**
    * Is the Customer notified
-   *
    * @return accountNotified
    */
 
@@ -769,11 +748,10 @@ public class Item {
   }
 
   /**
-   * Future use item level currency field.  Will allow multiple currency items
-   *
+   * Future use item level currency field.  Will allow multiple currency items  
    * @return itemCurrencyCode
    */
-  @Size(max = 3)
+  @Size(max = 3) 
   @Schema(name = "itemCurrencyCode", description = "Future use item level currency field.  Will allow multiple currency items  ", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("itemCurrencyCode")
   public String getItemCurrencyCode() {
@@ -791,10 +769,9 @@ public class Item {
 
   /**
    * Owning company currency code
-   *
    * @return companyCurrencyCode
    */
-  @Size(max = 3)
+  @Size(max = 3) 
   @Schema(name = "companyCurrencyCode", description = "Owning company currency code", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("companyCurrencyCode")
   public String getCompanyCurrencyCode() {
@@ -812,7 +789,6 @@ public class Item {
 
   /**
    * The Company UUID
-   *
    * @return companyId
    */
   @NotNull

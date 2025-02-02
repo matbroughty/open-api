@@ -2,34 +2,28 @@ package com.broughty.restapi.model;
 
 import java.net.URI;
 import java.util.Objects;
-
 import com.broughty.restapi.model.PaginginfoLinks;
 import com.broughty.restapi.model.Supplier;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 import org.springframework.lang.Nullable;
-
 import java.time.OffsetDateTime;
-
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 
 import java.util.*;
-
 import jakarta.annotation.Generated;
 
 /**
  * Suppliers
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-02-01T19:26:55.251389700Z[Europe/London]", comments = "Generator version: 7.11.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-02-02T13:18:41.397887300Z[Europe/London]", comments = "Generator version: 7.11.0")
 public class Suppliers {
 
   private @Nullable Integer pageNumber;
@@ -50,7 +44,6 @@ public class Suppliers {
 
   /**
    * Get pageNumber
-   *
    * @return pageNumber
    */
 
@@ -71,7 +64,6 @@ public class Suppliers {
 
   /**
    * Get pageSize
-   *
    * @return pageSize
    */
 
@@ -92,7 +84,6 @@ public class Suppliers {
 
   /**
    * Get totalResults
-   *
    * @return totalResults
    */
 
@@ -113,10 +104,9 @@ public class Suppliers {
 
   /**
    * Get links
-   *
    * @return links
    */
-  @Valid
+  @Valid 
   @Schema(name = "_links", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("_links")
   public PaginginfoLinks getLinks() {
@@ -142,10 +132,9 @@ public class Suppliers {
 
   /**
    * Get results
-   *
    * @return results
    */
-  @Valid
+  @Valid 
   @Schema(name = "results", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("results")
   public List<@Valid Supplier> getResults() {

@@ -2,119 +2,112 @@ package com.broughty.restapi.model;
 
 import java.net.URI;
 import java.util.Objects;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import org.springframework.lang.Nullable;
-
 import java.time.OffsetDateTime;
-
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 
 import java.util.*;
-
 import jakarta.annotation.Generated;
 
 /**
- * Error
+ * Describes an Error from the OA API service
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-02-01T19:26:55.251389700Z[Europe/London]", comments = "Generator version: 7.11.0")
+@Schema(name = "Error", description = "Describes an Error from the OA API service")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-02-02T13:18:41.397887300Z[Europe/London]", comments = "Generator version: 7.11.0")
 public class Error {
 
-  private @Nullable Integer statusCode;
+  private @Nullable Integer status;
 
-  private @Nullable String service;
+  private @Nullable String timestamp;
 
-  private @Nullable String errorMessage;
+  private @Nullable String error;
 
-  private @Nullable String retryable;
+  private @Nullable String path;
 
-  public Error statusCode(Integer statusCode) {
-    this.statusCode = statusCode;
+  public Error status(Integer status) {
+    this.status = status;
     return this;
   }
 
   /**
-   * Get statusCode
-   *
-   * @return statusCode
+   * HTTP status code
+   * @return status
    */
 
-  @Schema(name = "statusCode", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("statusCode")
-  public Integer getStatusCode() {
-    return statusCode;
+  @Schema(name = "status", description = "HTTP status code", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("status")
+  public Integer getStatus() {
+    return status;
   }
 
-  public void setStatusCode(Integer statusCode) {
-    this.statusCode = statusCode;
+  public void setStatus(Integer status) {
+    this.status = status;
   }
 
-  public Error service(String service) {
-    this.service = service;
+  public Error timestamp(String timestamp) {
+    this.timestamp = timestamp;
     return this;
   }
 
   /**
-   * Get service
-   *
-   * @return service
+   * Timestamp of error
+   * @return timestamp
    */
 
-  @Schema(name = "service", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("service")
-  public String getService() {
-    return service;
+  @Schema(name = "timestamp", description = "Timestamp of error", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("timestamp")
+  public String getTimestamp() {
+    return timestamp;
   }
 
-  public void setService(String service) {
-    this.service = service;
+  public void setTimestamp(String timestamp) {
+    this.timestamp = timestamp;
   }
 
-  public Error errorMessage(String errorMessage) {
-    this.errorMessage = errorMessage;
+  public Error error(String error) {
+    this.error = error;
     return this;
   }
 
   /**
    * Error message string
-   *
-   * @return errorMessage
+   * @return error
    */
 
-  @Schema(name = "errorMessage", description = "Error message string", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("errorMessage")
-  public String getErrorMessage() {
-    return errorMessage;
+  @Schema(name = "error", description = "Error message string", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("error")
+  public String getError() {
+    return error;
   }
 
-  public void setErrorMessage(String errorMessage) {
-    this.errorMessage = errorMessage;
+  public void setError(String error) {
+    this.error = error;
   }
 
-  public Error retryable(String retryable) {
-    this.retryable = retryable;
+  public Error path(String path) {
+    this.path = path;
     return this;
   }
 
   /**
-   * Can the API call be retried.
-   *
-   * @return retryable
+   * The API path
+   * @return path
    */
 
-  @Schema(name = "retryable", description = "Can the API call be retried.", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("retryable")
-  public String getRetryable() {
-    return retryable;
+  @Schema(name = "path", description = "The API path", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("path")
+  public String getPath() {
+    return path;
   }
 
-  public void setRetryable(String retryable) {
-    this.retryable = retryable;
+  public void setPath(String path) {
+    this.path = path;
   }
 
   @Override
@@ -126,25 +119,25 @@ public class Error {
       return false;
     }
     Error error = (Error) o;
-    return Objects.equals(this.statusCode, error.statusCode) &&
-        Objects.equals(this.service, error.service) &&
-        Objects.equals(this.errorMessage, error.errorMessage) &&
-        Objects.equals(this.retryable, error.retryable);
+    return Objects.equals(this.status, error.status) &&
+        Objects.equals(this.timestamp, error.timestamp) &&
+        Objects.equals(this.error, error.error) &&
+        Objects.equals(this.path, error.path);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(statusCode, service, errorMessage, retryable);
+    return Objects.hash(status, timestamp, error, path);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class Error {\n");
-    sb.append("    statusCode: ").append(toIndentedString(statusCode)).append("\n");
-    sb.append("    service: ").append(toIndentedString(service)).append("\n");
-    sb.append("    errorMessage: ").append(toIndentedString(errorMessage)).append("\n");
-    sb.append("    retryable: ").append(toIndentedString(retryable)).append("\n");
+    sb.append("    status: ").append(toIndentedString(status)).append("\n");
+    sb.append("    timestamp: ").append(toIndentedString(timestamp)).append("\n");
+    sb.append("    error: ").append(toIndentedString(error)).append("\n");
+    sb.append("    path: ").append(toIndentedString(path)).append("\n");
     sb.append("}");
     return sb.toString();
   }

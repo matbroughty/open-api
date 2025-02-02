@@ -2,23 +2,17 @@ package com.broughty.restapi.model;
 
 import java.net.URI;
 import java.util.Objects;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-
 import java.math.BigDecimal;
-
 import org.springframework.lang.Nullable;
-
 import java.time.OffsetDateTime;
-
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 
 import java.util.*;
-
 import jakarta.annotation.Generated;
 
 /**
@@ -26,7 +20,7 @@ import jakarta.annotation.Generated;
  */
 
 @Schema(name = "Snapshot", description = "A Snapshot is at Company Level and represents the state of the originating data source at a point in time.  The balances are all at either Company or System level")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-02-01T19:26:55.251389700Z[Europe/London]", comments = "Generator version: 7.11.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-02-02T13:18:41.397887300Z[Europe/London]", comments = "Generator version: 7.11.0")
 public class Snapshot {
 
   private @Nullable Integer dataFileId;
@@ -123,7 +117,6 @@ public class Snapshot {
 
   /**
    * The DataFile id that resulted in the snapshot
-   *
    * @return dataFileId
    */
 
@@ -144,10 +137,9 @@ public class Snapshot {
 
   /**
    * Id of the Snapshot.  Used as the createdId, closedId, updatedId and deletedId in Customer, Supplier and Items records.
-   *
    * @return snapshotId
    */
-  @NotNull
+  @NotNull 
   @Schema(name = "snapshotId", description = "Id of the Snapshot.  Used as the createdId, closedId, updatedId and deletedId in Customer, Supplier and Items records.", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("snapshotId")
   public Integer getSnapshotId() {
@@ -165,7 +157,6 @@ public class Snapshot {
 
   /**
    * Get dataFileReceived
-   *
    * @return dataFileReceived
    */
 
@@ -186,7 +177,6 @@ public class Snapshot {
 
   /**
    * Get receivedDate
-   *
    * @return receivedDate
    */
 
@@ -207,7 +197,6 @@ public class Snapshot {
 
   /**
    * Get loadStarted
-   *
    * @return loadStarted
    */
 
@@ -228,7 +217,6 @@ public class Snapshot {
 
   /**
    * Get loadFinished
-   *
    * @return loadFinished
    */
 
@@ -249,7 +237,6 @@ public class Snapshot {
 
   /**
    * Get extractDate
-   *
    * @return extractDate
    */
 
@@ -270,10 +257,9 @@ public class Snapshot {
 
   /**
    * Get balanceCc
-   *
    * @return balanceCc
    */
-  @Valid
+  @Valid 
   @Schema(name = "balanceCc", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("balanceCc")
   public BigDecimal getBalanceCc() {
@@ -291,10 +277,9 @@ public class Snapshot {
 
   /**
    * Slaes ledger balance in Company currency as a result of this snapshot.
-   *
    * @return balanceSc
    */
-  @Valid
+  @Valid 
   @Schema(name = "balanceSc", description = "Slaes ledger balance in Company currency as a result of this snapshot.", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("balanceSc")
   public BigDecimal getBalanceSc() {
@@ -312,10 +297,9 @@ public class Snapshot {
 
   /**
    * Get purchaseBalanceCc
-   *
    * @return purchaseBalanceCc
    */
-  @Valid
+  @Valid 
   @Schema(name = "purchaseBalanceCc", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("purchaseBalanceCc")
   public BigDecimal getPurchaseBalanceCc() {
@@ -333,10 +317,9 @@ public class Snapshot {
 
   /**
    * Get purchaseBalanceSc
-   *
    * @return purchaseBalanceSc
    */
-  @Valid
+  @Valid 
   @Schema(name = "purchaseBalanceSc", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("purchaseBalanceSc")
   public BigDecimal getPurchaseBalanceSc() {
@@ -354,10 +337,9 @@ public class Snapshot {
 
   /**
    * Get overdueCc
-   *
    * @return overdueCc
    */
-  @Valid
+  @Valid 
   @Schema(name = "overdueCc", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("overdueCc")
   public BigDecimal getOverdueCc() {
@@ -375,10 +357,9 @@ public class Snapshot {
 
   /**
    * Get overdueSc
-   *
    * @return overdueSc
    */
-  @Valid
+  @Valid 
   @Schema(name = "overdueSc", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("overdueSc")
   public BigDecimal getOverdueSc() {
@@ -396,10 +377,9 @@ public class Snapshot {
 
   /**
    * Get balanceExcCc
-   *
    * @return balanceExcCc
    */
-  @Valid
+  @Valid 
   @Schema(name = "balanceExcCc", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("balanceExcCc")
   public BigDecimal getBalanceExcCc() {
@@ -417,10 +397,9 @@ public class Snapshot {
 
   /**
    * Get balanceExcSc
-   *
    * @return balanceExcSc
    */
-  @Valid
+  @Valid 
   @Schema(name = "balanceExcSc", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("balanceExcSc")
   public BigDecimal getBalanceExcSc() {
@@ -438,7 +417,6 @@ public class Snapshot {
 
   /**
    * Get deletedItems
-   *
    * @return deletedItems
    */
 
@@ -459,7 +437,6 @@ public class Snapshot {
 
   /**
    * Get modifiedItems
-   *
    * @return modifiedItems
    */
 
@@ -480,7 +457,6 @@ public class Snapshot {
 
   /**
    * Get newItems
-   *
    * @return newItems
    */
 
@@ -501,7 +477,6 @@ public class Snapshot {
 
   /**
    * Get cashBalanceCc
-   *
    * @return cashBalanceCc
    */
 
@@ -522,7 +497,6 @@ public class Snapshot {
 
   /**
    * Get cashBalanceSc
-   *
    * @return cashBalanceSc
    */
 
@@ -543,7 +517,6 @@ public class Snapshot {
 
   /**
    * Get cashNewBalanceCc
-   *
    * @return cashNewBalanceCc
    */
 
@@ -564,7 +537,6 @@ public class Snapshot {
 
   /**
    * Get cashNewBalanceSc
-   *
    * @return cashNewBalanceSc
    */
 
@@ -585,7 +557,6 @@ public class Snapshot {
 
   /**
    * Get deletedPurchaseItems
-   *
    * @return deletedPurchaseItems
    */
 
@@ -606,7 +577,6 @@ public class Snapshot {
 
   /**
    * Get modifiedPurchaseItems
-   *
    * @return modifiedPurchaseItems
    */
 
@@ -627,7 +597,6 @@ public class Snapshot {
 
   /**
    * Get newPurchaseItems
-   *
    * @return newPurchaseItems
    */
 
@@ -648,10 +617,9 @@ public class Snapshot {
 
   /**
    * Get invoiceBalanceCc
-   *
    * @return invoiceBalanceCc
    */
-  @Valid
+  @Valid 
   @Schema(name = "invoiceBalanceCc", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("invoiceBalanceCc")
   public BigDecimal getInvoiceBalanceCc() {
@@ -669,10 +637,9 @@ public class Snapshot {
 
   /**
    * Get invoiceBalanceSc
-   *
    * @return invoiceBalanceSc
    */
-  @Valid
+  @Valid 
   @Schema(name = "invoiceBalanceSc", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("invoiceBalanceSc")
   public BigDecimal getInvoiceBalanceSc() {
@@ -690,7 +657,6 @@ public class Snapshot {
 
   /**
    * Get invoiceChangedCc
-   *
    * @return invoiceChangedCc
    */
 
@@ -711,7 +677,6 @@ public class Snapshot {
 
   /**
    * Get invoiceChangedSc
-   *
    * @return invoiceChangedSc
    */
 
@@ -732,10 +697,9 @@ public class Snapshot {
 
   /**
    * Get invoiceClosedCc
-   *
    * @return invoiceClosedCc
    */
-  @Valid
+  @Valid 
   @Schema(name = "invoiceClosedCc", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("invoiceClosedCc")
   public BigDecimal getInvoiceClosedCc() {
@@ -753,7 +717,6 @@ public class Snapshot {
 
   /**
    * Get invoiceDeletedCc
-   *
    * @return invoiceDeletedCc
    */
 
@@ -774,7 +737,6 @@ public class Snapshot {
 
   /**
    * Get invoiceDeletedSc
-   *
    * @return invoiceDeletedSc
    */
 
@@ -795,7 +757,6 @@ public class Snapshot {
 
   /**
    * Get invoiceMissing
-   *
    * @return invoiceMissing
    */
 
@@ -816,7 +777,6 @@ public class Snapshot {
 
   /**
    * Get invoiceNew
-   *
    * @return invoiceNew
    */
 
@@ -837,10 +797,9 @@ public class Snapshot {
 
   /**
    * The Company Identifier UUID
-   *
    * @return companyId
    */
-  @Size(min = 36, max = 36)
+  @Size(min = 36, max = 36) 
   @Schema(name = "companyId", description = "The Company Identifier UUID", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("companyId")
   public String getCompanyId() {
@@ -858,10 +817,9 @@ public class Snapshot {
 
   /**
    * Sales ledger balance in Company Currency before this Snapshot.
-   *
    * @return startBalanceCc
    */
-  @Valid
+  @Valid 
   @Schema(name = "startBalanceCc", description = "Sales ledger balance in Company Currency before this Snapshot.", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("startBalanceCc")
   public BigDecimal getStartBalanceCc() {
@@ -879,10 +837,9 @@ public class Snapshot {
 
   /**
    * Sales ledger balance in System Currency before this Snapshot
-   *
    * @return startBalanceSc
    */
-  @Valid
+  @Valid 
   @Schema(name = "startBalanceSc", description = "Sales ledger balance in System Currency before this Snapshot", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("startBalanceSc")
   public BigDecimal getStartBalanceSc() {
@@ -900,10 +857,9 @@ public class Snapshot {
 
   /**
    * This snapshot id
-   *
    * @return id
    */
-  @Valid
+  @Valid 
   @Schema(name = "id", description = "This snapshot id", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("id")
   public BigDecimal getId() {

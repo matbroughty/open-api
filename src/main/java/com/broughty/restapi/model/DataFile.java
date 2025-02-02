@@ -2,25 +2,19 @@ package com.broughty.restapi.model;
 
 import java.net.URI;
 import java.util.Objects;
-
 import com.broughty.restapi.model.DataFileSuspendedDetails;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-
 import java.time.OffsetDateTime;
-
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.lang.Nullable;
-
 import java.time.OffsetDateTime;
-
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 
 import java.util.*;
-
 import jakarta.annotation.Generated;
 
 /**
@@ -28,7 +22,7 @@ import jakarta.annotation.Generated;
  */
 
 @Schema(name = "DataFile", description = "The raw data file that will become a Snapshot if allowed through. If status is 40 then the suspendedDetails will be populated and the createdId will be null.")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-02-01T19:26:55.251389700Z[Europe/London]", comments = "Generator version: 7.11.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-02-02T13:18:41.397887300Z[Europe/London]", comments = "Generator version: 7.11.0")
 public class DataFile {
 
   private String id;
@@ -65,10 +59,9 @@ public class DataFile {
 
   /**
    * Unique Id of the DataFile instance
-   *
    * @return id
    */
-  @NotNull
+  @NotNull 
   @Schema(name = "id", description = "Unique Id of the DataFile instance", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("id")
   public String getId() {
@@ -85,11 +78,10 @@ public class DataFile {
   }
 
   /**
-   * - 0  = WAITING   : Awaiting processing by the Engine  - 5  = PAUSED    : Data file processing is PAUSED  - 20 = COMPLETED : Data file finished and Snapshot createdId is populated  - 30 = COMPLETED ERROR : Data file failed on server side  - 35 = COMPLETED ERROR TIMEOUT : Data file failed on server side due to exceeding processing time (30 mins default)  - 40 = SUSPENDED : Data suspended.  Exceeds Company suspension limit percentage, i.e. the load would increase or decrese the sales ledger by too much if let through  - 50 - CLIENT FAILURE : Typicalls an on-premise connector has failed.
-   *
+   * - 0  = WAITING   : Awaiting processing by the Engine  - 5  = PAUSED    : Data file processing is PAUSED  - 20 = COMPLETED : Data file finished and Snapshot createdId is populated  - 30 = COMPLETED ERROR : Data file failed on server side  - 35 = COMPLETED ERROR TIMEOUT : Data file failed on server side due to exceeding processing time (30 mins default)  - 40 = SUSPENDED : Data suspended.  Exceeds Company suspension limit percentage, i.e. the load would increase or decrese the sales ledger by too much if let through  - 50 - CLIENT FAILURE : Typicalls an on-premise connector has failed.  
    * @return status
    */
-  @NotNull
+  @NotNull 
   @Schema(name = "status", description = "- 0  = WAITING   : Awaiting processing by the Engine  - 5  = PAUSED    : Data file processing is PAUSED  - 20 = COMPLETED : Data file finished and Snapshot createdId is populated  - 30 = COMPLETED ERROR : Data file failed on server side  - 35 = COMPLETED ERROR TIMEOUT : Data file failed on server side due to exceeding processing time (30 mins default)  - 40 = SUSPENDED : Data suspended.  Exceeds Company suspension limit percentage, i.e. the load would increase or decrese the sales ledger by too much if let through  - 50 - CLIENT FAILURE : Typicalls an on-premise connector has failed.  ", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("status")
   public Integer getStatus() {
@@ -107,10 +99,9 @@ public class DataFile {
 
   /**
    * Date the DataFile was first seen by Open Accounting
-   *
    * @return receivedDate
    */
-  @Valid
+  @Valid 
   @Schema(name = "receivedDate", description = "Date the DataFile was first seen by Open Accounting", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("receivedDate")
   public OffsetDateTime getReceivedDate() {
@@ -127,8 +118,7 @@ public class DataFile {
   }
 
   /**
-   * The raw content from the data source.  This will be empty for the list method and only populated for the single Get
-   *
+   * The raw content from the data source.  This will be empty for the list method and only populated for the single Get 
    * @return content
    */
 
@@ -149,7 +139,6 @@ public class DataFile {
 
   /**
    * The Snapshot id if the status is completed
-   *
    * @return createdId
    */
 
@@ -170,7 +159,6 @@ public class DataFile {
 
   /**
    * See status - stores the previous status.  Useful to trouble shoot.
-   *
    * @return previousStatus
    */
 
@@ -191,10 +179,9 @@ public class DataFile {
 
   /**
    * Get suspendedDetails
-   *
    * @return suspendedDetails
    */
-  @Valid
+  @Valid 
   @Schema(name = "suspendedDetails", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("suspendedDetails")
   public DataFileSuspendedDetails getSuspendedDetails() {

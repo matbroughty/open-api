@@ -1,28 +1,27 @@
 package com.broughty.restapi.server;
 
 import com.broughty.restapi.api.AccountingApi;
+import com.broughty.restapi.sales.dao.SalesLedgerDao;
 import com.broughty.restapi.model.*;
-import com.broughty.restapi.services.AccountingService;
+import com.broughty.restapi.server.exception.ResourceNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class AccountingAPIImpl implements AccountingApi {
 
-  AccountingService accountingService;
+  private final SalesLedgerDao salesLedgerDao;
 
-  AccountingAPIImpl(AccountingService accountingService) {
-    this.accountingService = accountingService;
+
+  AccountingAPIImpl(SalesLedgerDao salesLedgerDao) {
+    this.salesLedgerDao = salesLedgerDao;
   }
 
-  @Override
-  public ResponseEntity<AccountingGetAccountpackageInfo200Response> accountingGetAccountpackageInfo(String companyId) {
-    return null;
-  }
 
   @Override
   public ResponseEntity<List<AgeingBucket>> accountingGetAgedCreditor(String companyId, String ageingDate) {
@@ -39,9 +38,14 @@ public class AccountingAPIImpl implements AccountingApi {
     return null;
   }
 
+
   @Override
-  public ResponseEntity<Customer> accountingGetCustomerById(String customerId, String companyId) {
-    return ResponseEntity.ok(accountingService.findCustomerById(customerId, companyId));
+  public ResponseEntity<Customer> accountingGetCustomerById(String companyId, String customerId) {
+    Optional<Customer> customer = salesLedgerDao.getCustomerByUniqueKey(companyId, customerId);
+    if (customer.isEmpty()) {
+      throw new ResourceNotFoundException(String.format("Company with Id %s or Customer with key %s not found", companyId, customerId));
+    }
+    return ResponseEntity.ok(customer.get());
   }
 
   @Override
@@ -74,9 +78,15 @@ public class AccountingAPIImpl implements AccountingApi {
     return null;
   }
 
+
+  /**
+   * Needs complete rewrite - just testing!
+   */
   @Override
-  public ResponseEntity<Customers> accountingListCustomers(String page, Integer pageSize, String orderBy, String companyId, Integer createdId, String updatedId, Integer closedId, Integer deletedId, BigDecimal balanceGtEq, BigDecimal balanceLt, String notified, String notified2) {
-    return null;
+  public ResponseEntity<Customers> accountingListCustomers(String page, Integer pageSize, String orderBy, String companyId, Integer createdId, Integer updatedId, Integer closedId, Integer deletedId, BigDecimal balanceGtEq, BigDecimal balanceLt, String notified, String notified2) {
+    List<Customer> customersResultList = salesLedgerDao.getCustomersByCompanyId(companyId, createdId, updatedId, balanceGtEq, balanceLt);
+    Customers customers = new Customers().results(customersResultList).pageSize(1).totalResults(customersResultList.size());
+    return ResponseEntity.ok(customers);
   }
 
   @Override
@@ -89,15 +99,7 @@ public class AccountingAPIImpl implements AccountingApi {
     return null;
   }
 
-  @Override
-  public ResponseEntity<Items> accountingListPurchaseItems(String page, Integer pageSize, String status, String companyId, String orderByItem, String itemType, Integer createdId, String updatedId, Integer closedId, Integer deletedId, BigDecimal balanceGtEq, BigDecimal balanceLt) {
-    return null;
-  }
 
-  @Override
-  public ResponseEntity<Items> accountingListSalesItems(String page, Integer pageSize, String status, String companyId, String orderByItem, String itemType, Integer createdId, String updatedId, Integer closedId, Integer deletedId, BigDecimal balanceGtEq, BigDecimal balanceLt, String notified) {
-    return null;
-  }
 
   @Override
   public ResponseEntity<Snapshots> accountingListSnapshots(String page, Integer pageSize, String companyId, LocalDate snapshotDate, LocalDate snapshotDateGtEq, String snapshotDateLt, Boolean snapshotSalesBalanceChange) {
@@ -105,7 +107,22 @@ public class AccountingAPIImpl implements AccountingApi {
   }
 
   @Override
-  public ResponseEntity<Suppliers> accountingListSuppliers(String page, Integer pageSize, String orderBy, String companyId, Integer createdId, String updatedId, Integer closedId, Integer deletedId, BigDecimal balanceLt, BigDecimal balanceGtEq) {
+  public ResponseEntity<PackageInfo> accountingGetAccountpackageInfo(String companyId) {
+    return null;
+  }
+
+  @Override
+  public ResponseEntity<Items> accountingListPurchaseItems(String page, Integer pageSize, String status, String companyId, String orderByItem, String itemType, Integer createdId, Integer updatedId, Integer closedId, Integer deletedId, BigDecimal balanceGtEq, BigDecimal balanceLt) {
+    return null;
+  }
+
+  @Override
+  public ResponseEntity<Items> accountingListSalesItems(String page, Integer pageSize, String status, String companyId, String orderByItem, String itemType, Integer createdId, Integer updatedId, Integer closedId, Integer deletedId, BigDecimal balanceGtEq, BigDecimal balanceLt, String notified) {
+    return null;
+  }
+
+  @Override
+  public ResponseEntity<Suppliers> accountingListSuppliers(String page, Integer pageSize, String orderBy, String companyId, Integer createdId, Integer updatedId, Integer closedId, Integer deletedId, BigDecimal balanceLt, BigDecimal balanceGtEq) {
     return null;
   }
 }

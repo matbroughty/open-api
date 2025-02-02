@@ -2,28 +2,24 @@ package com.broughty.restapi.model;
 
 import java.net.URI;
 import java.util.Objects;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import org.springframework.lang.Nullable;
-
 import java.time.OffsetDateTime;
-
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 
 import java.util.*;
-
 import jakarta.annotation.Generated;
 
 /**
- * This represents the Company information taken from the originating data source  The Company will hold basic information such as the Client name, address and contact details as well as Tax number and information about the account package the data is being retrieved from and whether it is a multi-currency installation. This information is likely to match the information manually entered into the Client\\Company records in the system api.  Pulling this Company data is optional, apart from for Cloud accounting packages (i.e. Xero, QuickBooks online).  There will typically only be one Company per account package instance.  The OA Service will truncate all field values if they exceed the maximum size limit.
+ * This represents the Company information taken from the originating data source  The Company will hold basic information such as the Client name, address and contact details as well as Tax number and information about the account package the data is being retrieved from and whether it is a multi-currency installation. This information is likely to match the information manually entered into the Client\\Company records in the system api.  Pulling this Company data is optional, apart from for Cloud accounting packages (i.e. Xero, QuickBooks online).  There will typically only be one Company per account package instance.  The OA Service will truncate all field values if they exceed the maximum size limit. 
  */
 
 @Schema(name = "PackageInfo", description = "This represents the Company information taken from the originating data source  The Company will hold basic information such as the Client name, address and contact details as well as Tax number and information about the account package the data is being retrieved from and whether it is a multi-currency installation. This information is likely to match the information manually entered into the Client\\Company records in the system api.  Pulling this Company data is optional, apart from for Cloud accounting packages (i.e. Xero, QuickBooks online).  There will typically only be one Company per account package instance.  The OA Service will truncate all field values if they exceed the maximum size limit. ")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-02-01T19:26:55.251389700Z[Europe/London]", comments = "Generator version: 7.11.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-02-02T13:18:41.397887300Z[Europe/London]", comments = "Generator version: 7.11.0")
 public class PackageInfo {
 
   private @Nullable String companyId;
@@ -71,10 +67,9 @@ public class PackageInfo {
 
   /**
    * Company UUID
-   *
    * @return companyId
    */
-  @Size(min = 36, max = 36)
+  @Size(min = 36, max = 36) 
   @Schema(name = "companyId", description = "Company UUID", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("companyId")
   public String getCompanyId() {
@@ -92,10 +87,9 @@ public class PackageInfo {
 
   /**
    * Unique id of the PackageInfo
-   *
    * @return uniqueKey
    */
-  @Size(max = 50)
+  @Size(max = 50) 
   @Schema(name = "uniqueKey", description = "Unique id of the PackageInfo", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("uniqueKey")
   public String getUniqueKey() {
@@ -113,10 +107,9 @@ public class PackageInfo {
 
   /**
    * Get fingerprint
-   *
    * @return fingerprint
    */
-  @Size(max = 32)
+  @Size(max = 32) 
   @Schema(name = "fingerprint", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("fingerprint")
   public String getFingerprint() {
@@ -134,7 +127,6 @@ public class PackageInfo {
 
   /**
    * The Snapshot ID that created this Package Info record
-   *
    * @return createdId
    */
 
@@ -155,7 +147,6 @@ public class PackageInfo {
 
   /**
    * The Snapshot ID that updated this Package Info record
-   *
    * @return updatedId
    */
 
@@ -175,11 +166,10 @@ public class PackageInfo {
   }
 
   /**
-   * Name of the Company
-   *
+   * Name of the Company 
    * @return name
    */
-  @Size(max = 60)
+  @Size(max = 60) 
   @Schema(name = "name", description = "Name of the Company ", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("name")
   public String getName() {
@@ -197,10 +187,9 @@ public class PackageInfo {
 
   /**
    * Get reference
-   *
    * @return reference
    */
-  @Size(max = 30)
+  @Size(max = 30) 
   @Schema(name = "reference", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("reference")
   public String getReference() {
@@ -218,10 +207,9 @@ public class PackageInfo {
 
   /**
    * Get address1
-   *
    * @return address1
    */
-  @Size(max = 60)
+  @Size(max = 60) 
   @Schema(name = "address1", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("address1")
   public String getAddress1() {
@@ -239,10 +227,9 @@ public class PackageInfo {
 
   /**
    * Get address2
-   *
    * @return address2
    */
-  @Size(max = 60)
+  @Size(max = 60) 
   @Schema(name = "address2", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("address2")
   public String getAddress2() {
@@ -260,10 +247,9 @@ public class PackageInfo {
 
   /**
    * Get address3
-   *
    * @return address3
    */
-  @Size(max = 60)
+  @Size(max = 60) 
   @Schema(name = "address3", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("address3")
   public String getAddress3() {
@@ -281,10 +267,9 @@ public class PackageInfo {
 
   /**
    * Get postCode
-   *
    * @return postCode
    */
-  @Size(max = 20)
+  @Size(max = 20) 
   @Schema(name = "postCode", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("postCode")
   public String getPostCode() {
@@ -302,10 +287,9 @@ public class PackageInfo {
 
   /**
    * Get countryCode
-   *
    * @return countryCode
    */
-  @Size(max = 2)
+  @Size(max = 2) 
   @Schema(name = "countryCode", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("countryCode")
   public String getCountryCode() {
@@ -323,10 +307,9 @@ public class PackageInfo {
 
   /**
    * Get contactPhone
-   *
    * @return contactPhone
    */
-  @Size(max = 25)
+  @Size(max = 25) 
   @Schema(name = "contactPhone", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("contactPhone")
   public String getContactPhone() {
@@ -344,10 +327,9 @@ public class PackageInfo {
 
   /**
    * Get duns
-   *
    * @return duns
    */
-  @Size(max = 20)
+  @Size(max = 20) 
   @Schema(name = "duns", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("duns")
   public String getDuns() {
@@ -365,10 +347,9 @@ public class PackageInfo {
 
   /**
    * Get taxNo
-   *
    * @return taxNo
    */
-  @Size(max = 20)
+  @Size(max = 20) 
   @Schema(name = "taxNo", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("taxNo")
   public String getTaxNo() {
@@ -386,7 +367,6 @@ public class PackageInfo {
 
   /**
    * true if multi-currency company
-   *
    * @return multiCurrency
    */
 
@@ -407,7 +387,6 @@ public class PackageInfo {
 
   /**
    * Compant financial start month
-   *
    * @return startMonth
    */
 
@@ -428,10 +407,9 @@ public class PackageInfo {
 
   /**
    * Industry type for the company
-   *
    * @return industryType
    */
-  @Size(max = 50)
+  @Size(max = 50) 
   @Schema(name = "industryType", description = "Industry type for the company", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("industryType")
   public String getIndustryType() {
@@ -449,10 +427,9 @@ public class PackageInfo {
 
   /**
    * Details in short the accounting package/ERP system
-   *
    * @return packageInfo
    */
-  @Size(max = 50)
+  @Size(max = 50) 
   @Schema(name = "packageInfo", description = "Details in short the accounting package/ERP system", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("packageInfo")
   public String getPackageInfo() {

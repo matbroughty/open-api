@@ -5,13 +5,10 @@
  */
 package com.broughty.restapi.api;
 
-import com.broughty.restapi.model.AccountingGetAccountpackageInfo200Response;
 import com.broughty.restapi.model.AgeingBucket;
 import com.broughty.restapi.model.Bank;
 import com.broughty.restapi.model.BankItems;
-
 import java.math.BigDecimal;
-
 import com.broughty.restapi.model.Customer;
 import com.broughty.restapi.model.Customers;
 import com.broughty.restapi.model.DataFile;
@@ -20,10 +17,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 import com.broughty.restapi.model.Error;
 import com.broughty.restapi.model.Item;
 import com.broughty.restapi.model.Items;
-
 import java.time.LocalDate;
-
 import com.broughty.restapi.model.NominalAccount;
+import com.broughty.restapi.model.PackageInfo;
 import com.broughty.restapi.model.Snapshot;
 import com.broughty.restapi.model.Snapshots;
 import com.broughty.restapi.model.Supplier;
@@ -49,14 +45,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
-
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-
 import jakarta.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-02-01T19:26:55.251389700Z[Europe/London]", comments = "Generator version: 7.11.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-02-02T13:18:41.397887300Z[Europe/London]", comments = "Generator version: 7.11.0")
 @Validated
 @Tag(name = "package-info", description = "This is Company info from the account package")
 public interface AccountingApi {
@@ -68,6 +62,7 @@ public interface AccountingApi {
    * @param companyId The main UUID representing the Company.  Static and unqiue (required)
    *
    * @return OK (status code 200)
+   * or Access Denied (status code 403)
    * or One or more of the resources you referenced could not be found. This might be because your company id is incorrect. (status code 404)
    * or There is a problem with our API service. Please try again later. (status code 500)
    * or General Client Error.  Check logs and request (status code 4XX)
@@ -79,50 +74,7 @@ public interface AccountingApi {
       tags = {"package-info"},
       responses = {
           @ApiResponse(responseCode = "200", description = "OK", content = {
-              @Content(mediaType = "application/json", schema = @Schema(implementation = AccountingGetAccountpackageInfo200Response.class))
-          }),
-          @ApiResponse(responseCode = "404", description = "One or more of the resources you referenced could not be found. This might be because your company id is incorrect.", content = {
-              @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class))
-          }),
-          @ApiResponse(responseCode = "500", description = "There is a problem with our API service. Please try again later.", content = {
-              @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class))
-          }),
-          @ApiResponse(responseCode = "4XX", description = "General Client Error.  Check logs and request", content = {
-              @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class))
-          })
-      }
-  )
-  @RequestMapping(
-      method = RequestMethod.GET,
-      value = "/accounting/companies/{companyId}/packageInfo",
-      produces = {"application/json"}
-  )
-  ResponseEntity<AccountingGetAccountpackageInfo200Response> accountingGetAccountpackageInfo(
-      @Parameter(name = "companyId", description = "The main UUID representing the Company.  Static and unqiue", required = true, in = ParameterIn.PATH) @PathVariable("companyId") String companyId
-  );
-
-
-  /**
-   * GET /accounting/companies/{companyId}/agedCreditor : Get aged creditor report
-   * Gets the aged  creditor report - i.e. ages by supplier.
-   *
-   * @param companyId The main UUID representing the Company.  Static and unqiue (required)
-   * @param ageingDate The date field to use for ageing.  Defaults to dueDate. (optional, default to dueDate)
-   *
-   * @return OK (status code 200)
-   * or Access Denied (status code 403)
-   * or One or more of the resources you referenced could not be found. This might be because your company id is incorrect. (status code 404)
-   * or There is a problem with our API service. Please try again later. (status code 500)
-   * or General Client Error.  Check logs and request (status code 4XX)
-   */
-  @Operation(
-      operationId = "accountingGetAgedCreditor",
-      summary = "Get aged creditor report",
-      description = "Gets the aged  creditor report - i.e. ages by supplier.  ",
-      tags = {"aged-creditor"},
-      responses = {
-          @ApiResponse(responseCode = "200", description = "OK", content = {
-              @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = AgeingBucket.class)))
+              @Content(mediaType = "application/json", schema = @Schema(implementation = PackageInfo.class))
           }),
           @ApiResponse(responseCode = "403", description = "Access Denied", content = {
               @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class))
@@ -140,28 +92,72 @@ public interface AccountingApi {
   )
   @RequestMapping(
       method = RequestMethod.GET,
-      value = "/accounting/companies/{companyId}/agedCreditor",
+      value = "/accounting/companies/{companyId}/packageInfo",
       produces = {"application/json"}
   )
-  ResponseEntity<List<AgeingBucket>> accountingGetAgedCreditor(
-      @Size(min = 36, max = 36) @Parameter(name = "companyId", description = "The main UUID representing the Company.  Static and unqiue", required = true, in = ParameterIn.PATH) @PathVariable("companyId") String companyId,
-      @Parameter(name = "ageingDate", description = "The date field to use for ageing.  Defaults to dueDate.", in = ParameterIn.QUERY) @Valid @RequestParam(value = "ageingDate", required = false, defaultValue = "dueDate") String ageingDate
+  ResponseEntity<PackageInfo> accountingGetAccountpackageInfo(
+      @Parameter(name = "companyId", description = "The main UUID representing the Company.  Static and unqiue", required = true, in = ParameterIn.PATH) @PathVariable("companyId") String companyId
   );
+
+
+    /**
+     * GET /accounting/companies/{companyId}/agedCreditor : Get aged creditor report
+     * Gets the aged  creditor report - i.e. ages by supplier.  
+     *
+     * @param companyId The main UUID representing the Company.  Static and unique. (required)
+     * @param ageingDate The date field to use for ageing.  Defaults to dueDate. (optional, default to dueDate)
+     * @return OK (status code 200)
+     *         or Access Denied (status code 403)
+     *         or One or more of the resources you referenced could not be found. This might be because your company id is incorrect. (status code 404)
+     *         or There is a problem with our API service. Please try again later. (status code 500)
+     *         or General Client Error.  Check logs and request (status code 4XX)
+     */
+    @Operation(
+        operationId = "accountingGetAgedCreditor",
+        summary = "Get aged creditor report",
+        description = "Gets the aged  creditor report - i.e. ages by supplier.  ",
+        tags = {"aged-creditor"},
+        responses = {
+            @ApiResponse(responseCode = "200", description = "OK", content = {
+                @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = AgeingBucket.class)))
+            }),
+            @ApiResponse(responseCode = "403", description = "Access Denied", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class))
+            }),
+            @ApiResponse(responseCode = "404", description = "One or more of the resources you referenced could not be found. This might be because your company id is incorrect.", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class))
+            }),
+            @ApiResponse(responseCode = "500", description = "There is a problem with our API service. Please try again later.", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class))
+            }),
+            @ApiResponse(responseCode = "4XX", description = "General Client Error.  Check logs and request", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class))
+            })
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.GET,
+        value = "/accounting/companies/{companyId}/agedCreditor",
+        produces = {"application/json"}
+    )
+    ResponseEntity<List<AgeingBucket>> accountingGetAgedCreditor(
+        @Size(min = 36, max = 36) @Parameter(name = "companyId", description = "The main UUID representing the Company.  Static and unique.", required = true, in = ParameterIn.PATH) @PathVariable("companyId") String companyId,
+        @Parameter(name = "ageingDate", description = "The date field to use for ageing.  Defaults to dueDate.", in = ParameterIn.QUERY) @Valid @RequestParam(value = "ageingDate", required = false, defaultValue = "dueDate") String ageingDate
+    );
 
 
   /**
    * GET /accounting/companies/{companyId}/agedDebtor : Get aged debtor report
    * Gets the aged debtor report - i.e. ageing by customer.
    *
-   * @param companyId The main UUID representing the Company.  Static and unqiue (required)
+   * @param companyId The main UUID representing the Company.  Static and unique. (required)
    * @param notified Is the Customer notified - tue, false or include all (optional, default to all)
    * @param ageingDate The date field to use for ageing.  Defaults to dueDate. (optional, default to dueDate)
-   *
    * @return OK (status code 200)
-   * or Access Denied (status code 403)
-   * or One or more of the resources you referenced could not be found. This might be because your company id is incorrect. (status code 404)
-   * or There is a problem with our API service. Please try again later. (status code 500)
-   * or General Client Error.  Check logs and request (status code 4XX)
+   *         or Access Denied (status code 403)
+   *         or One or more of the resources you referenced could not be found. This might be because your company id is incorrect. (status code 404)
+   *         or There is a problem with our API service. Please try again later. (status code 500)
+   *         or General Client Error.  Check logs and request (status code 4XX)
    */
   @Operation(
       operationId = "accountingGetAgedDebtor",
@@ -192,7 +188,7 @@ public interface AccountingApi {
       produces = {"application/json"}
   )
   ResponseEntity<List<AgeingBucket>> accountingGetAgedDebtor(
-      @Size(min = 36, max = 36) @Parameter(name = "companyId", description = "The main UUID representing the Company.  Static and unqiue", required = true, in = ParameterIn.PATH) @PathVariable("companyId") String companyId,
+      @Size(min = 36, max = 36) @Parameter(name = "companyId", description = "The main UUID representing the Company.  Static and unique.", required = true, in = ParameterIn.PATH) @PathVariable("companyId") String companyId,
       @Parameter(name = "notified", description = "Is the Customer notified - tue, false or include all", in = ParameterIn.QUERY) @Valid @RequestParam(value = "notified", required = false, defaultValue = "all") String notified,
       @Parameter(name = "ageingDate", description = "The date field to use for ageing.  Defaults to dueDate.", in = ParameterIn.QUERY) @Valid @RequestParam(value = "ageingDate", required = false, defaultValue = "dueDate") String ageingDate
   );
@@ -200,20 +196,19 @@ public interface AccountingApi {
 
   /**
    * GET /accounting/companies/{companyId}/snapshots/current : Get current snapshot
-   * Gets the current snapshot - any company with data must have at least one snapshot.  This endpoint will return the latest.    The Snapshot ID can be used in the List items and customers/suppliers to deteremine the items and accounts that were created, modified, deleted or closed by this snapshot
+   * Gets the current Snapshot - any company with data must have at least one Snapshot.  This endpoint will return the latest.    The Snapshot ID can be used in the List items and customers/suppliers to deteremine the items and accounts that were created, modified, deleted or closed by this snapshot
    *
-   * @param companyId The main UUID representing the Company.  Static and unqiue (required)
-   *
+   * @param companyId The main UUID representing the Company.  Static and unique. (required)
    * @return OK (status code 200)
-   * or Access Denied (status code 403)
-   * or One or more of the resources you referenced could not be found. This might be because your company id is incorrect. (status code 404)
-   * or There is a problem with our API service. Please try again later. (status code 500)
-   * or General Client Error.  Check logs and request (status code 4XX)
+   *         or Access Denied (status code 403)
+   *         or One or more of the resources you referenced could not be found. This might be because your company id is incorrect. (status code 404)
+   *         or There is a problem with our API service. Please try again later. (status code 500)
+   *         or General Client Error.  Check logs and request (status code 4XX)
    */
   @Operation(
       operationId = "accountingGetCurrentSnapshot",
       summary = "Get current snapshot",
-      description = "Gets the current snapshot - any company with data must have at least one snapshot.  This endpoint will return the latest.    The Snapshot ID can be used in the List items and customers/suppliers to deteremine the items and accounts that were created, modified, deleted or closed by this snapshot",
+      description = "Gets the current Snapshot - any company with data must have at least one Snapshot.  This endpoint will return the latest.    The Snapshot ID can be used in the List items and customers/suppliers to deteremine the items and accounts that were created, modified, deleted or closed by this snapshot",
       tags = {"current-snapshot", "mvp"},
       responses = {
           @ApiResponse(responseCode = "200", description = "OK", content = {
@@ -239,7 +234,7 @@ public interface AccountingApi {
       produces = {"application/json"}
   )
   ResponseEntity<Snapshot> accountingGetCurrentSnapshot(
-      @Size(min = 36, max = 36) @Parameter(name = "companyId", description = "The main UUID representing the Company.  Static and unqiue", required = true, in = ParameterIn.PATH) @PathVariable("companyId") String companyId
+      @Size(min = 36, max = 36) @Parameter(name = "companyId", description = "The main UUID representing the Company.  Static and unique.", required = true, in = ParameterIn.PATH) @PathVariable("companyId") String companyId
   );
 
 
@@ -247,13 +242,12 @@ public interface AccountingApi {
    * GET /accounting/companies/{companyId}/customers/{customerId} : Get customer
    * Gets a customer by the unique Customer id
    *
-   * @param customerId The uniqueKey for the Customer.  Data soure controlled.  Static and unique.  (required)
-   * @param companyId The main UUID representing the Company.  Static and unqiue (required)
-   *
+   * @param companyId The main UUID representing the Company.  Static and unique. (required)
+   * @param customerId The uniqueKey for the Customer.  Data source controlled.  Static and unique.  (required)
    * @return OK (status code 200)
-   * or One or more of the resources you referenced could not be found. This might be because your company id is incorrect. (status code 404)
-   * or There is a problem with our API service. Please try again later. (status code 500)
-   * or General Client Error.  Check logs and request (status code 4XX)
+   *         or One or more of the resources you referenced could not be found. This might be because your company id is incorrect. (status code 404)
+   *         or There is a problem with our API service. Please try again later. (status code 500)
+   *         or General Client Error.  Check logs and request (status code 4XX)
    */
   @Operation(
       operationId = "accountingGetCustomerById",
@@ -281,8 +275,8 @@ public interface AccountingApi {
       produces = {"application/json"}
   )
   ResponseEntity<Customer> accountingGetCustomerById(
-      @Size(min = 1, max = 50) @Parameter(name = "customerId", description = "The uniqueKey for the Customer.  Data soure controlled.  Static and unique. ", required = true, in = ParameterIn.PATH) @PathVariable("customerId") String customerId,
-      @Size(min = 36, max = 36) @Parameter(name = "companyId", description = "The main UUID representing the Company.  Static and unqiue", required = true, in = ParameterIn.PATH) @PathVariable("companyId") String companyId
+      @Size(min = 36, max = 36) @Parameter(name = "companyId", description = "The main UUID representing the Company.  Static and unique.", required = true, in = ParameterIn.PATH) @PathVariable("companyId") String companyId,
+      @Size(min = 1, max = 50) @Parameter(name = "customerId", description = "The uniqueKey for the Customer.  Data source controlled.  Static and unique. ", required = true, in = ParameterIn.PATH) @PathVariable("customerId") String customerId
   );
 
 
@@ -290,14 +284,13 @@ public interface AccountingApi {
    * GET /accounting/companies/{companyId}/dataFile/{dataFileId} : Get data file
    * The raw data from the originating data source.      This will contain the raw standardised xml data regardless of originating data source
    *
-   * @param companyId The main UUID representing the Company.  Static and unqiue (required)
+   * @param companyId The main UUID representing the Company.  Static and unique. (required)
    * @param dataFileId Data File Id (required)
-   *
    * @return OK (status code 200)
-   * or Access Denied (status code 403)
-   * or One or more of the resources you referenced could not be found. This might be because your company id is incorrect. (status code 404)
-   * or There is a problem with our API service. Please try again later. (status code 500)
-   * or General Client Error.  Check logs and request (status code 4XX)
+   *         or Access Denied (status code 403)
+   *         or One or more of the resources you referenced could not be found. This might be because your company id is incorrect. (status code 404)
+   *         or There is a problem with our API service. Please try again later. (status code 500)
+   *         or General Client Error.  Check logs and request (status code 4XX)
    */
   @Operation(
       operationId = "accountingGetDatafile",
@@ -328,7 +321,7 @@ public interface AccountingApi {
       produces = {"application/json"}
   )
   ResponseEntity<DataFile> accountingGetDatafile(
-      @Size(min = 36, max = 36) @Parameter(name = "companyId", description = "The main UUID representing the Company.  Static and unqiue", required = true, in = ParameterIn.PATH) @PathVariable("companyId") String companyId,
+      @Size(min = 36, max = 36) @Parameter(name = "companyId", description = "The main UUID representing the Company.  Static and unique.", required = true, in = ParameterIn.PATH) @PathVariable("companyId") String companyId,
       @Parameter(name = "dataFileId", description = "Data File Id", required = true, in = ParameterIn.PATH) @PathVariable("dataFileId") String dataFileId
   );
 
@@ -337,13 +330,12 @@ public interface AccountingApi {
    * GET /accounting/companies/{companyId}/snapshots/previous : Get previous snapshot
    * Gets the previous snapshot - i.e. the snapshot before the current snapshot.  A company may only have one snapshot so this could return empty
    *
-   * @param companyId The main UUID representing the Company.  Static and unqiue (required)
-   *
+   * @param companyId The main UUID representing the Company.  Static and unique. (required)
    * @return OK (status code 200)
-   * or Access Denied (status code 403)
-   * or One or more of the resources you referenced could not be found. This might be because your company id is incorrect. (status code 404)
-   * or There is a problem with our API service. Please try again later. (status code 500)
-   * or General Client Error.  Check logs and request (status code 4XX)
+   *         or Access Denied (status code 403)
+   *         or One or more of the resources you referenced could not be found. This might be because your company id is incorrect. (status code 404)
+   *         or There is a problem with our API service. Please try again later. (status code 500)
+   *         or General Client Error.  Check logs and request (status code 4XX)
    */
   @Operation(
       operationId = "accountingGetPreviousSnapshot",
@@ -374,7 +366,7 @@ public interface AccountingApi {
       produces = {"application/json"}
   )
   ResponseEntity<Snapshot> accountingGetPreviousSnapshot(
-      @Size(min = 36, max = 36) @Parameter(name = "companyId", description = "The main UUID representing the Company.  Static and unqiue", required = true, in = ParameterIn.PATH) @PathVariable("companyId") String companyId
+      @Size(min = 36, max = 36) @Parameter(name = "companyId", description = "The main UUID representing the Company.  Static and unique.", required = true, in = ParameterIn.PATH) @PathVariable("companyId") String companyId
   );
 
 
@@ -382,13 +374,12 @@ public interface AccountingApi {
    * GET /accounting/companies/{companyId}/salesItems/{itemKey} : Get sales Item
    * Gets a single sales ledger item by uniqueKey.
    *
-   * @param companyId The main UUID representing the Company.  Static and unqiue (required)
+   * @param companyId The main UUID representing the Company.  Static and unique. (required)
    * @param itemKey Unique identifier for the item (required)
-   *
    * @return Extracts (status code 200)
-   * or One or more of the resources you referenced could not be found. This might be because your company id is incorrect. (status code 404)
-   * or There is a problem with our API service. Please try again later. (status code 5XX)
-   * or General Client Error.  Check logs and request (status code 4XX)
+   *         or One or more of the resources you referenced could not be found. This might be because your company id is incorrect. (status code 404)
+   *         or There is a problem with our API service. Please try again later. (status code 5XX)
+   *         or General Client Error.  Check logs and request (status code 4XX)
    */
   @Operation(
       operationId = "accountingGetSalesItem",
@@ -416,7 +407,7 @@ public interface AccountingApi {
       produces = {"application/json"}
   )
   ResponseEntity<Item> accountingGetSalesItem(
-      @Size(min = 36, max = 36) @Parameter(name = "companyId", description = "The main UUID representing the Company.  Static and unqiue", required = true, in = ParameterIn.PATH) @PathVariable("companyId") String companyId,
+      @Size(min = 36, max = 36) @Parameter(name = "companyId", description = "The main UUID representing the Company.  Static and unique.", required = true, in = ParameterIn.PATH) @PathVariable("companyId") String companyId,
       @Size(min = 1, max = 50) @Parameter(name = "itemKey", description = "Unique identifier for the item", required = true, in = ParameterIn.PATH) @PathVariable("itemKey") String itemKey
   );
 
@@ -425,13 +416,12 @@ public interface AccountingApi {
    * GET /accounting/companies/{companyId}/suppliers/{supplierId} : Get supplier
    * Gets a Supplier by the unique Supplier id
    *
-   * @param companyId The main UUID representing the Company.  Static and unqiue (required)
+   * @param companyId The main UUID representing the Company.  Static and unique. (required)
    * @param supplierId The uniqueKey for the Supplier.  Data soure controlled.  Static and unique.  (required)
-   *
    * @return OK (status code 200)
-   * or One or more of the resources you referenced could not be found. This might be because your company id is incorrect. (status code 404)
-   * or There is a problem with our API service. Please try again later. (status code 500)
-   * or General Client Error.  Check logs and request (status code 4XX)
+   *         or One or more of the resources you referenced could not be found. This might be because your company id is incorrect. (status code 404)
+   *         or There is a problem with our API service. Please try again later. (status code 500)
+   *         or General Client Error.  Check logs and request (status code 4XX)
    */
   @Operation(
       operationId = "accountingGetSupplierById",
@@ -459,7 +449,7 @@ public interface AccountingApi {
       produces = {"application/json"}
   )
   ResponseEntity<Supplier> accountingGetSupplierById(
-      @Size(min = 36, max = 36) @Parameter(name = "companyId", description = "The main UUID representing the Company.  Static and unqiue", required = true, in = ParameterIn.PATH) @PathVariable("companyId") String companyId,
+      @Size(min = 36, max = 36) @Parameter(name = "companyId", description = "The main UUID representing the Company.  Static and unique.", required = true, in = ParameterIn.PATH) @PathVariable("companyId") String companyId,
       @Size(min = 1, max = 50) @Parameter(name = "supplierId", description = "The uniqueKey for the Supplier.  Data soure controlled.  Static and unique. ", required = true, in = ParameterIn.PATH) @PathVariable("supplierId") String supplierId
   );
 
@@ -469,12 +459,11 @@ public interface AccountingApi {
    * Lists banks.  The bank accounts are only available for a subset of the native connectors and only pulled if.  the Company.banksAccounts is set to true.    **Note:** This list query is not paged as there will usually only be a handful of bank accounts on the Company
    *
    * @param companyId The main UUID representing the Company.  Static and unqiue (required)
-   *
    * @return OK (status code 200)
-   * or Access Denied (status code 403)
-   * or One or more of the resources you referenced could not be found. This might be because your company id is incorrect. (status code 404)
-   * or There is a problem with our API service. Please try again later. (status code 500)
-   * or General Client Error.  Check logs and request (status code 4XX)
+   *         or Access Denied (status code 403)
+   *         or One or more of the resources you referenced could not be found. This might be because your company id is incorrect. (status code 404)
+   *         or There is a problem with our API service. Please try again later. (status code 500)
+   *         or General Client Error.  Check logs and request (status code 4XX)
    */
   @Operation(
       operationId = "accountingListBanks",
@@ -515,12 +504,11 @@ public interface AccountingApi {
    *
    * @param companyId The main UUID representing the Company.  Static and unqiue (required)
    * @param bankUniqueKey The Bank&#39;s unique key (required)
-   *
    * @return OK (status code 200)
-   * or Access Denied (status code 403)
-   * or One or more of the resources you referenced could not be found. This might be because your company id is incorrect. (status code 404)
-   * or There is a problem with our API service. Please try again later. (status code 500)
-   * or General Client Error.  Check logs and request (status code 4XX)
+   *         or Access Denied (status code 403)
+   *         or One or more of the resources you referenced could not be found. This might be because your company id is incorrect. (status code 404)
+   *         or There is a problem with our API service. Please try again later. (status code 500)
+   *         or General Client Error.  Check logs and request (status code 4XX)
    */
   @Operation(
       operationId = "accountingListBanksItems",
@@ -572,12 +560,11 @@ public interface AccountingApi {
    * @param balanceLt Specify an amount that the balance (company currency) needs to be less than. Can be negative. (optional)
    * @param notified Is the Customer notified - tue, false or include all (optional, default to all)
    * @param notified2 Is the Customer notified - tue, false or include all (optional, default to all)
-   *
    * @return OK (status code 200)
-   * or Access Denied (status code 403)
-   * or One or more of the resources you referenced could not be found. This might be because your company id is incorrect. (status code 404)
-   * or There is a problem with our API service. Please try again later. (status code 500)
-   * or General Client Error.  Check logs and request (status code 4XX)
+   *         or Access Denied (status code 403)
+   *         or One or more of the resources you referenced could not be found. This might be because your company id is incorrect. (status code 404)
+   *         or There is a problem with our API service. Please try again later. (status code 500)
+   *         or General Client Error.  Check logs and request (status code 4XX)
    */
   @Operation(
       operationId = "accountingListCustomers",
@@ -613,7 +600,7 @@ public interface AccountingApi {
       @NotNull @Parameter(name = "orderBy", description = "Order by properties (descending) - for Account (Customer/Supplier) this will be balance, currencyCode, reference, name and countryCode", required = true, in = ParameterIn.QUERY) @Valid @RequestParam(value = "orderBy", required = true, defaultValue = "balanceCc") String orderBy,
       @Parameter(name = "companyId", description = "The main UUID representing the Company.  Static and unqiue", required = true, in = ParameterIn.PATH) @PathVariable("companyId") String companyId,
       @Parameter(name = "createdId", description = "The SnapshotId that created the item or account", in = ParameterIn.QUERY) @Valid @RequestParam(value = "createdId", required = false) Integer createdId,
-      @Parameter(name = "updatedId", description = "The Snapshot ID that updated the item or account", in = ParameterIn.QUERY) @Valid @RequestParam(value = "updatedId", required = false) String updatedId,
+      @Parameter(name = "updatedId", description = "The Snapshot ID that updated the item or account", in = ParameterIn.QUERY) @Valid @RequestParam(value = "updatedId", required = false) Integer updatedId,
       @Parameter(name = "closedId", description = "The Snapshot ID that closed the item or account", in = ParameterIn.QUERY) @Valid @RequestParam(value = "closedId", required = false) Integer closedId,
       @Parameter(name = "deletedId", description = "The Snapshot ID that deleted the item or account", in = ParameterIn.QUERY) @Valid @RequestParam(value = "deletedId", required = false) Integer deletedId,
       @Parameter(name = "balanceGtEq", description = "Specify an amount that the balance (company currency) needs to be greater than or equal to. Can be negative.", in = ParameterIn.QUERY) @Valid @RequestParam(value = "balanceGtEq", required = false) BigDecimal balanceGtEq,
@@ -630,14 +617,13 @@ public interface AccountingApi {
    * @param page Page number (required)
    * @param orderBy Order by properties (descending) - for Account (Customer/Supplier) this will be balance, currencyCode, reference, name and countryCode (required)
    * @param pageSize The number of records to return - defaults to 100 (required)
-   * @param companyId The main UUID representing the Company.  Static and unqiue (required)
+   * @param companyId The main UUID representing the Company.  Static and unique. (required)
    * @param createdId The SnapshotId that created the item or account (optional)
-   *
    * @return OK (status code 200)
-   * or Access Denied (status code 403)
-   * or One or more of the resources you referenced could not be found. This might be because your company id is incorrect. (status code 404)
-   * or There is a problem with our API service. Please try again later. (status code 500)
-   * or General Client Error.  Check logs and request (status code 4XX)
+   *         or Access Denied (status code 403)
+   *         or One or more of the resources you referenced could not be found. This might be because your company id is incorrect. (status code 404)
+   *         or There is a problem with our API service. Please try again later. (status code 500)
+   *         or General Client Error.  Check logs and request (status code 4XX)
    */
   @Operation(
       operationId = "accountingListDatafiles",
@@ -671,7 +657,7 @@ public interface AccountingApi {
       @NotNull @Parameter(name = "page", description = "Page number", required = true, in = ParameterIn.QUERY) @Valid @RequestParam(value = "page", required = true) String page,
       @NotNull @Parameter(name = "orderBy", description = "Order by properties (descending) - for Account (Customer/Supplier) this will be balance, currencyCode, reference, name and countryCode", required = true, in = ParameterIn.QUERY) @Valid @RequestParam(value = "orderBy", required = true, defaultValue = "balanceCc") String orderBy,
       @NotNull @Min(1) @Max(1000) @Parameter(name = "pageSize", description = "The number of records to return - defaults to 100", required = true, in = ParameterIn.QUERY) @Valid @RequestParam(value = "pageSize", required = true, defaultValue = "100") Integer pageSize,
-      @Size(min = 36, max = 36) @Parameter(name = "companyId", description = "The main UUID representing the Company.  Static and unqiue", required = true, in = ParameterIn.PATH) @PathVariable("companyId") String companyId,
+      @Size(min = 36, max = 36) @Parameter(name = "companyId", description = "The main UUID representing the Company.  Static and unique.", required = true, in = ParameterIn.PATH) @PathVariable("companyId") String companyId,
       @Parameter(name = "createdId", description = "The SnapshotId that created the item or account", in = ParameterIn.QUERY) @Valid @RequestParam(value = "createdId", required = false) Integer createdId
   );
 
@@ -681,12 +667,11 @@ public interface AccountingApi {
    * Lists nominal items.      The nominal accounts are only available for a subset of the native connectors and only pulled if.  the Company.trialBalance is set to true.
    *
    * @param companyId The main UUID representing the Company.  Static and unqiue (required)
-   *
    * @return OK (status code 200)
-   * or Access Denied (status code 403)
-   * or One or more of the resources you referenced could not be found. This might be because your company id is incorrect. (status code 404)
-   * or There is a problem with our API service. Please try again later. (status code 500)
-   * or General Client Error.  Check logs and request (status code 4XX)
+   *         or Access Denied (status code 403)
+   *         or One or more of the resources you referenced could not be found. This might be because your company id is incorrect. (status code 404)
+   *         or There is a problem with our API service. Please try again later. (status code 500)
+   *         or General Client Error.  Check logs and request (status code 4XX)
    */
   @Operation(
       operationId = "accountingListNominal",
@@ -737,11 +722,10 @@ public interface AccountingApi {
    * @param deletedId The Snapshot ID that deleted the item or account (optional)
    * @param balanceGtEq Specify an amount that the balance (company currency) needs to be greater than or equal to. Can be negative. (optional)
    * @param balanceLt Specify an amount that the balance (company currency) needs to be less than. Can be negative. (optional)
-   *
    * @return List Purchase items (supplier items) (status code 200)
-   * or One or more of the resources you referenced could not be found. This might be because your company id is incorrect. (status code 404)
-   * or There is a problem with our API service. Please try again later. (status code 500)
-   * or General Client Error.  Check logs and request (status code 4XX)
+   *         or One or more of the resources you referenced could not be found. This might be because your company id is incorrect. (status code 404)
+   *         or There is a problem with our API service. Please try again later. (status code 500)
+   *         or General Client Error.  Check logs and request (status code 4XX)
    */
   @Operation(
       operationId = "accountingListPurchaseItems",
@@ -776,7 +760,7 @@ public interface AccountingApi {
       @Parameter(name = "orderByItem", description = "Order by columns (descending) for Sales and purchase item list queries", in = ParameterIn.QUERY) @Valid @RequestParam(value = "orderByItem", required = false, defaultValue = "balance") String orderByItem,
       @Parameter(name = "itemType", description = "Limit the item types for sales and purchase ledger item list queries to on of the available item types", in = ParameterIn.QUERY) @Valid @RequestParam(value = "itemType", required = false) String itemType,
       @Parameter(name = "createdId", description = "The SnapshotId that created the item or account", in = ParameterIn.QUERY) @Valid @RequestParam(value = "createdId", required = false) Integer createdId,
-      @Parameter(name = "updatedId", description = "The Snapshot ID that updated the item or account", in = ParameterIn.QUERY) @Valid @RequestParam(value = "updatedId", required = false) String updatedId,
+      @Parameter(name = "updatedId", description = "The Snapshot ID that updated the item or account", in = ParameterIn.QUERY) @Valid @RequestParam(value = "updatedId", required = false) Integer updatedId,
       @Parameter(name = "closedId", description = "The Snapshot ID that closed the item or account", in = ParameterIn.QUERY) @Valid @RequestParam(value = "closedId", required = false) Integer closedId,
       @Parameter(name = "deletedId", description = "The Snapshot ID that deleted the item or account", in = ParameterIn.QUERY) @Valid @RequestParam(value = "deletedId", required = false) Integer deletedId,
       @Parameter(name = "balanceGtEq", description = "Specify an amount that the balance (company currency) needs to be greater than or equal to. Can be negative.", in = ParameterIn.QUERY) @Valid @RequestParam(value = "balanceGtEq", required = false) BigDecimal balanceGtEq,
@@ -786,12 +770,12 @@ public interface AccountingApi {
 
   /**
    * GET /accounting/companies/{companyId}/salesItems : List sales items
-   * Retrieve the sales ledger items for a Company.    This endpoint can access all sales item transactions for the Company, i.e. every transaction that makes up the current Sales Ledger balance.  The query params allow selection of items by the Snapshot id for created, closed, updated and deleted ID&#39;s as well as non-notified etc.  Using this endpoint in conjuction with the Snapshot endpoints allows a detailed granular view of movements by snapshot date.
+   * Retrieve the sales ledger items for a Company.    This endpoint can access all sales item transactions for the Company, i.e. every transaction that makes up the current Sales Ledger balance.  The query params allow selection of items by the Snapshot id for created, closed, updated and deleted ID&#39;s as well as non-notified etc.  Using this endpoint in conjuction with the Snapshot endpoints allows a detailed granular view of movements by Snapshot date.
    *
    * @param page Page number (required)
    * @param pageSize The number of records to return - defaults to 100 (required)
    * @param status Status of the items - open, closed or include all (required)
-   * @param companyId The main UUID representing the Company.  Static and unqiue (required)
+   * @param companyId The main UUID representing the Company.  Static and unique. (required)
    * @param orderByItem Order by columns (descending) for Sales and purchase item list queries (optional, default to balance)
    * @param itemType Limit the item types for sales and purchase ledger item list queries to on of the available item types (optional)
    * @param createdId The SnapshotId that created the item or account (optional)
@@ -801,17 +785,16 @@ public interface AccountingApi {
    * @param balanceGtEq Specify an amount that the balance (company currency) needs to be greater than or equal to. Can be negative. (optional)
    * @param balanceLt Specify an amount that the balance (company currency) needs to be less than. Can be negative. (optional)
    * @param notified Is the Customer notified - tue, false or include all (optional, default to all)
-   *
    * @return Returns back 0 or more sales items for the Company.  The Company must have 1 or more Snapshots. (status code 200)
-   * or Access Denied (status code 401)
-   * or One or more of the resources you referenced could not be found. This might be because your company id is incorrect. (status code 404)
-   * or There is a problem with our API service. Please try again later. (status code 500)
-   * or General Client Error.  Check logs and request (status code 4XX)
+   *         or Access Denied (status code 401)
+   *         or One or more of the resources you referenced could not be found. This might be because your company id is incorrect. (status code 404)
+   *         or There is a problem with our API service. Please try again later. (status code 500)
+   *         or General Client Error.  Check logs and request (status code 4XX)
    */
   @Operation(
       operationId = "accountingListSalesItems",
       summary = "List sales items",
-      description = "Retrieve the sales ledger items for a Company.    This endpoint can access all sales item transactions for the Company, i.e. every transaction that makes up the current Sales Ledger balance.  The query params allow selection of items by the Snapshot id for created, closed, updated and deleted ID's as well as non-notified etc.  Using this endpoint in conjuction with the Snapshot endpoints allows a detailed granular view of movements by snapshot date. ",
+      description = "Retrieve the sales ledger items for a Company.    This endpoint can access all sales item transactions for the Company, i.e. every transaction that makes up the current Sales Ledger balance.  The query params allow selection of items by the Snapshot id for created, closed, updated and deleted ID's as well as non-notified etc.  Using this endpoint in conjuction with the Snapshot endpoints allows a detailed granular view of movements by Snapshot date. ",
       tags = {"salesitems", "mvp"},
       responses = {
           @ApiResponse(responseCode = "200", description = "Returns back 0 or more sales items for the Company.  The Company must have 1 or more Snapshots.", content = {
@@ -840,11 +823,11 @@ public interface AccountingApi {
       @NotNull @Parameter(name = "page", description = "Page number", required = true, in = ParameterIn.QUERY) @Valid @RequestParam(value = "page", required = true) String page,
       @NotNull @Min(1) @Max(1000) @Parameter(name = "pageSize", description = "The number of records to return - defaults to 100", required = true, in = ParameterIn.QUERY) @Valid @RequestParam(value = "pageSize", required = true, defaultValue = "100") Integer pageSize,
       @NotNull @Parameter(name = "status", description = "Status of the items - open, closed or include all", required = true, in = ParameterIn.QUERY) @Valid @RequestParam(value = "status", required = true, defaultValue = "open") String status,
-      @Size(min = 36, max = 36) @Parameter(name = "companyId", description = "The main UUID representing the Company.  Static and unqiue", required = true, in = ParameterIn.PATH) @PathVariable("companyId") String companyId,
+      @Size(min = 36, max = 36) @Parameter(name = "companyId", description = "The main UUID representing the Company.  Static and unique.", required = true, in = ParameterIn.PATH) @PathVariable("companyId") String companyId,
       @Parameter(name = "orderByItem", description = "Order by columns (descending) for Sales and purchase item list queries", in = ParameterIn.QUERY) @Valid @RequestParam(value = "orderByItem", required = false, defaultValue = "balance") String orderByItem,
       @Parameter(name = "itemType", description = "Limit the item types for sales and purchase ledger item list queries to on of the available item types", in = ParameterIn.QUERY) @Valid @RequestParam(value = "itemType", required = false) String itemType,
       @Parameter(name = "createdId", description = "The SnapshotId that created the item or account", in = ParameterIn.QUERY) @Valid @RequestParam(value = "createdId", required = false) Integer createdId,
-      @Parameter(name = "updatedId", description = "The Snapshot ID that updated the item or account", in = ParameterIn.QUERY) @Valid @RequestParam(value = "updatedId", required = false) String updatedId,
+      @Parameter(name = "updatedId", description = "The Snapshot ID that updated the item or account", in = ParameterIn.QUERY) @Valid @RequestParam(value = "updatedId", required = false) Integer updatedId,
       @Parameter(name = "closedId", description = "The Snapshot ID that closed the item or account", in = ParameterIn.QUERY) @Valid @RequestParam(value = "closedId", required = false) Integer closedId,
       @Parameter(name = "deletedId", description = "The Snapshot ID that deleted the item or account", in = ParameterIn.QUERY) @Valid @RequestParam(value = "deletedId", required = false) Integer deletedId,
       @Parameter(name = "balanceGtEq", description = "Specify an amount that the balance (company currency) needs to be greater than or equal to. Can be negative.", in = ParameterIn.QUERY) @Valid @RequestParam(value = "balanceGtEq", required = false) BigDecimal balanceGtEq,
@@ -854,26 +837,25 @@ public interface AccountingApi {
 
 
   /**
-   * GET /accounting/companies/{companyId}/snapshots : List snapshots
-   * List all snapshots - these are records of updates from the originating data source and contain balance and movement details comparing the current snapshot to the previous snapshot
+   * GET /accounting/companies/{companyId}/snapshots : List Snapshots
+   * List all Snapshots - these are records of updates from the originating data source and contain balance and movement details comparing the current Snapshot to the previous Snapshot
    *
    * @param page Page number (required)
    * @param pageSize The number of records to return - defaults to 100 (required)
-   * @param companyId The main UUID representing the Company.  Static and unqiue (required)
+   * @param companyId The main UUID representing the Company.  Static and unique. (required)
    * @param snapshotDate A date string to limit the Snapshot list to - based on the Snapshot receivedDate.  There may be multiple Snapshots per day. (optional)
    * @param snapshotDateGtEq A date string to limit the Snapshot list to being greater to or equal to (i.e. on or after) - based on the Snapshot receivedDate. (optional)
    * @param snapshotDateLt A date string to limit the Snapshot list to being less than (i.e. before) - based on the Snapshot receivedDate. (optional)
    * @param snapshotSalesBalanceChange true to restrict list of Snaphots to those that had a balance change based on the previous sales ledger Balance in Company currency compared to this Snapshots balance (startBalanceCc !&#x3D; balanceCc ) (optional)
-   *
    * @return OK (status code 200)
-   * or One or more of the resources you referenced could not be found. This might be because your company id is incorrect. (status code 404)
-   * or There is a problem with our API service. Please try again later. (status code 500)
-   * or General Client Error.  Check logs and request (status code 4XX)
+   *         or One or more of the resources you referenced could not be found. This might be because your company id is incorrect. (status code 404)
+   *         or There is a problem with our API service. Please try again later. (status code 500)
+   *         or General Client Error.  Check logs and request (status code 4XX)
    */
   @Operation(
       operationId = "accountingListSnapshots",
-      summary = "List snapshots",
-      description = "List all snapshots - these are records of updates from the originating data source and contain balance and movement details comparing the current snapshot to the previous snapshot  ",
+      summary = "List Snapshots",
+      description = "List all Snapshots - these are records of updates from the originating data source and contain balance and movement details comparing the current Snapshot to the previous Snapshot  ",
       tags = {"list-snapshot", "mvp"},
       responses = {
           @ApiResponse(responseCode = "200", description = "OK", content = {
@@ -898,7 +880,7 @@ public interface AccountingApi {
   ResponseEntity<Snapshots> accountingListSnapshots(
       @NotNull @Parameter(name = "page", description = "Page number", required = true, in = ParameterIn.QUERY) @Valid @RequestParam(value = "page", required = true) String page,
       @NotNull @Min(1) @Max(1000) @Parameter(name = "pageSize", description = "The number of records to return - defaults to 100", required = true, in = ParameterIn.QUERY) @Valid @RequestParam(value = "pageSize", required = true, defaultValue = "100") Integer pageSize,
-      @Size(min = 36, max = 36) @Parameter(name = "companyId", description = "The main UUID representing the Company.  Static and unqiue", required = true, in = ParameterIn.PATH) @PathVariable("companyId") String companyId,
+      @Size(min = 36, max = 36) @Parameter(name = "companyId", description = "The main UUID representing the Company.  Static and unique.", required = true, in = ParameterIn.PATH) @PathVariable("companyId") String companyId,
       @Parameter(name = "snapshotDate", description = "A date string to limit the Snapshot list to - based on the Snapshot receivedDate.  There may be multiple Snapshots per day.", in = ParameterIn.QUERY) @Valid @RequestParam(value = "snapshotDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate snapshotDate,
       @Parameter(name = "snapshotDateGtEq", description = "A date string to limit the Snapshot list to being greater to or equal to (i.e. on or after) - based on the Snapshot receivedDate.", in = ParameterIn.QUERY) @Valid @RequestParam(value = "snapshotDateGtEq", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate snapshotDateGtEq,
       @Parameter(name = "snapshotDateLt", description = "A date string to limit the Snapshot list to being less than (i.e. before) - based on the Snapshot receivedDate.", in = ParameterIn.QUERY) @Valid @RequestParam(value = "snapshotDateLt", required = false) String snapshotDateLt,
@@ -920,11 +902,10 @@ public interface AccountingApi {
    * @param deletedId The Snapshot ID that deleted the item or account (optional)
    * @param balanceLt Specify an amount that the balance (company currency) needs to be less than. Can be negative. (optional)
    * @param balanceGtEq Specify an amount that the balance (company currency) needs to be greater than or equal to. Can be negative. (optional)
-   *
    * @return OK (status code 200)
-   * or One or more of the resources you referenced could not be found. This might be because your company id is incorrect. (status code 404)
-   * or There is a problem with our API service. Please try again later. (status code 500)
-   * or General Client Error.  Check logs and request (status code 4XX)
+   *         or One or more of the resources you referenced could not be found. This might be because your company id is incorrect. (status code 404)
+   *         or There is a problem with our API service. Please try again later. (status code 500)
+   *         or General Client Error.  Check logs and request (status code 4XX)
    */
   @Operation(
       operationId = "accountingListSuppliers",
@@ -957,7 +938,7 @@ public interface AccountingApi {
       @NotNull @Parameter(name = "orderBy", description = "Order by properties (descending) - for Account (Customer/Supplier) this will be balance, currencyCode, reference, name and countryCode", required = true, in = ParameterIn.QUERY) @Valid @RequestParam(value = "orderBy", required = true, defaultValue = "balanceCc") String orderBy,
       @Parameter(name = "companyId", description = "The main UUID representing the Company.  Static and unqiue", required = true, in = ParameterIn.PATH) @PathVariable("companyId") String companyId,
       @Parameter(name = "createdId", description = "The SnapshotId that created the item or account", in = ParameterIn.QUERY) @Valid @RequestParam(value = "createdId", required = false) Integer createdId,
-      @Parameter(name = "updatedId", description = "The Snapshot ID that updated the item or account", in = ParameterIn.QUERY) @Valid @RequestParam(value = "updatedId", required = false) String updatedId,
+      @Parameter(name = "updatedId", description = "The Snapshot ID that updated the item or account", in = ParameterIn.QUERY) @Valid @RequestParam(value = "updatedId", required = false) Integer updatedId,
       @Parameter(name = "closedId", description = "The Snapshot ID that closed the item or account", in = ParameterIn.QUERY) @Valid @RequestParam(value = "closedId", required = false) Integer closedId,
       @Parameter(name = "deletedId", description = "The Snapshot ID that deleted the item or account", in = ParameterIn.QUERY) @Valid @RequestParam(value = "deletedId", required = false) Integer deletedId,
       @Parameter(name = "balanceLt", description = "Specify an amount that the balance (company currency) needs to be less than. Can be negative.", in = ParameterIn.QUERY) @Valid @RequestParam(value = "balanceLt", required = false) BigDecimal balanceLt,

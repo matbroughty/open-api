@@ -2,22 +2,18 @@ package com.broughty.restapi.model;
 
 import java.net.URI;
 import java.util.Objects;
-
 import com.broughty.restapi.model.PackageInfo;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import org.springframework.lang.Nullable;
-
 import java.time.OffsetDateTime;
-
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 
 import java.util.*;
-
 import jakarta.annotation.Generated;
 
 /**
@@ -25,7 +21,7 @@ import jakarta.annotation.Generated;
  */
 
 @JsonTypeName("accounting_get_accountpackage_info_200_response")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-02-01T19:26:55.251389700Z[Europe/London]", comments = "Generator version: 7.11.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-02-02T10:51:26.254693400Z[Europe/London]", comments = "Generator version: 7.11.0")
 public class AccountingGetAccountpackageInfo200Response {
 
   private @Nullable PackageInfo company;
@@ -37,10 +33,9 @@ public class AccountingGetAccountpackageInfo200Response {
 
   /**
    * Get company
-   *
    * @return company
    */
-  @Valid
+  @Valid 
   @Schema(name = "company", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("company")
   public PackageInfo getCompany() {

@@ -2,26 +2,20 @@ package com.broughty.restapi.model;
 
 import java.net.URI;
 import java.util.Objects;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
-
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
-
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.lang.Nullable;
-
 import java.time.OffsetDateTime;
-
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 
 import java.util.*;
-
 import jakarta.annotation.Generated;
 
 /**
@@ -30,7 +24,7 @@ import jakarta.annotation.Generated;
 
 @Schema(name = "DataFile_suspendedDetails", description = "If the DataFile was suspended (status=40) then this will hold details of why")
 @JsonTypeName("DataFile_suspendedDetails")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-02-01T19:26:55.251389700Z[Europe/London]", comments = "Generator version: 7.11.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-02-02T13:18:41.397887300Z[Europe/London]", comments = "Generator version: 7.11.0")
 public class DataFileSuspendedDetails {
 
   private @Nullable Integer id;
@@ -51,7 +45,6 @@ public class DataFileSuspendedDetails {
 
   /**
    * Suspended data id
-   *
    * @return id
    */
 
@@ -72,10 +65,9 @@ public class DataFileSuspendedDetails {
 
   /**
    * Date file was suspended
-   *
    * @return supsendedDate
    */
-  @Valid
+  @Valid 
   @Schema(name = "supsendedDate", description = "Date file was suspended", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("supsendedDate")
   public OffsetDateTime getSupsendedDate() {
@@ -93,10 +85,9 @@ public class DataFileSuspendedDetails {
 
   /**
    * Previous sales ledger balance prior to this DataFile
-   *
    * @return previousSalesBalanceCc
    */
-  @Valid
+  @Valid 
   @Schema(name = "previousSalesBalanceCc", description = "Previous sales ledger balance prior to this DataFile", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("previousSalesBalanceCc")
   public BigDecimal getPreviousSalesBalanceCc() {
@@ -114,10 +105,9 @@ public class DataFileSuspendedDetails {
 
   /**
    * Proposed sales ledger balance if this DataFile let through
-   *
    * @return proposedSalesBalanceCc
    */
-  @Valid
+  @Valid 
   @Schema(name = "proposedSalesBalanceCc", description = "Proposed sales ledger balance if this DataFile let through", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("proposedSalesBalanceCc")
   public BigDecimal getProposedSalesBalanceCc() {
@@ -135,7 +125,6 @@ public class DataFileSuspendedDetails {
 
   /**
    * Proposed Sales Ledger Balance change
-   *
    * @return proposedSalesBalanceChangePercent
    */
 

@@ -2,20 +2,16 @@ package com.broughty.restapi.model;
 
 import java.net.URI;
 import java.util.Objects;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import org.springframework.lang.Nullable;
-
 import java.time.OffsetDateTime;
-
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 
 import java.util.*;
-
 import jakarta.annotation.Generated;
 
 /**
@@ -23,7 +19,7 @@ import jakarta.annotation.Generated;
  */
 
 @Schema(name = "BankItem", description = "The Bank Item record represents all cash items (receipts, payments and adjustments) for a particular Bank.   It is not necessary to extract Bank Items as the owning Bank (BankItem.BankReference = Bank.Reference) contains the Balance but if it is required to see Bank Statements for a certain period then all Bank Items for a Bank should be extracted.  Bank Items are neither open or closed.  Bank Items either debit or credit the owning Bank  Some of these Bank Items will already exist as a Customer or Supplier 'PAY' Ledger item. If possible and known in the accounts package then the BankItem.LedgerItemUniqueKey will be the same as the LedgerItem.UniqueKey.  The OA Service will truncate all field values if they exceed the maximum size limit.")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-02-01T19:26:55.251389700Z[Europe/London]", comments = "Generator version: 7.11.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-02-02T13:18:41.397887300Z[Europe/London]", comments = "Generator version: 7.11.0")
 public class BankItem {
 
   private @Nullable String companyId;
@@ -87,10 +83,9 @@ public class BankItem {
 
   /**
    * Owning Company UUID
-   *
    * @return companyId
    */
-  @Size(min = 36, max = 36)
+  @Size(min = 36, max = 36) 
   @Schema(name = "companyId", description = "Owning Company UUID", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("companyId")
   public String getCompanyId() {
@@ -108,10 +103,9 @@ public class BankItem {
 
   /**
    * Get reference
-   *
    * @return reference
    */
-  @Size(max = 30)
+  @Size(max = 30) 
   @Schema(name = "reference", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("reference")
   public String getReference() {
@@ -129,10 +123,9 @@ public class BankItem {
 
   /**
    * Get bankUniqueKey
-   *
    * @return bankUniqueKey
    */
-  @Size(max = 50)
+  @Size(max = 50) 
   @Schema(name = "bankUniqueKey", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("bankUniqueKey")
   public String getBankUniqueKey() {
@@ -150,7 +143,6 @@ public class BankItem {
 
   /**
    * Get accountName
-   *
    * @return accountName
    */
 
@@ -171,7 +163,6 @@ public class BankItem {
 
   /**
    * Get accountReference
-   *
    * @return accountReference
    */
 
@@ -192,7 +183,6 @@ public class BankItem {
 
   /**
    * Get bankReference
-   *
    * @return bankReference
    */
 
@@ -213,7 +203,6 @@ public class BankItem {
 
   /**
    * Get createdId
-   *
    * @return createdId
    */
 
@@ -234,7 +223,6 @@ public class BankItem {
 
   /**
    * Get deletedId
-   *
    * @return deletedId
    */
 
@@ -255,7 +243,6 @@ public class BankItem {
 
   /**
    * Get closedId
-   *
    * @return closedId
    */
 
@@ -276,7 +263,6 @@ public class BankItem {
 
   /**
    * Get fingerprint
-   *
    * @return fingerprint
    */
 
@@ -297,7 +283,6 @@ public class BankItem {
 
   /**
    * Get amountBc
-   *
    * @return amountBc
    */
 
@@ -318,7 +303,6 @@ public class BankItem {
 
   /**
    * Get amountCc
-   *
    * @return amountCc
    */
 
@@ -339,7 +323,6 @@ public class BankItem {
 
   /**
    * Get amountSc
-   *
    * @return amountSc
    */
 
@@ -360,7 +343,6 @@ public class BankItem {
 
   /**
    * Get details
-   *
    * @return details
    */
 
@@ -381,7 +363,6 @@ public class BankItem {
 
   /**
    * Get type
-   *
    * @return type
    */
 
@@ -402,7 +383,6 @@ public class BankItem {
 
   /**
    * Get balanceBc
-   *
    * @return balanceBc
    */
 
@@ -423,7 +403,6 @@ public class BankItem {
 
   /**
    * Get balanceCc
-   *
    * @return balanceCc
    */
 
@@ -444,7 +423,6 @@ public class BankItem {
 
   /**
    * Get balanceSc
-   *
    * @return balanceSc
    */
 
@@ -465,7 +443,6 @@ public class BankItem {
 
   /**
    * Get dueDate
-   *
    * @return dueDate
    */
 
@@ -486,7 +463,6 @@ public class BankItem {
 
   /**
    * Get documentDate
-   *
    * @return documentDate
    */
 
@@ -507,7 +483,6 @@ public class BankItem {
 
   /**
    * Get entryDate
-   *
    * @return entryDate
    */
 
@@ -528,7 +503,6 @@ public class BankItem {
 
   /**
    * Get userName
-   *
    * @return userName
    */
 
@@ -549,7 +523,6 @@ public class BankItem {
 
   /**
    * Get taxAmountBc
-   *
    * @return taxAmountBc
    */
 
@@ -570,7 +543,6 @@ public class BankItem {
 
   /**
    * Get taxAmountCc
-   *
    * @return taxAmountCc
    */
 
@@ -591,7 +563,6 @@ public class BankItem {
 
   /**
    * Get taxAmountSc
-   *
    * @return taxAmountSc
    */
 
@@ -612,7 +583,6 @@ public class BankItem {
 
   /**
    * Get ledgerItemKey
-   *
    * @return ledgerItemKey
    */
 
@@ -633,7 +603,6 @@ public class BankItem {
 
   /**
    * Get originalType
-   *
    * @return originalType
    */
 

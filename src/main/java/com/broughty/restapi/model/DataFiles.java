@@ -2,27 +2,21 @@ package com.broughty.restapi.model;
 
 import java.net.URI;
 import java.util.Objects;
-
 import com.broughty.restapi.model.DataFile;
 import com.broughty.restapi.model.PaginginfoLinks;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 import org.springframework.lang.Nullable;
-
 import java.time.OffsetDateTime;
-
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 
 import java.util.*;
-
 import jakarta.annotation.Generated;
 
 /**
@@ -30,7 +24,7 @@ import jakarta.annotation.Generated;
  */
 
 @Schema(name = "DataFiles", description = "The raw data loaded from the originating data sources prior to being created as a Snapshot")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-02-01T19:26:55.251389700Z[Europe/London]", comments = "Generator version: 7.11.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-02-02T13:18:41.397887300Z[Europe/London]", comments = "Generator version: 7.11.0")
 public class DataFiles {
 
   private @Nullable Integer pageNumber;
@@ -51,7 +45,6 @@ public class DataFiles {
 
   /**
    * Get pageNumber
-   *
    * @return pageNumber
    */
 
@@ -72,7 +65,6 @@ public class DataFiles {
 
   /**
    * Get pageSize
-   *
    * @return pageSize
    */
 
@@ -93,7 +85,6 @@ public class DataFiles {
 
   /**
    * Get totalResults
-   *
    * @return totalResults
    */
 
@@ -114,10 +105,9 @@ public class DataFiles {
 
   /**
    * Get links
-   *
    * @return links
    */
-  @Valid
+  @Valid 
   @Schema(name = "_links", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("_links")
   public PaginginfoLinks getLinks() {
@@ -143,10 +133,9 @@ public class DataFiles {
 
   /**
    * Get results
-   *
    * @return results
    */
-  @Valid
+  @Valid 
   @Schema(name = "results", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("results")
   public List<@Valid DataFile> getResults() {
